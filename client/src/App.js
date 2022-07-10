@@ -1,9 +1,12 @@
 import './styles/components/App.scss'
+import Home from './components/Home'
+import Admin from './components/Admin'
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello World!</h1>
+     {/** <Home />*/}
+     <Admin />
     </div>
   );
 }
