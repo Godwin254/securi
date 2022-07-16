@@ -47,12 +47,13 @@
             border: none;
             border-radius: 10rem;
             cursor: pointer;
-            background-color: orange;
+            background-color: black;
+            color: #fff;
             transition: all .4s;
             &:hover{
                 transition: all .4s;
                 color: #fff;
-                border: 1px solid orange;
+                border: 1px solid #ffff;
                 background: none;
             }
 
