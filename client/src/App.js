@@ -3,17 +3,15 @@ import Home from './components/Home'
 //import Admin from './components/Admin'
 //import SecurityGuard from './components/SecurityGuard';
 import Resident from './components/Resident'
-import { Route, Routes } from "react-router-dom";
+import { BrowswerRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-        <Routes>
-          <Route path="/home" element={<Home/>} />
-          <Route path="/resident" element={<Resident/>} />
-        </Routes>
-    
-    </div>
+    <Router>
+      <div className="App">
+        <Home />
+      </div>
+    </Router>
   );
 }
 
