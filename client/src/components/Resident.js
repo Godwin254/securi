@@ -1,10 +1,11 @@
 import React from 'react'
-import {BrowserRouter as Router} from 'react-router-dom'
+import {Link, Route} from 'react-router-dom'
+import Login from './Login'
 
 function Resident() {
   return (
     <div>
-      <h1>Resident Welcome Page</h1>
+      <Login />
     </div>
    
   )

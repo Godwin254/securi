@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
+import '../styles/components/Login.scss'
 
 export default function () {
   return (
-    <div className='login'>
-
+    <div className='Login'>
       <div className="sideA">
+        <img src="assets/images/car-pro1.jpg" width="300px" alt="background" />
+        <div className="overlay"></div>
         <div className='content'>
           <h1>Securi App</h1>
           <p>
@@ -15,11 +17,11 @@ export default function () {
             able to guarantee safety of a Resident's vehicle.
           </p>
         </div>
-        <span>&copy Copyright | brownscode</span>
+        <span>&copy; Copyright 2022 | brownscode</span>
       </div> 
 
       <div className='sideB'>
-        <h2>Welcome back</h2>
+        <h2>Welcome back!</h2>
         <span>Login to access your account</span>
         <form>
           <input type="text" placeholder='Enter your username'/>
@@ -28,7 +30,7 @@ export default function () {
           <span>Forgot your password?</span>
         </form>
         <span></span>
-        <input type='Register Account' />
+        <input type="button" value='Register Account' />
       </div>
     </div>
   )
