@@ -26,8 +26,8 @@ export default function Register() {
           <input type="text" placeholder='Enter your username' />
           <input type="email" placeholder='Enter your email' />
           <input type="password" placeholder='Enter your password' />
-          <input type="submit" value="Login" />
-          <span>Forgot your password?</span>
+          <input type="submit" value="REQUEST ACCOUNT" />
+          <span>Already have an Account?</span>
         </form>
         <span></span>
       </div>
