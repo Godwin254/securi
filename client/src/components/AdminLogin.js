@@ -1,9 +1,9 @@
 import React from 'react'
-import '../styles/components/Admin.scss'
+import '../styles/components/AdminLogin.scss'
 
-function Admin() {
+function AdminLogin() {
   return (
-    <div className="Admin">
+    <div className="Admin-login">
         <h2>Section for Admin only</h2>
         <p>Provide password to login as the administrator.</p>
         <form>
@@ -14,4 +14,4 @@ function Admin() {
   )
 }
 
-export default Admin;
+export default AdminLogin;
