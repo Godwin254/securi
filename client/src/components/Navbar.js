@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
+import '../styles/components/Navbar.scss'
 
 //Navbar component
 const Navbar = ({ username }) => {
@@ -11,9 +12,9 @@ const Navbar = ({ username }) => {
             </div>
             <div className='links'>
                 <Link to='/home'>Home</Link>
-                <Link to='/notifications'>Notifications</Link>
+                <Link to='/notifications'>Notifications <span>{1}</span></Link>
                 <div className='user-profile'>
-                    <img src='img/' alt='User Profile' />
+                    <img src='assets/images/user1.jpg' alt='User Profile' width='100px'/>
                     <span>{username}</span>
                 </div>
             </div>
