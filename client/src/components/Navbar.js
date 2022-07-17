@@ -12,7 +12,7 @@ const Navbar = ({ username }) => {
             </div>
             <div className='links'>
                 <Link to='/home'>Home</Link>
-                <Link to='/notifications'>Notifications <span>{1}</span></Link>
+                <Link to='/notifications'>Notifications <span>{12}</span></Link>
                 <div className='user-profile'>
                     <img src='assets/images/user1.jpg' alt='User Profile' width='100px'/>
                     <span>{username}</span>
