@@ -1,42 +1,24 @@
 import React from 'react'
-import {Link, Route, Routes} from 'react-router-dom'
+import {Link, Route, Routes} from 'react-router-dom';
 import Login from './Login'
 import Register from './Register'
-import Navbar from './Navbar'
+import ResidentDashboard from './ResidentDashboard'
+
 
 function Resident() {
-  let isUser = true;
+  //control variables
+  let isUser = false; //not a registered user
+  let loggedIn = true; //user currently loggedIn
   return (
     <div>
       {
-        //isUser ? <Login /> : <Register />
+        loggedIn ? <ResidentDashboard /> :
+        isUser ? <Login /> : <Register />
       }
-      <ResidentDashboard />
+     
     </div>
    
   )
-}
-
-//resident dashboard
-const ResidentDashboard = () => {
-
-  return (
-    <div className="resident-dash">
-      <Navbar username = "John Doe" />
-
-      <Footer />
-    </div>
-  );
-}
-
-//footer component
-const Footer = () => {
-
-  return (
-    <div className='footer'>
-      <span>&copy; Copyright 2022 | brownscode</span>
-    </div>
-  );
 }
 
 export default Resident;
