@@ -39,8 +39,32 @@ const ResidentDashboard = () => {
                         
                     </div>
                     <div className='sectionB'>
-                        <h2>Your Users List ({2})</h2>
+                        <h2>Your Users List ({4})</h2>
                         <div className='users'>
+                            <div className='user'>
+                                <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
+                                <div>
+                                    <h5>Tina Doe</h5>
+                                    <h6>{1234657768}</h6>
+                                    <span>{"Relationship"}</span>
+                                </div>
+                                <div className='btns'>
+                                    <input type="button" value="Edit" />
+                                    <input type="button" value="Delete" />
+                                </div>
+                            </div>
+                            <div className='user'>
+                                <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
+                                <div>
+                                    <h5>Tina Doe</h5>
+                                    <h6>{1234657768}</h6>
+                                    <span>{"Relationship"}</span>
+                                </div>
+                                <div className='btns'>
+                                    <input type="button" value="Edit" />
+                                    <input type="button" value="Delete" />
+                                </div>
+                            </div>
                             <div className='user'>
                                 <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
                                 <div>
