@@ -4,7 +4,7 @@ import Login from './Login'
 import Register from './Register'
 
 function Resident() {
-  let isUser = false;
+  let isUser = true;
   return (
     <div>
       {
