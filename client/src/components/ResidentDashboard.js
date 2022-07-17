@@ -39,7 +39,7 @@ const ResidentDashboard = () => {
                         
                     </div>
                     <div className='sectionB'>
-                        <h2>Your Users List ({1})</h2>
+                        <h2>Your Users List ({2})</h2>
                         <div className='users'>
                             <div className='user'>
                                 <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />

@@ -9,6 +9,7 @@ const Navbar = ({ username }) => {
         <div className='navbar'>
             <div className='logo'>
                 <h2>Securi</h2>
+                <span>Estate Vehicle Access System</span>
             </div>
             <div className='links'>
                 <Link to='/home'>Home</Link>
