@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/components/Login.scss'
+import {Link} from 'react-router-dom';
 
 export default function () {
   return (
@@ -30,7 +31,7 @@ export default function () {
           <span>Forgot your password?</span>
         </form>
         <span></span>
-        <input type="button" value='Register Account' />
+        <Link to="/register-user"><input type="button" value='Register Account' /></Link>
       </div>
     </div>
   )
