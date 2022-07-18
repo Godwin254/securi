@@ -40,6 +40,8 @@ const ResidentDashboard = () => {
         }
     ];
 
+    console.log(users[0].image)
+
     return (
         <div className="resident-dash">
             <Navbar username="John Doe" />
@@ -77,6 +79,7 @@ const ResidentDashboard = () => {
                         <div className='users'>
                             {
                                 users.map( ({username, phone, relationship, image}) => (
+                                    
                                     <div className='user'>
                                         <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
                                         <div>
