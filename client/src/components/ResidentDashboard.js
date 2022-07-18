@@ -6,6 +6,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //resident dashboard
 const ResidentDashboard = () => {
 
+    const users = [
+        {
+            id: 1,
+            username: 'John Doe',
+            phone: +254712345578,
+            relationship: 'Cousin',
+            image: 'assets/ images / user1.jpg'
+        },
+        {
+            id: 2,
+            username: 'Tina Doe',
+            phone: +25471265338,
+            relationship: 'Daughter'
+        },
+        {
+            id: 3,
+            username: 'William Doe',
+            phone: +2547578745578,
+            relationship: 'Father'
+        },
+        {
+            id: 3,
+            username: 'William Doe',
+            phone: +2547578745578,
+            relationship: 'Father'
+        },
+         {
+            id: 3,
+            username: 'William Doe',
+            phone: +2547578745578,
+            relationship: 'Father'
+        }
+    ];
+
     return (
         <div className="resident-dash">
             <Navbar username="John Doe" />
@@ -39,56 +73,24 @@ const ResidentDashboard = () => {
                         
                     </div>
                     <div className='sectionB'>
-                        <h2>Your Users List ({4})</h2>
+                        <h2>Your Users List ({users.length})</h2>
                         <div className='users'>
-                            <div className='user'>
-                                <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
-                                <div>
-                                    <h5>Tina Doe</h5>
-                                    <h6>{1234657768}</h6>
-                                    <span>{"Relationship"}</span>
-                                </div>
-                                <div className='btns'>
-                                    <input type="button" value="Edit" />
-                                    <input type="button" value="Delete" />
-                                </div>
-                            </div>
-                            <div className='user'>
-                                <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
-                                <div>
-                                    <h5>Tina Doe</h5>
-                                    <h6>{1234657768}</h6>
-                                    <span>{"Relationship"}</span>
-                                </div>
-                                <div className='btns'>
-                                    <input type="button" value="Edit" />
-                                    <input type="button" value="Delete" />
-                                </div>
-                            </div>
-                            <div className='user'>
-                                <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
-                                <div>
-                                    <h5>Tina Doe</h5>
-                                    <h6>{1234657768}</h6>
-                                    <span>{"Relationship"}</span>
-                                </div>
-                                <div className='btns'>
-                                    <input type="button" value="Edit" />
-                                    <input type="button" value="Delete" />
-                                </div>
-                            </div>
-                            <div className='user'>
-                                <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
-                                <div>
-                                    <h5>Tina Doe</h5>
-                                    <h6>{1234657768}</h6>
-                                    <span>{"Relationship"}</span>
-                                </div>
-                                <div className='btns'>
-                                    <input type="button" value="Edit" />
-                                    <input type="button" value="Delete" />
-                                </div>
-                            </div>
+                            {
+                                users.map( ({username, phone, relationship, image}) => (
+                                    <div className='user'>
+                                        <img src='assets/images/user1.jpg' alt='User Profile' width='100px' />
+                                        <div>
+                                            <h5>{username}</h5>
+                                            <h6>{phone}</h6>
+                                            <span>{relationship}</span>
+                                        </div>
+                                        <div className='btns'>
+                                            <input type="button" value="Edit" />
+                                            <input type="button" value="Delete" />
+                                        </div>
+                                    </div>
+                                ))
+                            }
                         </div>
 
                     </div>
