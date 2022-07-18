@@ -4,7 +4,7 @@ import '../styles/components/Navbar.scss'
 
 //Navbar component
 const Navbar = ({ username }) => {
-
+    const isNotify = false;
     return (
         <div className='navbar'>
             <div className='logo'>
@@ -13,7 +13,7 @@ const Navbar = ({ username }) => {
             </div>
             <div className='links'>
                 <Link to='/home'>Home</Link>
-                <Link to='/notifications'>Notifications <span>{12}</span></Link>
+                <Link to='/notifications'>Notifications <span style={isNotify ? { display: "flex" } : { display: "none" }}>{12}</span></Link>
                 <div className='user-profile'>
                     <img src='assets/images/user1.jpg' alt='User Profile' width='100px'/>
                     <span>{username}</span>
