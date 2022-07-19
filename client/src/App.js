@@ -1,7 +1,7 @@
 import './styles/components/App.scss'
-import Home from './components/Home'
-import Admin from './components/Admin'
-import SecurityGuard from './components/SecurityGuard';
+import Home from './views/Home'
+import Admin from './views/Admin'
+import SecurityGuard from './views/SecurityGuard';
 import Resident from './components/Resident'
 import { Route, Routes, Link } from "react-router-dom";
 
