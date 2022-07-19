@@ -1,8 +1,8 @@
 import React from 'react'
 import {Link, Route, Routes} from 'react-router-dom';
-import Login from './Login'
-import Register from './Register'
-import ResidentDashboard from './ResidentDashboard'
+import Login from '../components/Login'
+import Register from '../components/Register'
+import ResidentDashboard from '../components/ResidentDashboard'
 
 
 function Resident() {
