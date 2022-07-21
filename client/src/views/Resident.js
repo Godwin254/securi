@@ -8,7 +8,7 @@ import ResidentDashboard from '../components/ResidentDashboard'
 function Resident() {
   //control variables
   let isUser = false; //not a registered user
-  let loggedIn = false; //user currently loggedIn
+  let loggedIn = true; //user currently loggedIn
   return (
     <div>
       {
