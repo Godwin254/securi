@@ -4,7 +4,7 @@ import '../styles/components/Navbar.scss'
 
 //Navbar component
 const Navbar = ({ username }) => {
-    const isNotify = false;
+    const isNotify = true;
     return (
         <div className='navbar'>
             <div className='logo'>

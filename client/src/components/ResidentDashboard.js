@@ -12,7 +12,18 @@ const ResidentDashboard = () => {
             username: 'John Doe',
             phone: +254712345578,
             relationship: 'Cousin',
-            image: 'assets/ images / user1.jpg'
+            image: 'assets/ images / user1.jpg',
+            password: 'qwerty',
+            fingerID: 12,
+            members: [
+                {
+                    id: 1,
+                    name: "John Doe",
+                    img: "some image",
+                    fingerID: '',
+                    relationship: 'Cousin',
+                }
+            ]
         },
         {
             id: 2,
