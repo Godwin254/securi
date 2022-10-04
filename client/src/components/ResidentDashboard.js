@@ -97,6 +97,9 @@ const ResidentDashboard = () => {
     );
 }
 
+//function to set server
+
+
 // user navigations
 const ManageUsers = ({users}) => {
 
