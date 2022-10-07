@@ -6,3 +6,4 @@ This is a final year undergrad project that is to be assessed on completion of t
 1. IOT (key components RFID & Optical Fingerprint)
 2. Reactjs (frontend)
 3. Nodejs + Express (backend)
+4. MongoDB
