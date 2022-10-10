@@ -1,15 +1,10 @@
 const bcrypt = require('bcrypt');
-const { getAllAdmins,
-        getAdmin,
-        createAdmin,
-        updateAdmin,
-        deleteAdmin 
-    } = require('../services/adminService');
+const adminService = require('../services/adminService');
 
 //get all admins
 const getAllAdmins = async (req, res) => {
     try{
-        const admins = await getAllAdmins();
+        const admins = await adminService.getAllAdmins();
         res.status(200).json(admins);
 
     }catch(err){
@@ -21,7 +16,7 @@ const getAllAdmins = async (req, res) => {
 const getAdmin = async (req, res) => {
     try{
         const { adminId } = req.params;
-        const admin = await getAdmin(adminId);
+        const admin = await adminService.getAdmin(adminId);
         res.status(200).json(admin);
     }catch(err){
         res.status(500).json({message: err.message});
@@ -37,7 +32,7 @@ const createAdmin = async (req, res) => {
             email: req.body.email,
             password: hashedPassword,
         }
-        const admin = await createAdmin(newAdmin);
+        const admin = await adminService.createAdmin(newAdmin);
         res.status(201).json(admin);
     }catch(err){
         res.status(500).json({message: err.message});
@@ -49,7 +44,7 @@ const updateAdmin = async (req, res) => {
     try{
         const { adminId } = req.params;
         const updatedAdmin = req.body;
-        const admin = await updateAdmin(adminId, updatedAdmin);
+        const admin = await adminService.updateAdmin(adminId, updatedAdmin);
         res.status(200).json(admin);
     }catch(err){
         res.status(500).json({message: err.message});
@@ -60,7 +55,7 @@ const updateAdmin = async (req, res) => {
 const deleteAdmin = async (req, res) => {
     try{
         const { adminId } = req.params;
-        const admin = await deleteAdmin(adminId);
+        const admin = await adminService.deleteAdmin(adminId);
         res.status(200).json({message: "Admin deleted successfully"});
     }catch(err){
         res.status(500).json({message: err.message});
