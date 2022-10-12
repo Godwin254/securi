@@ -1,23 +1,12 @@
-// entry point
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const path = require('path');
-const cors = require('cors');
+// entry point for the application
+const app = require('./server');
+
+const PORT = process.env.PORT || 8000;
 require('dotenv').config();
 
 
-//server config
-require('./server')
 //db config
 require('./models/conn');
 
-
-//middlewares
-app.use(bodyParser.json());
-
-//import routes
-const adminRoutes = require('./routes/adminRoutes');
-
-//route config
-app.use('/api/admins', adminRoutes);
+//status
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

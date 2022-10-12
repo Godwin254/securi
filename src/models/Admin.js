@@ -14,6 +14,15 @@ const admin = new adminSchema({
     role: {
         type: String,
         required: false
+    },
+    createAt: {
+        type: Date,
+        default: () => new Date().toLocaleDateString(),
+        immutable: true
+    },
+    updateAt: {
+        type: Date,
+        default: () => new Date().toLocaleDateString()
     }
 });
 

@@ -31,6 +31,7 @@ const createAdmin = async (req, res) => {
         const newAdmin = { 
             email: req.body.email,
             password: hashedPassword,
+            role: "admin"
         }
         const admin = await adminService.createAdmin(newAdmin);
         res.status(201).json(admin);
