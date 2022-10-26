@@ -23,6 +23,9 @@ const admin = new adminSchema({
     updateAt: {
         type: Date,
         default: () => new Date().toLocaleDateString()
+    },
+    token: {
+        type: String
     }
 });
 
