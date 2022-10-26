@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
+const auth = require('./middleware/auth');
 
 
 
@@ -13,14 +14,16 @@ app.use(cors());
 
 //import routes
 const adminRoutes = require('./routes/adminRoutes');
+const residentRoutes = require('./routes/residentRoutes');
 
 //route config
 app.use('/api/admins', adminRoutes);
+app.use('/api/residents', residentRoutes);
 
 
 
 //test server running
-app.get('/api', (req, res) => {
+app.get('/api',auth, (req, res) => {
     res.send("<h1>Dev server started</h1>")
 });
 

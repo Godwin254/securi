@@ -9,6 +9,14 @@ const getAllAdmins = async () => {
         throw err;
     }
 }
+const getAdminByEmail = async (email) => {
+    try{
+        const admin = await Admin.findOne({email: email});
+        return admin;
+    }catch(err){
+        throw err;
+    }
+}
 
 //get one admin
 const getAdmin = async (adminId) => {
@@ -54,6 +62,7 @@ const deleteAdmin = async (adminId) => {
 
 module.exports = {
     getAllAdmins,
+    getAdminByEmail,
     getAdmin,
     createAdmin,
     updateAdmin,

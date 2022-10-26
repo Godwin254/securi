@@ -6,6 +6,7 @@ const {
     getAllAdmins,
     getAdmin,
     createAdmin,
+    loginAdmin,
     updateAdmin,
     deleteAdmin
 } = require('../controllers/adminController');
@@ -16,6 +17,9 @@ router.get('/', getAllAdmins);
 router.get('/:adminId', getAdmin);
 //create a new admin
 router.post('/register', createAdmin);
+
+//admin login
+router.post('/login', loginAdmin);
 //update an admin
 router.patch('/:adminId', updateAdmin);
 //delete an admin
