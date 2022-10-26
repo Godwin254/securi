@@ -20,11 +20,14 @@ const residentRoutes = require('./routes/residentRoutes');
 app.use('/api/admins', adminRoutes);
 app.use('/api/residents', residentRoutes);
 
+//static files
+app.use('/', express.static(path.join(__dirname, '../client/build')));
 
 
 //test server running
 app.get('/api',auth, (req, res) => {
     res.send("<h1>Dev server started</h1>")
 });
+
 
 module.exports = app;
