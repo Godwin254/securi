@@ -2,9 +2,10 @@ import React from 'react';
 import { BsSignpostFill } from 'react-icons/bs';
 import { MdApproval } from 'react-icons/md';
 import { BiLogInCircle } from 'react-icons/bi';
-import { IoPersonAdd, IoNotificationsSharp } from 'react-icons/io5';
+import { IoPersonAdd, IoNotificationsSharp, IoFingerPrintOutline } from 'react-icons/io5';
 
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function Home() {
     const home1 = require('../images/home1.png');
@@ -84,12 +85,12 @@ function Home() {
 
                 <div className="section__about__content__card">
                     <div className="section__about__content__card__icon">
-                        <IoNotificationsSharp className='i' />
+                        <IoFingerPrintOutline className='i' />
                     </div>
                     <div className="section__about__content__card__text">
                         <h3>Register Fingerprint</h3>
                         <p>
-                            
+
                         </p>
                     </div>
                 </div>
@@ -109,7 +110,7 @@ function Home() {
             </div>
 
         </section>
-
+        <Footer />
     </div>
   )
 }
