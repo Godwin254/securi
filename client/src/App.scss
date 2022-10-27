@@ -1,0 +1,153 @@
+@use './styles/index.scss' as *;
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.App{
+    position: relative;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.Navbar{
+    border-bottom: 1px solid #ccc;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 10rem;
+    h1{
+        flex: 0 0 1;
+        margin-right: 50%;
+    }
+    a{
+        padding: 0 4rem;
+        text-decoration: none;
+        color: #000;
+        font-weight: 600;
+        font-size: 1rem;
+        &:last-child{
+            text-decoration: underline;
+            color: blueviolet;
+        }
+    }
+}
+
+.Footer{
+    height: 10vh;
+    background-color: rgb(216, 216, 216);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 15rem;
+    h1{
+        padding-right: 1rem;
+    }
+    &__links{
+        flex: 0 0 1;
+        margin-left: 40%;
+        a{
+            text-decoration: none;
+            color: rgb(32, 26, 26);
+            padding: 0 2rem
+        }
+    }
+
+}
+
+.homepage{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .header{
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 10rem;
+        &__left-view{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            h1{
+                font-size: 3rem;
+                padding: 2rem 0
+            }
+            p{
+                font-size: 1.2rem;
+                line-height: 1.9;
+            }
+            button{
+                margin: 2rem 0;
+                padding: 1rem 4rem;
+                font-weight: bold;
+                cursor: pointer;
+                border: none;
+                background-color: rgb(29, 22, 22);
+                color: #fff;
+            }
+        }
+        &__right-view{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 5rem 0;
+            img{
+                width: 700px
+            }
+        }
+    }
+
+    .section{
+        position: relative;
+        padding: 2rem 15rem;
+        &__about{
+            &__title{
+                text-align: center;
+                padding: 3rem 0;
+                font-size: 1.5rem;
+            }
+            &__content{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                margin: 0 auto;
+                grid-gap: 2rem;
+
+                &__card{
+                    border: 1px solid #ccc;
+                    height: 20vh;
+                    padding: 2rem 3rem;
+                    border-radius: 5px;
+                    transition: all .5s ease-in-out;
+
+                    &__icon{
+                        .i{
+                            font-size: 2rem;
+                        }
+                    }
+                    &__text{
+                        h3{
+                            font-size: 1.3rem;
+                            padding: 1rem 0;
+                        }
+                        p{
+                            font-size: 1.1rem;
+                        }
+                    }
+                     &:hover{
+                        transition: all .3s ease-in-out;
+                        transform: translate(-20px, -10px);
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+
+
