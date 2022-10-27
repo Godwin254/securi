@@ -1,9 +1,9 @@
-import './styles/components/App.scss'
-import Home from './views/Home'
-import Admin from './views/Admin'
-import SecurityGuard from './views/SecurityGuard';
-import Resident from './views/Resident'
+import React from 'react';
+import './App.scss'
 import { Route, Routes, Link } from "react-router-dom";
+import Footer from './components/Footer';
+
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -11,10 +11,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/security" element={<SecurityGuard />} />
-        <Route path="/resident" element={<Resident />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
