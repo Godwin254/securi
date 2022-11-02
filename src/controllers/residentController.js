@@ -47,14 +47,26 @@ const createResident = async (req, res) => {
         }
 
         const resident = await residentService.createResident(newResident);
-         //create tokens
+         //create tokens //token stores user info
         const token = jwt.sign({ 
+
+            //destructure resident info
+            //const {} = resident; //data to be included in the token (payload)
             resident_id: resident._id,
             email: req.body.email},
             process.env.JWT_TOKEN_SECRET,
-            { expiresIn: '2h' }
+            { expiresIn: '1d' },
+            (err, token) => {
+                if(err){
+                    res.status(500).json({message: err.message});
+                }
+
+                // send the token to the client
+                //res.status(201).json({token}); //send token to client is not a good practice
+
+            }
         );
-        //save resident token
+        //save resident token (example - remove later)
         resident.token = token;
         //resident
         res.status(201).json(resident);
@@ -74,17 +86,29 @@ const loginResident = async (req, res) => {
         //check if user exists
         const resident = await residentService.getResidentByEmail(req.body.email);
 
+        //check user exist
         if(!resident){
             res.status(400).json({ message: "Resident does not exist" });
         }
 
+        //validate if resident password is correct
         if(resident && (await bcrypt.compare(req.body.password, resident.password))){
+
+            //destructure resident
+            const { _id: id, email, password } = resident;
             //create tokens
-            const token = jwt.sign({ 
-                resident_id: resident._id,
-                email: req.body.email},
+            const token = jwt.sign(
+                { id,email,password},
                 process.env.JWT_TOKEN_SECRET,
-                { expiresIn: '2h' }
+                { expiresIn: '1d' },
+                (err, token) => {
+                    if(err){
+                        res.status(500).json({message: err.message});
+                    }
+
+                    // send the token to the client
+                    //res.status(201).json({token}); //send token to client is not a good practice
+                }
             );
 
             //save resident token
@@ -93,7 +117,8 @@ const loginResident = async (req, res) => {
             res.status(200).json(resident);
         }
 
-        res.status(400).json({ message: "Invalid credentials" });
+        //if user credentials are not correct
+        res.status(401).json({ message: "Invalid credentials" });
          
     }catch(err){
         res.status(500).json({message: err.message});
@@ -128,6 +153,7 @@ module.exports = {
     getAllResidents,
     getResident,
     createResident,
+    loginResident,
     updateResident,
     deleteResident
 }
