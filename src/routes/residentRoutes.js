@@ -6,6 +6,7 @@ const {
     getAllResidents,
     getResident,
     createResident,
+    loginResident,
     updateResident,
     deleteResident
 } = require('../controllers/residentController');
@@ -21,8 +22,8 @@ const {
 //resident routes
 router.get('/', getAllResidents);
 router.get('/:residentId', getResident);
-router.post('/', createResident); //register
-//router.post ('/login', loginResident);
+router.post('/register', createResident); //register
+router.post ('/login', loginResident);
 router.patch('/:residentId', updateResident);
 router.delete('/:residentId', deleteResident);
 

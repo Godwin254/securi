@@ -1,37 +1,37 @@
 import React, {useState} from 'react'
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import {useToken} from '../auth/useToken';
 
 function Admin() {
+    const [token, setToken] = useToken();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const API = "https://securi-app.herokuapp.com/api/admins/login"; 
+    
     const navigate = useNavigate();
 
-
-    const handleSubmit = (e) => {
+    const handleAdminLogin = async (e) => {
         e.preventDefault();
-        //perform login action
-        //validate inputs
         if(!(email && password)) {
             setError('Please enter all fields');
         }
         
-        /*send request to server
-        axios.post(API, {email, password})
-        .then(res => {
-            console.log(res);
+        const res = await axios.post('http://localhost:8000/api/admins/login', 
+        {
+            email,
+            password
+        });
 
-        })
-        .catch(err => {
-            console.log(err);
-            setError(err.message);
-        });*/
+        if(res.status !== 200){
+            setError('Server internal error')
+        }
 
-
+        //console.log(res)
+        const {token} = res.data;
+        setToken(token);
         //navgate to admin dashboard
-        navigate('/admin/dashboard');
+        navigate('/admin/requests');
         //clear inputs
         if (email && password) {
             setEmail('');
@@ -41,9 +41,16 @@ function Admin() {
 
     }
 
+    //handle logout
+    const handleAdminLogout = (e) => {
+        localStorage.removeItem('token');
+
+    }
+
   return (
     <div className='AdminPage'>
-        <form onSubmit={handleSubmit}>
+          {error && <span>{error}</span>}
+          <form onSubmit={handleAdminLogin}>
             <h3>Admin Login</h3>
             <input 
                 type='text' 
@@ -59,8 +66,11 @@ function Admin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
              />
-            <input type='submit' value="Login" />
-            <span>{error}</span>
+            <input 
+                type='submit' 
+                value="Login"
+                disabled={!email || !password}
+            />
         </form>
 
     </div>

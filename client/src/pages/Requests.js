@@ -2,36 +2,13 @@ import React from 'react'
 import Nav from '../components/AdminNav';
 import {useNavigate} from 'react-router-dom';
 
-function Requests() {
+function Requests({residents}) {
 
   const navigate = useNavigate();
-  const Requests = [
-    {
-      id: 1,
-      name: 'John Doe',
-      type: 'Visitor',
-      date: '2021-01-01',
-      status: 'Pending'
-    },
-    {
-      id: 2,
-      name: 'Janet Twain',
-      type: 'Visitor',
-      date: '2021-01-01',
-      status: 'Pending'
-    },
-    {
-      id:3,
-      name: 'Winstone',
-      type: 'Visitor',
-      date: '2021-01-01',
-      status: 'Pending'
-    },
-  ];
 
   return (
     <div className='Requests'>
-      <Nav count={Requests.length} />
+      <Nav count={residents.length} />
       <div className='Requests__content'>
         <h1>Requests</h1>
         <div className='Requests__content__table'>
@@ -39,27 +16,33 @@ function Requests() {
             <thead>
               <tr>
                 <th>Request ID</th>
-                <th>Request Type</th>
-                <th>Request Date</th>
-                <th>Request Status</th>
-                <th>Request Details</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>House No.</th>
+                <th>Vehicle No.</th>
+                <th>Request status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {
-                Requests.map((request) => {
-                  const {id, name, type, date, status} = request;
-                  return (
-                    <tr key={id}>
-                      <td>{id}</td>
-                      <td>{type}</td>
-                      <td>{date}</td>
-                      <td>{status}</td>
-                      <td>{name}</td>
-                      <button onClick={() => navigate(`/admin/dashboard/request/${name}`) }>View details</button>
-                    </tr>
-                  )
+                residents.map((resident, index) => {
+                  const {_id:id, firstName, lastName, email, houseNo, plateNo, status} = resident;
+
+                  if (status !== "approved"){
+                    return (
+                      <tr key={id}>
+                        <td>{index}</td>
+                        <td>{`${firstName} ${lastName}`}</td>
+                        <td>{email}</td>
+                        <td>{houseNo}</td>
+                        <td>{plateNo}</td>
+                        <td>{status}</td>
+                        <td onClick={() => navigate(`/admin/request/${id}`)}>View details</td>
+                      </tr>
+                    )
+                  }
+                  
                 })
               }
             </tbody>
