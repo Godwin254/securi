@@ -1,39 +1,31 @@
-import React from 'react'
+import React,{useState}  from 'react'
 import Nav from '../components/AdminNav';
 import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
-function Users() {
+function Users({residents}) {
     const navigate = useNavigate();
-    const Users = [
-        {
-            id: 1,
-            name: 'John Doe',
-            houseNo: 'A 507',
-            license: 'KCZ 300A',
-            status: 'Active'
-        },
-        {
-            id: 2,
-            name: 'John Doe',
-            houseNo: 'B 401',
-            license: 'KCZ 300A',
-            status: 'Active'
-        },
-        {
-            id: 3,
-            name: 'John Doe',
-            houseNo: 'C 201',
-            license: 'KCZ 300A',
-            status: 'Active'
-        },
-    ];
+    const [info, setInfo] = useState(false);
+    const [success, setSuccess] = useState('');
 
-    console.log(Users)
+    const handleDelete = async (e) => {
+        console.log(e.target.id);
+
+       const res =  await axios.delete(`http://localhost:8000/api/residents/${e.target.id}`);
+
+       //status 200
+       if (res.status === 200) {
+            navigate('/admin/manage-users');
+            setInfo(true);
+            setSuccess('User is deleted!');
+       }
+    }
 
     return (
         <div className='Requests'>
             <Nav />
             <div className='Requests__content'>
+                {info && <span> {success} </span>}
                 <h1>Manage Users</h1>
                 <div className='Requests__content__table'>
                     <table>
@@ -42,26 +34,32 @@ function Users() {
                                 <th>Resident ID</th>
                                 <th>Resident Name</th>
                                 <th>House No</th>
-                                <th>Request Status</th>
-                                <th>License No </th>
+                                <th>Vehicle</th>
+                                <th>Status</th>
+                                <th>Members</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                Users.map((user) => {
-                                    const { id, name, houseNo, license, status } = user;
-                                    return (
-                                        <tr key={id}>
-                                            <td>{id}</td>
-                                            <td>{name}</td>
-                                            <td>{houseNo}</td>
-                                            <td>{status}</td>
-                                            <td>{license}</td>
-                                            <button onClick={() => navigate(`/admin/dashboard/Edit/${name}`)}>Edit</button>
-                                            <button>Remove</button>
-                                        </tr>
-                                    )
+                                residents.map((resident, index) => {
+                                    const { _id: id, firstName, lastName, houseNo, plateNo, status } = resident;
+
+                                    if (status === "approved") {
+                                        return (
+                                            <tr key={id}>
+                                                <td>{index}</td>
+                                                <td>{`${firstName} ${lastName}`}</td>
+                                                <td>{houseNo}</td>
+                                                <td>{plateNo}</td>
+                                                <td>{status}</td>
+                                                <td onClick={ () => navigate(`/admin/edit-member/${id}`) }>View members</td>
+                                                <button onClick={() => navigate(`/admin/Edit/${id}`)}>Edit</button>
+                                                <button id={id} onClick={handleDelete}>Remove</button>
+                                            </tr>
+                                        )
+                                    }
+                                    
                                 })
                             }
                         </tbody>
@@ -76,5 +74,6 @@ function Users() {
         </div>
     )
 }
+
 
 export default Users
