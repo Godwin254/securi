@@ -39,7 +39,8 @@ const createAdmin = async (req, res) => {
             res.status(400).json({ message: "Admin already exists" });
         }
         //hash password
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
         const newAdmin = { 
             email: req.body.email.toLowerCase(),
@@ -50,22 +51,30 @@ const createAdmin = async (req, res) => {
         //create admin
         const admin = await adminService.createAdmin(newAdmin);
 
+        const {_id:id, email, role} = admin;
         //create tokens
-        const token = jwt.sign({ 
-            admin_id: admin._id,
-            email: req.body.email},
+        const token = jwt.sign(
+            { id, email, role},
             process.env.JWT_TOKEN_SECRET,
-            { expiresIn: '2h' }
+            { expiresIn: '1d' },
+            (err, token) => {
+                if(err){
+                    res.status(500).json({message: err.message})
+                }
+                // send the token to the client
+                //res.status(201).json({token}); //send token to client is not a good practice
+                //save admin tokens
+                admin.token = token;
+                //admin
+                res.status(201).json(admin);
+            }
         );
 
-        //save admin tokens
-        admin.token = token;
-        //admin
-        res.status(201).json(admin);
     }catch(err){
         res.status(500).json({message: err.message});
     }
 }
+
 
 //login admin
 const loginAdmin = async (req, res) => {
@@ -82,19 +91,28 @@ const loginAdmin = async (req, res) => {
             res.status(400).json({ message: "Admin does not exist" });
         }
 
-        if (admin && (await bcrypt.compare(req.body.password, admin.password))){
+        const { _id: id, email, role, password } = admin;
+        
+        if (admin && (await bcrypt.compare(req.body.password, password))){
             //create tokens
-            const token = jwt.sign({
-                admin_id: admin._id,
-                email: req.body.email},
+            const token = jwt.sign(
+                {id, email, role},
                 process.env.JWT_TOKEN_SECRET,
-                { expiresIn: '2h' }
+                { expiresIn: '1d' },
+                (err, token) => {
+                    if(err){
+                        res.status(500).json({message: err.message})
+                    }
+                    // send the token to the client
+                    //res.status(201).json({token}); //send token to client is not a good practice
+                    console.log(token);
+                    //save admin tokens
+                    admin.token = token;
+                }
             );
-
-            //save admin tokens
-            admin.token = token;
             //admin
             res.status(200).json(admin);
+
         }
 
         res.status(400).json({ message: "Invalid credentials" });
