@@ -21,10 +21,11 @@ function App() {
 
   //fetch residents data
   const fetchData = async () => {
-    const res = await axios.get('http://localhost:8000/api/residents');
+    const res = await axios.get('/api/residents');
     setResidents(res.data);
   }
 
+  
   useEffect(() => {
     fetchData();
   }, [residents]);
