@@ -17,7 +17,7 @@ function Admin() {
             setError('Please enter all fields');
         }
         
-        const res = await axios.post('http://localhost:8000/api/admins/login', 
+        const res = await axios.post('/api/admins/login', 
         {
             email,
             password

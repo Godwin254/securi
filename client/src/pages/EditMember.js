@@ -12,13 +12,13 @@ function EditMember() {
 
     //fetch one member that belongs to Resident
     const fetchMember = async () => {
-        const response = await axios.get(`http://localhost:8000/api/residents/${userId}/members/${memberId}`);
+        const response = await axios.get(`/api/residents/${userId}/members/${memberId}`);
         setMember(response.data);
         //console.log(response);
     }
     //fetch resident details from the database
     const fetchResident = async () => {
-        const response = await axios.get(`http://localhost:8000/api/residents/${userId}`);
+        const response = await axios.get(`/api/residents/${userId}`);
         setResident(response.data);
         //console.log(response);
     }

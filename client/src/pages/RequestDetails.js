@@ -14,7 +14,7 @@ function RequestDetails() {
 
     //fetch resident details from the database
     const fetchResident = async () => {
-        const response = await axios.get(`http://localhost:8000/api/residents/${id}`);
+        const response = await axios.get(`/api/residents/${id}`);
         setResident(response.data);
         //console.log(response);
     }
@@ -27,7 +27,7 @@ function RequestDetails() {
     //console.log("resident",resident);
     //console.log("members",members);
     const handleApprove = async () => {
-        const response = await axios.patch(`http://localhost:8000/api/residents/${id}`, {
+        const response = await axios.patch(`/api/residents/${id}`, {
             status: "approved"
         });
         setApproved(true);
