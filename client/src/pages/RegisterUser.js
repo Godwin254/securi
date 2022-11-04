@@ -22,6 +22,9 @@ function RegisterUser() {
 
     const navigate = useNavigate();
 
+    //image
+    const image = require('../images/test-img2.jpg')
+
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -48,22 +51,22 @@ function RegisterUser() {
 
   return (
     <div className="RegisterUser">
-        <div className="RegisterUser_left-container">
-            <img src="assets/images/car-pro1.jpg" width="300px" alt="background" />
-            <div className="overlay"></div>
-            <div className='content'>
-                <h1>Securi</h1>
+        <div className="RegisterUser__left-container">
+            <img src={image} width="300px" alt="background" />
+            <div className="RegisterUser__left-container__overlay"></div>
+            <div className='RegisterUser__left-container__content'>
+                <h1>New to SECURI APP?</h1>
                 <p>
                     Securi is a security system that allows you to
-                    monitor your home and business from anywhere in the world.
+                    monitor access to your vehicle from anywhere in the world.
                 </p>
             </div>
         </div>
-        <div className="RegisterUser_right-container">
-            <h2>New To Securi App?</h2>
-            <span>Request for account.</span>
-            <form>
-                <div className="RegisterUser__form-control">
+        <div className="RegisterUser__right-container">
+            <h2>Request for an account</h2>
+            <span>Error boundary shown here</span>
+              <form onSubmit={handleRegister}>
+                <div className="form-control">
                     <input 
                         type="text"
                         placeholder='First name'
@@ -77,7 +80,7 @@ function RegisterUser() {
                         onChange={(e) => setLastName(e.target.value)}
                     />
                 </div>
-                <div className="RegisterUser__form-control">
+                <div className="form-control">
                     <input
                         type="text"
                         placeholder='Mobile number'
@@ -91,7 +94,7 @@ function RegisterUser() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div className="RegisterUser__form-control">
+                <div className="form-control">
                     <input
                         type="text" 
                         placeholder='Gender'
@@ -105,7 +108,7 @@ function RegisterUser() {
                         onChange={(e) => setUserImg(e.target.value)}
                     />
                 </div>
-                <div className="RegisterUser__form-control">
+                <div className="form-control">
                     <input 
                         type="text" 
                         placeholder='Plate number'
@@ -119,7 +122,7 @@ function RegisterUser() {
                         onChange={(e) => setCarColor(e.target.value)}
                     />
                 </div>
-                <div className="RegisterUser__form-control">
+                <div className="form-control">
                     <input 
                         type="text" 
                         placeholder='House number'
@@ -133,7 +136,7 @@ function RegisterUser() {
                         onChange={(e) => setCarImage(e.target.value)} 
                     />
                 </div>
-                <div className="RegisterUser__form-control">
+                <div className="form-control">
                     <input
                         type="password"
                         placeholder='Create your password'
@@ -147,12 +150,11 @@ function RegisterUser() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                 </div>
-                <div className="RegisterUser__form-control">
+                <div className="form-control">
                     <input
-                        type="sumbit"
-                        value='Register'
+                        type="button"
+                        value='Finish registration'
                         disabled={true} 
-                        onClick={handleRegister}
                     />
                     <input
                         type="button"
