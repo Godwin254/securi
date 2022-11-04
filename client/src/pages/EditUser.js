@@ -14,20 +14,20 @@ function EditUser() {
 
     //fetch resident members from the database
     const fetchMembers = async () => {
-        const response = await axios.get(`http://localhost:8000/api/residents/${id}/members`);
+        const response = await axios.get(`/api/residents/${id}/members`);
         setMembers(response.data);
     }
 
     //fetch resident details from the database
     const fetchResident = async () => {
-        const response = await axios.get(`http://localhost:8000/api/residents/${id}`);
+        const response = await axios.get(`/api/residents/${id}`);
         setResident(response.data);
         //console.log(response);
     }
 
     const handleDetailsUpdate = async (e) => {
         e.preventDefault();
-        const response = await axios.patch(`http://localhost:8000/api/residents/${id}`, {
+        const response = await axios.patch(`/api/residents/${id}`, {
             fingerID,
             tagID
         });

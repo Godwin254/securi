@@ -11,7 +11,7 @@ function Users({residents}) {
     const handleDelete = async (e) => {
         console.log(e.target.id);
 
-       const res =  await axios.delete(`http://localhost:8000/api/residents/${e.target.id}`);
+       const res =  await axios.delete(`/api/residents/${e.target.id}`);
 
        //status 200
        if (res.status === 200) {
@@ -74,6 +74,7 @@ function Users({residents}) {
         </div>
     )
 }
+
 
 
 export default Users
