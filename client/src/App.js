@@ -12,6 +12,7 @@ import EditUser from './pages/EditUser';
 import RegisterUser from './pages/RegisterUser';
 import LoginUser from './pages/LoginUser';
 import EditMember from './pages/EditMember'; 
+import ErrorPage from './components/ErrorPage';
 import { ResidentProtectedRoutes } from './auth/ResidentProtectedRoutes';
 import { AdminProtectedRoutes } from './auth/AdminProtectedRoutes';
 import axios from 'axios';
@@ -25,7 +26,7 @@ function App() {
     setResidents(res.data);
   }
 
-  
+
   useEffect(() => {
     fetchData();
   }, [residents]);
@@ -57,7 +58,7 @@ function App() {
           <Route path="edit-member/:id/:memberId" element={<EditMember />} />
           <Route path="access-history" element={<AccessHistory />} />
         </Route>
-
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );
