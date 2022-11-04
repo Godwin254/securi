@@ -646,4 +646,104 @@
 .RegisterUser{
     position: relative;
     height: 100vh;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    &__left-container{
+        position: relative;
+        height: 100vh;
+        img{
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+        }
+        &__overlay{
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.623);
+        }
+        &__content{
+            position: relative;
+            display : flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: rgb(231, 231, 231);
+            height: 100vh;
+            h1{
+                font-size: 3rem;
+                padding: .5rem 0;
+            }
+            p{
+                font-size: 1.2rem;
+                padding: .5rem 0;
+                width: 50%;
+                text-align: center;
+                line-height: 1.9rem;
+            }
+         
+        }
+    }
+    &__right-container{
+        position: relative;
+        height: 100vh;
+        background-color: rgb(245, 245, 245);
+        padding: 5rem 3rem;
+        h2{
+            font-size: 2.5rem;
+            padding: 1.5rem 0;
+        }
+        span{
+            color: rgb(18, 82, 18);
+            background-color: none;
+            padding: .5rem .8rem;
+            border-left: 6px solid orange;
+        }
+
+        form{
+            padding: 2rem 0;
+            .form-control{
+                width: 80%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                margin-bottom: 1rem;
+                grid-column-gap: 1rem;
+                input{
+                    padding: .7rem 1rem;
+                    border: none;
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    font-size: 1.1rem;
+                }
+                &:last-child{
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: 2rem;
+                    input{
+                        padding: 1rem 1rem;
+                        border: none;
+                        background-color: rgb(29, 22, 22);
+                        color: #fff;
+                        border-radius: 3px;
+                        font-size: 1.1rem;
+                        margin-bottom: 1rem;
+                        cursor: pointer;
+                        &:last-child{
+                            background-color: rgb(245, 245, 245);
+                            color: rgb(29, 22, 22);
+                            font-weight: bold;
+                            cursor: pointer;
+                            border: 1px solid rgb(29, 22, 22);
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
 }
