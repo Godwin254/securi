@@ -13,6 +13,7 @@ import RegisterUser from './pages/RegisterUser';
 import LoginUser from './pages/LoginUser';
 import EditMember from './pages/EditMember'; 
 import ErrorPage from './components/ErrorPage';
+import UserNav from './components/UserNav';
 import { ResidentProtectedRoutes } from './auth/ResidentProtectedRoutes';
 import { AdminProtectedRoutes } from './auth/AdminProtectedRoutes';
 import axios from 'axios';
@@ -44,8 +45,10 @@ function App() {
         <Route path="/admin-login" element={<Admin />} />
         <Route path="/login" element={<LoginUser />} />
         <Route path="/register" element={<RegisterUser />} />
+        <Route path="/user-nav" element={<UserNav />} />
         {/*private routes */}
         <Route path="/resident" element={<ResidentProtectedRoutes />}>
+          <Route path="/resident" element={<Navigate replace to='manage-members' />} />
 
         </Route>
 
