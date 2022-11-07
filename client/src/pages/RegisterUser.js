@@ -154,7 +154,6 @@ function RegisterUser() {
                     <input
                         type="button"
                         value='Finish registration'
-                        disabled={true} 
                     />
                     <input
                         type="button"

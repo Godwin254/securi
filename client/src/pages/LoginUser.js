@@ -13,6 +13,9 @@ function LoginUser() {
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
+
+    //image
+    const image = require('../images/test-img1.jpg')
     //handle login
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -27,33 +30,35 @@ function LoginUser() {
         navigate('/resident');
     }
   return (
-    <div  className="LoginUser">
-        <div className="LoginUser_left-container">
-            <img src="assets/images/car-pro1.jpg" width="300px" alt="background" />
-            <div className="overlay"></div>
-            <div className='content'>
-                <h1>Securi</h1>
+    <div  className="RegisterUser">
+        <div className="RegisterUser__left-container">
+            <img src={image} width="300px" alt="background" />
+              <div className="RegisterUser__left-container__overlay"></div>
+              <div className='RegisterUser__left-container__content'>
+                <h1>Sign in and monitor your account</h1>
                 <p>
                     Securi is a security system that allows you to
-                    monitor your home and business from anywhere in the world.
+                    monitor access to your vehicle from anywhere in the world.
                 </p>
             </div>
         </div>
 
-        <div className="LoginUser_right-container">
-            <h2>Already Have An Account?</h2>
-            <span>Sign in to your account.</span>
+        <div className="RegisterUser__right-container">
+            <h2>Welcome back, Resident!</h2>
 
-            { error && <div className="LoginUser__right-container__errorMsg">{error}</div> }
+            <span>Hello error</span> 
 
-            <form>
-                <div className="LoginUser__form-control">
+            <form onSubmit={handleLogin}>
+                <div className="form-control">
+        
                     <input
-                        type="text" 
+                        type="text"
                         placeholder='Email address'
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                     />
+                </div>
+                <div className="form-control">
                     <input 
                         type="password" 
                         placeholder='Password'
@@ -61,20 +66,20 @@ function LoginUser() {
                         value={password}
                     />
                 </div>
-                <div className="LoginUser__form-control">
+                <div className="form-control login-buttons">
 
-                      <input
-                          type="button"
-                          value='Login'
-                          onClick={handleLogin}
-                          disabled={!email || !password}
-                      />
+                    <input
+                        type="button"
+                        value='Login'
+                        onClick={handleLogin}
+                        disabled={!email || !password}
+                    />
                     <Link to='/forgot-password'>Forgot Password?</Link>
                     <Link to='/register'>Dont have an account? Register</Link>
                 </div>
 
-                <div className='LoginUser__oath'>
-                    <span>Signin with:</span>
+                <div className='oath'>
+                    <p>Signin with:</p>
                     <FcGoogle className="i"/>
                     <GrFacebook className="i" />
 
