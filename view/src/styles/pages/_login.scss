@@ -1,0 +1,82 @@
+
+//alert pop
+.login{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+
+      &__alert{
+            
+            min-width: 20vw;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+
+            background-color: #fff;
+            box-shadow: 0 1px 10px #cccccc5e;
+
+            &__left{
+                  background-color: rgb(143, 143, 245);
+                  height: 100%;
+                  width: 50px;
+                  font-size: 1rem;
+                  border-radius: 5px 0 0 5px;
+
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+
+                  &__icon{
+                        font-size: 1.5rem;
+                        color: #f7f4f4;
+                  }
+            }
+
+            &__text{
+                  font-size: .9rem;
+                  padding: 0 1rem;
+            }
+
+
+      }
+
+      &__form{
+            border: 1px solid #cccccc65;
+            margin-top: 4rem;
+            box-shadow: 0 1px 10px #cccccc42;
+
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            border-radius: 5px;
+
+            &__control{
+                  display: flex;
+                  flex-direction: column;
+                  margin-bottom: 1rem;
+
+                  input{
+                        padding: 1rem;
+                        width: 350px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                  }
+
+                  input[type='button']{
+                        width: 100%;
+                        border: none;
+                        background-color: #0c131a;
+                        color: #fffc;
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        margin-bottom: 2rem;
+                  }
+
+                  a{
+                        font-size: 1rem;
+                  }
+            }
+      }
+}
