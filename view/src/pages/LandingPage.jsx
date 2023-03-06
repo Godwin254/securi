@@ -9,6 +9,8 @@ import {SiArduino, SiExpress, SiReact} from 'react-icons/si'
 import {AiFillTag} from 'react-icons/ai'
 import {FaNode} from 'react-icons/fa'
 
+import { useNavigate } from 'react-router-dom';
+
 
 import carParkedImg from '../assets/cars-parked.jpg'
 import fingerPrintImg from '../assets/fingerprint_header_sd.jpg'
@@ -20,6 +22,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 function LandingPage() {
+
+    const navigate = useNavigate();
   return (
     <div className='homepage'>
         <Navbar />
@@ -35,7 +39,7 @@ function LandingPage() {
                         <HiDocument className="header__left-view__controls__button__icon"/>
                         Documentation
                     </button>
-                    <button className='header__left-view__controls__button'>
+                    <button className='header__left-view__controls__button' onClick={ () => navigate('/auth/register')}>
                         Register
                         <BsArrowRight className="header__left-view__controls__button__icon"/>
                     </button>
