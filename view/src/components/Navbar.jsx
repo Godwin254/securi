@@ -34,12 +34,12 @@ const Navbar = () => {
 
     return (
         <nav className='navbar'>
-            <a to='/'>SECURI</a>
+            <a href='/'>SECURI</a>
 
-            <a to='/'>Home</a>
-            <a to='/about'>About Securi</a>
-            <a to='/circuits'>Circuits</a>
-            <a to='/diagrams'>Diagrams</a>
+            <a href='/'>Home</a>
+            <a href='/about'>About Securi</a>
+            <a href='/circuits'>Circuits</a>
+            <a href='/diagrams'>Diagrams</a>
 
 
             <div className="navbar__icons">
