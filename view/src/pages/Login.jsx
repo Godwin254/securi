@@ -12,18 +12,24 @@ import axios from 'axios'
 import {useToken} from '../auth/useToken'
 
 import Navbar from '../components/Navbar';
+import Alert from '../components/Alert'
 
 function Login() {
     const [token, setToken] = useToken();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [alert, setAlert] = useState("some alert message ");
+    const [alert, setAlert] = useState("");
 
     //const navigate = useNavigate();
 
     //handle login
     const handleLogin = async (e) => {
         e.preventDefault();
+
+        if (!email || !password){
+            setAlert("All inputs are required");
+            return;
+        }
 
         const res = await axios.post('api/residents/login', {
             email,
@@ -63,14 +69,7 @@ function Login() {
             <div  className="login">
 
                 {
-                    !alert ? (
-                        <div className="login__alert">
-                            <div className="login__alert__left">
-                                <MdOutlineErrorOutline className='login__alert__left__icon' />
-                            </div>
-                            <span className='login__alert__text'>{alert}</span> 
-                        </div>
-                    ) : null
+                    alert ? (<Alert text={alert}/>) : null
                 }
 
 
@@ -85,7 +84,7 @@ function Login() {
                     <div className="login__form__control">
 
                         <input
-                            type="text"
+                            type="email"
                             name='email'
                             placeholder='Email address'
                             onChange={handleInputChange}
@@ -104,10 +103,9 @@ function Login() {
                     <div className="login__form__control">
 
                         <input
-                            type="button"
-                            value='Login'
+                            type="submit"
+                            value='login'
                             onClick={handleLogin}
-                            disabled={!email || !password}
                         />
                         <a href='/auth/forgot-password'>Forgot Password?</a>
                         <a href='/auth/register'>Dont have an account? Register</a>
