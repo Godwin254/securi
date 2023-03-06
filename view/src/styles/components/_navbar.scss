@@ -72,3 +72,66 @@
             }
       }
 }
+
+
+//shared navbar
+
+.shared{
+      position: relative;
+      width: 100%;
+      background-color: #ffffff;
+      box-shadow: 0 1px 10px #ccccccc2;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 1rem 5rem;
+
+      &__title{
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+
+            &__icon{
+                  font-size: 2rem;
+                  margin-right: 1rem;
+                  cursor: pointer;
+            }
+
+      }
+
+      &__input{
+            flex: 0 0 1;
+            margin: 0 auto;
+            padding: .6rem 1rem;
+            width: 15vw;
+
+            border: 1px solid #ccc;
+            border-radius: 5rem;
+            outline: none;
+
+            &:focus{
+                  border: 1px solid #4d9be9;
+            }
+      }
+
+      &__icon{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+
+            .circle{
+                  background-color: #f6f6f6;
+                  width: 30px;
+                  height: 30px;
+                  border-radius: 5rem;
+            }
+
+            &__btn{
+                  font-size: 1.4rem;
+            }
+
+      }
+}
