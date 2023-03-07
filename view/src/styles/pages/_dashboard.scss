@@ -1,0 +1,101 @@
+@use '../mixins' as *;
+
+.dashboard{
+
+      @include grid-area-layout;
+
+      &__main{
+            padding: 2rem 3rem ;
+            background-color: #fff7f7;
+
+            &__panel1{
+                  border: 1px solid #ccc;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  padding: 1.2rem 1.5rem;
+                  background-color: #ffffff;
+                  
+                  border-radius: 5px;
+
+                  &__icon{
+                        margin-right: .3rem;
+                        font-size: 1.2rem;
+                  }
+
+                  &__title{
+                        font-size: 1rem;
+                        display: flex;
+                        align-items: flex-end;
+                        
+                  }
+
+                  &__text{
+                        margin-left: .5rem;
+                  }
+            }
+
+            &__panel2{
+                  border: 1px solid #cccccc60; 
+                  margin: 1.5rem 0;
+                  border-radius: 5px;
+                  background-color: #ffffff;
+
+                  display: grid;
+                  grid-template-columns: 2fr 1fr;
+                  gap: 2rem;
+
+                  &__left-view{
+                        padding: 1rem;
+
+                        &__table{
+                              border-collapse: collapse;
+                              width: 100%;
+                              td,th{
+                                    border: 1px solid #ddd;
+                                    padding: 8px;
+                                    text-align: left;
+                              }
+
+                              tr{
+                                    &:nth-child(even){
+                                          background-color: #f1f1f1;
+                                    }
+                              }
+                        }
+                  
+                  }
+
+                  &__right-view{
+                        padding: 1rem;
+                        &__title{
+                              margin-bottom: 1rem;
+                        }
+
+                        &__cards{
+                              display: grid;
+                              grid-template-columns: repeat(2, 1fr);
+                              gap: 1rem;
+
+                              &__card{
+                                    border: 1px solid #ccc;
+                                    height: 140px;
+                                    cursor: pointer;
+                                    border-radius: 5px;
+
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+
+                                    &__icon{
+                                          font-size: 2rem;
+                                          margin-bottom: .5rem;
+                                    }
+                              }
+                        }
+                  }
+
+            }
+      }
+}

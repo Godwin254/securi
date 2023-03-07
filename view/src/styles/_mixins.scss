@@ -22,3 +22,15 @@
 @mixin card(){
       
 }
+
+
+@mixin grid-area-layout{
+      display: grid;
+      width: 100%;
+      grid-template-areas: 
+      "sidebar nav "
+      "sidebar main"
+      "sidebar main";
+      grid-template-columns: 6vw 94vw;
+      grid-template-rows: 9vh 91vh;
+}
