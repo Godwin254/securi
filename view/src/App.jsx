@@ -9,6 +9,10 @@ import SharedNavbar from './components/SharedNavbar'
 import Sidebar from './components/SideNavigation'
 
 import Dashboard from './pages/client/Dashboard'
+import Members from './pages/client/Members'
+import Devices from './pages/client/Devices'
+import Access from './pages/client/Access'
+import Account from './pages/client/Account'
 
 import {Routes, Route} from 'react-router-dom'
 
@@ -21,7 +25,11 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/auth/login' element={<Login />} />
         <Route path='/auth/register' element={<Register />} />
-        <Route path='/nav' element={<Dashboard />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/members' element={<Members />} />
+        <Route path='/devices' element={<Devices />} />
+        <Route path='/access' element={<Access />} />
+        <Route path='/account' element={<Account />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </div>

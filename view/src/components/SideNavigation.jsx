@@ -17,7 +17,7 @@ function SideNavigation() {
             <span className="tooltip">Members</span>
            
       </a>
-      <a href="/Devices">
+      <a href="/devices">
             <RiDeviceFill className="icon"/>
             <span className="tooltip">Devices</span>
             
@@ -34,7 +34,7 @@ function SideNavigation() {
       </a>
 
       <div className="aside__controls">
-            <a href="/logout">
+            <a href="/auth/login">
                   <MdOutlineLogin className='aside__controls__icon icon' />
             </a>
 
