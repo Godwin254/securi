@@ -3,11 +3,11 @@ import { useState } from 'react';
 
 export const useToken = () => {
     const [token, setTokenkeInternal] = useState(() => {
-        return localStorage.getItem('token');
+        return localStorage.getItem('firebase-token');
     });
 
     const setToken = (newToken) => {
-        localStorage.setItem('token', newToken);
+        localStorage.setItem('firebase-token', newToken);
         setTokenkeInternal(newToken);
     }
 

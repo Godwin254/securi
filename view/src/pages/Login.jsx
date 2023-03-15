@@ -1,24 +1,27 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import {useNavigate, Link} from 'react-router-dom';
+
 import { FcGoogle } from "react-icons/fc"
 import {GrFacebook} from "react-icons/gr"
 import {MdOutlineErrorOutline, MdWarningAmber} from "react-icons/md"
 import {VscPass} from 'react-icons/vsc'
 
 
+//import { loginUser } from '../services/userService'
+import { useToken } from '../auth/useToken';
+import {auth} from '../firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import axios from 'axios'
-import {useToken} from '../auth/useToken'
 
 import Navbar from '../components/Navbar';
 import Alert from '../components/Alert'
 
 function Login() {
-    const [token, setToken] = useToken();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alert, setAlert] = useState("");
+    const {setToken} = useToken();
 
     //const navigate = useNavigate();
 
@@ -26,20 +29,31 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        if (!email || !password){
-            setAlert("All inputs are required");
-            return;
+        try{
+
+             
+            if (!email || !password){
+                setAlert("All inputs are required");
+                return;
+            }
+ 
+             
+            await signInWithEmailAndPassword(auth, email, password);
+            //const token = await auth.createCustomToken(uid);
+ 
+            const user = auth.currentUser;
+            const {token} = await user.getIdTokenResult()
+
+            //setToken(token);
+            console.table(token);
+
+        }catch(error){
+            console.log(error);
         }
 
-        const res = await axios.post('api/residents/login', {
-            email,
-            password
-        });
+           
 
-        const {token} = res.data;
-        setToken(token);
-
-        //check if user or admin
+        
         //navigate('/resident');
     }
 

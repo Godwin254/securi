@@ -2,7 +2,7 @@ const db = require('../config/db');
 const users = db.collection('users');
 const admin = require('firebase-admin');
 
-/* //Should be handled from the client side
+ //Should be handled from the client side
 exports.login = async (req, res) => {
 
       //firebase auth
@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
             console.error(error);
             res.status(500).send(error);
       }
-}*/
+}
 
 exports.signup = async (req, res) => {
 
