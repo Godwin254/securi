@@ -9,6 +9,6 @@ module.exports = (app) => {
             next();
       });
 
-      app.get('/auth/login', controller.loginUser);
-      app.post('/auth/signup', controller.createUser);
+      app.post('/auth/login', controller.login);
+      app.post('/auth/signup', controller.signup);
 }
