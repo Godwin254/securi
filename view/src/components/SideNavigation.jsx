@@ -1,17 +1,27 @@
 import React from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 
 import {MdOutlineLogin, MdSpaceDashboard, MdAccessTimeFilled, MdManageAccounts} from 'react-icons/md'
 import {HiUsers} from "react-icons/hi"
 import {RiDeviceFill} from "react-icons/ri"
 
+import { logoutUser } from '../services/userService'
 
 function SideNavigation() {
+
+      const navigate = useNavigate();
+
+      const handleLogout = () => {
+            logoutUser();
+            navigate('/auth/login');
+      }
+
   return (
     <aside className="aside">
-      <a href="/dashboard">
+      <Link to="/admin/dashboard">
             <MdSpaceDashboard className="icon"/>
             <span className="tooltip">Dashboard</span>
-      </a>
+      </Link>
       <a href="/members">
             <HiUsers className="icon"/>
             <span className="tooltip">Members</span>
@@ -34,8 +44,8 @@ function SideNavigation() {
       </a>
 
       <div className="aside__controls">
-            <a href="/auth/login">
-                  <MdOutlineLogin className='aside__controls__icon icon' />
+            <a href="">
+                  <MdOutlineLogin className='aside__controls__icon icon'  onClick={handleLogout}/>
             </a>
 
             <span>

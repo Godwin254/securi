@@ -8,10 +8,8 @@ import {MdOutlineErrorOutline, MdWarningAmber} from "react-icons/md"
 import {VscPass} from 'react-icons/vsc'
 
 
-//import { loginUser } from '../services/userService'
+import { loginUser, decodeAccessToken, userRole } from '../services/userService'
 import { useToken } from '../auth/useToken';
-import {auth} from '../firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth';
 
 
 import Navbar from '../components/Navbar';
@@ -21,40 +19,53 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alert, setAlert] = useState("");
-    const {setToken} = useToken();
+    const [,setToken] = useToken();
 
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
     //handle login
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        try{
+        if (!email || !password){
+            setAlert("All inputs are required");
+            return;
+        }
+        
+        const token = await loginUser({email, password});
 
-             
-            if (!email || !password){
-                setAlert("All inputs are required");
-                return;
-            }
- 
-             
-            await signInWithEmailAndPassword(auth, email, password);
-            //const token = await auth.createCustomToken(uid);
- 
-            const user = auth.currentUser;
-            const {token} = await user.getIdTokenResult()
-
-            //setToken(token);
-            console.table(token);
-
-        }catch(error){
-            console.log(error);
+        if(!token && token === undefined){
+            console.log("An error occured on login!")
+            setAlert("An error occured on login!")
+            return;
         }
 
-           
+        //console.log("Recieved Token:",token);
+        setToken(token);
+
+        //decode access token & identify user role
+        const {role} = await decodeAccessToken(token);
+
+        //console.log("Login", user)
+
+        //navigate to page depending on user role
+        setAlert("Login Success!!!")
+
+        if (role === "user"){
+            setTimeout(() => {
+                navigate('/user/dashboard');
+            },500)
+        }else if (role === "admin"){
+            setTimeout(() => {
+                navigate('/admin/dashboard');
+            },500)
+        }
+
+        //clear inputs
+        setEmail("");
+        setPassword("");
 
         
-        //navigate('/resident');
     }
 
     const handleInputChange = (e) => {

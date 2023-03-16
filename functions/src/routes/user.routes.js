@@ -1,5 +1,6 @@
 const controller = require('../controllers/user.controllers');
 const members = require('../controllers/members.controllers')
+const {authToken} = require('../middleware/authToken')
 
 module.exports = (app) => {
       app.use(function(req, res, next){
@@ -12,7 +13,7 @@ module.exports = (app) => {
 
       //user operations
       app.get('/users/', controller.allUsers);
-      app.get('/users/:id', controller.singleUser);
+      app.get('/users/:id',[authToken], controller.singleUser);
       app.patch('/users/:id', controller.updateUser);
       app.delete('/users/:id', controller.deleteUser);
 

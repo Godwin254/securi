@@ -6,7 +6,10 @@ exports.authToken = async (req, res, next) => {
                       req.query?.token ||
                       req.cookies?.token;
     
-        if (!token) throw new Error('No token found');
+        if (!token){
+          throw new Error('No token found');
+          return;
+        }
     
         // Verify the token and decode its contents
         const decodedToken = await admin.auth().verifyIdToken(token);
