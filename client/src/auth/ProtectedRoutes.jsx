@@ -7,3 +7,4 @@ export const ProtectedRoutes = ({ children }) => {
 
     return  user ? <Outlet /> : <Navigate to='/auth/login' />;
 }
+

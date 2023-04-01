@@ -4,7 +4,7 @@ import {AiOutlineUsergroupAdd} from 'react-icons/ai'
 import {CiSquareRemove} from 'react-icons/ci'
 
 
-const RegisterResidentForm = ({onsubmit}) => {
+const RegisterResidentForm = ({onsubmit, title, btnText}) => {
 
       const [image, setImage] = useState(null);
       const [previewUrl, setPreviewUrl] = useState(null);
@@ -43,8 +43,8 @@ const RegisterResidentForm = ({onsubmit}) => {
       }
 
       return (
-            <form className='box-bg-shadow' onSubmit={handleFormSubmit}>
-                  <h1 className='form-title'>Resident Account Setup</h1>
+            <form className='box-bg-shadow register-form' onSubmit={handleFormSubmit}>
+                  <h1 className='form-title'>{title}</h1>
                   <p className='form-subtitle'>
                         Welcome to our resident portal! We're excited to have you as part of our community. 
                         Please fill out the form below to set up your account.
@@ -156,7 +156,7 @@ const RegisterResidentForm = ({onsubmit}) => {
 
                   </div>
 
-                  <input type='submit' value='Save New Changes' />
+                  <input type='submit' value={btnText} />
             </form>
       )
 }

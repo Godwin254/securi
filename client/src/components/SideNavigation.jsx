@@ -7,7 +7,7 @@ import {RiDeviceFill} from "react-icons/ri"
 
 import { logoutUser } from '../services/ResidentServices'
 
-function SideNavigation() {
+function SideNavigation({links}) {
 
       const navigate = useNavigate();
 
@@ -19,30 +19,15 @@ function SideNavigation() {
 
   return (
     <aside className="aside">
-      <Link to="/app">
-            <MdSpaceDashboard className="icon"/>
-            <span className="tooltip">Dashboard</span>
-      </Link>
-      <Link to="/app/manage-residents">
-            <HiUsers className="icon"/>
-            <span className="tooltip">Members</span>
-           
-      </Link>
-      <Link to="/app/manage-devices">
-            <RiDeviceFill className="icon"/>
-            <span className="tooltip">Devices</span>
-            
-      </Link>
-      <Link to="/app/access-history">
-            <MdAccessTimeFilled className="icon"/>
-            <span className="tooltip">Access</span>
-            
-      </Link>
-      <Link to="/app/settings">
-            <MdManageAccounts className="icon" />
-            <span className="tooltip">Account</span>
-            
-      </Link>
+
+      {
+            links.map( (link, i) => (
+                  <Link key={i} to={link.url}>
+                        <link.icon className="icon"/>
+                        <span className="tooltip">{link.text}</span>
+                  </Link>   
+            ) )
+      }
 
       <div className="aside__controls">
             <Link to="">

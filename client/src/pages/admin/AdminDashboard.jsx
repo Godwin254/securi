@@ -5,12 +5,15 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
+import { AdminLinks } from '../../utils/utils'
 
 function AdminDashboard() {
   return (
     <div className="page-layout-grid">
       <SharedNavbar />
-      <SideNavigation />
+      <SideNavigation 
+            links={AdminLinks}
+      />
 
       <main className='main-content-space'>
             {

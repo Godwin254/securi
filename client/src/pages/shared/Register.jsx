@@ -22,7 +22,9 @@ function Register() {
       
       <div className="register">
             {
-                  !user === 'admin' ? <RegisterEstateForm onsubmit={handleFormSubmit} title='Register New Estate' btnText='Create New Estate'/> : <RegisterResidentForm onsubmit={handleFormSubmit}/>
+                  user === 'admin' ? 
+                        <RegisterEstateForm onsubmit={handleFormSubmit} title='Register New Estate' btnText='Create New Estate'/> : 
+                        <RegisterResidentForm onsubmit={handleFormSubmit} title='Resident Account Setup' btnText='Save New Changes'/>
             }
       </div>
 

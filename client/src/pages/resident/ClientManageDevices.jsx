@@ -5,14 +5,14 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
-import { AdminLinks } from '../../utils/utils'
+import { ClientLinks } from '../../utils/utils'
 
-function AdminManageDevices() {
+function ClientManageDevices() {
   return (
     <div className="page-layout-grid">
       <SharedNavbar />
-      <SideNavigation
-            links={AdminLinks} 
+      <SideNavigation 
+            links={ClientLinks}
       />
 
       <main className='main-content-space'>
@@ -41,4 +41,4 @@ function AdminManageDevices() {
   )
 }
 
-export default AdminManageDevices
+export default ClientManageDevices

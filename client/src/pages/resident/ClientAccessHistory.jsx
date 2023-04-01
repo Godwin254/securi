@@ -5,25 +5,25 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
-import { AdminLinks } from '../../utils/utils'
+import { ClientLinks } from '../../utils/utils'
 
-function AdminAccessHistory() {
+function ClientAccessHistory() {
   return (
     <div className="page-layout-grid">
       <SharedNavbar />
       <SideNavigation 
-        links={AdminLinks}
+        links={ClientLinks}
       />
 
       <main className='main-content-space'>
-        {
-          true  ? <AlertBox type='success' text='Welcome to home page' /> : null
-        }
-        <PageHeader title={"Access History"}/>
+            {
+                  true  ? <AlertBox type='success' text='Welcome to home page' /> : null
+            }
+            <PageHeader title={"Access History"}/>
 
-        <div className="container-no-grid">
-          <Table />
-        </div>
+            <div className="container-no-grid">
+                  <Table />
+            </div>
 
       </main>
 
@@ -31,4 +31,4 @@ function AdminAccessHistory() {
   )
 }
 
-export default AdminAccessHistory
+export default ClientAccessHistory

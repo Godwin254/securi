@@ -5,31 +5,37 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
-import { AdminLinks } from '../../utils/utils'
+import { ClientLinks } from '../../utils/utils'
 
-function AdminManageDevices() {
+function ClientDashboard() {
   return (
     <div className="page-layout-grid">
       <SharedNavbar />
-      <SideNavigation
-            links={AdminLinks} 
+      <SideNavigation 
+            links={ClientLinks}
       />
 
       <main className='main-content-space'>
             {
                   true  ? <AlertBox type='success' text='Welcome to home page' /> : null
             }
-            <PageHeader title={"Manage Devices"}/>
+            <PageHeader title={"Dashboard"}/>
 
             <div className='container'>
                   <Table />
 
                   <div className='controls'>
                         <div className="card">
-                              <h4>Fingerprints</h4>
+                              <h4>Residents</h4>
+                              <span>{"12"}</span>
                         </div>
                         <div className="card">
-                              <h4>Tags</h4>
+                              <h4>Devices</h4>
+                              <span>{"12"}</span>
+                        </div>
+                        <div className="card">
+                              <h4>Security</h4>
+                              <span>{"12"}</span>
                         </div>
                   </div>
 
@@ -41,4 +47,4 @@ function AdminManageDevices() {
   )
 }
 
-export default AdminManageDevices
+export default ClientDashboard
