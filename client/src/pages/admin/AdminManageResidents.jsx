@@ -5,7 +5,7 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
-import { AdminLinks } from '../../utils/utils'
+import { AdminLinks, residentTableHead } from '../../utils/utils'
 
 function AdminManageResidents() {
   return (
@@ -22,7 +22,9 @@ function AdminManageResidents() {
             <PageHeader title={"Manage Residents"}/>
 
             <div className='container'>
-                  <Table />
+                  <Table 
+                    theads={residentTableHead}
+                  />
 
                   <div className='controls'>
                         <div className="card">

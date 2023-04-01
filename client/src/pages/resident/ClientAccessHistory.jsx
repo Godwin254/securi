@@ -5,7 +5,7 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
-import { ClientLinks } from '../../utils/utils'
+import { ClientLinks, accessTableHead } from '../../utils/utils'
 
 function ClientAccessHistory() {
   return (
@@ -22,7 +22,9 @@ function ClientAccessHistory() {
             <PageHeader title={"Access History"}/>
 
             <div className="container-no-grid">
-                  <Table />
+                  <Table 
+                    heads={accessTableHead}
+                  />
             </div>
 
       </main>

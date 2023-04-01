@@ -1,17 +1,14 @@
 import React from 'react'
 import {AiOutlinePlus, AiFillDelete} from 'react-icons/ai'
 
-function Table() {
+function Table({theads}) {
   return (
       <table className='dashboard__main__panel2__left-view__table'>
             <thead>
                   <tr>
-                        <th>Name</th>
-                        <th>Car ID</th>
-                        <th>House No.</th>
-                        <th>Time</th>
-                        <th>Accessed By</th>
-                        <th>Actions</th>
+                        {
+                              theads.map((thead, i) =>  <th key={i}>{thead}</th> ) 
+                        }           
                   </tr>
             </thead>
             <tbody>

@@ -5,7 +5,7 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
-import { AdminLinks } from '../../utils/utils'
+import { AdminLinks, accessTableHead } from '../../utils/utils'
 
 function AdminDashboard() {
   return (
@@ -22,7 +22,9 @@ function AdminDashboard() {
             <PageHeader title={"Dashboard"}/>
 
             <div className='container'>
-                  <Table />
+                  <Table 
+                    theads={accessTableHead}
+                  />
 
                   <div className='controls'>
                         <div className="card">

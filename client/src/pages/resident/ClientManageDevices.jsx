@@ -5,7 +5,7 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
-import { ClientLinks } from '../../utils/utils'
+import { ClientLinks,deviceTableHead } from '../../utils/utils'
 
 function ClientManageDevices() {
   return (
@@ -22,7 +22,9 @@ function ClientManageDevices() {
             <PageHeader title={"Manage Devices"}/>
 
             <div className='container'>
-                  <Table />
+                  <Table 
+                    theads={deviceTableHead}
+                  />
 
                   <div className='controls'>
                         <div className="card">

@@ -5,7 +5,7 @@ import SideNavigation from '../../components/SideNavigation'
 import PageHeader from '../../components/PageHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
-import { AdminLinks } from '../../utils/utils'
+import { AdminLinks,accessTableHead } from '../../utils/utils'
 
 function AdminAccessHistory() {
   return (
@@ -22,7 +22,9 @@ function AdminAccessHistory() {
         <PageHeader title={"Access History"}/>
 
         <div className="container-no-grid">
-          <Table />
+          <Table 
+            theads={accessTableHead}
+          />
         </div>
 
       </main>
