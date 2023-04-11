@@ -2,7 +2,7 @@ const admin = require('firebase-admin');
 
 exports.authToken = async (req, res, next) => {
       try {
-        const token = req.headers.authorization?.split(' ')[1] ||
+        const token = req.headers.Authorization?.split(' ')[1] ||
                       req.query?.token ||
                       req.cookies?.token;
     
@@ -15,7 +15,7 @@ exports.authToken = async (req, res, next) => {
         const decodedToken = await admin.auth().verifyIdToken(token);
     
         // Set the user ID as a property on the request object for future use
-        req.userId = decodedToken.uid;
+        req.userId = decodedToken.userId;
     
         next();
       } catch (error) {

@@ -1,90 +1,47 @@
-// Importing db from dbConfig.js
-const db = require('../config/db');
 
-const members = db.collection('members');
+const MemberService = require("../services/member.service");
 
-exports.allMembers = (req, res) => {
+const memberService = new MemberService();
 
-      //get all inventory
-      members.get()
-            .then(snapshot => {
-                  const members = [];
-                  snapshot.forEach(doc => {
-                        const data = doc.data();
-                        inventory.push(data);
-                  });
-                  return res.status(200).json(members);
-            })
-            .catch(error => console.log(error));
+exports.allMembers = async (req, res) => {
 
+      try{
+            const members = await memberService.getAllMembers(req.userId)
+            res.status(200).send(members)
+
+      }catch(error){
+            console.error(error);
+            res.status(500).send(error.message);
+      }
 
 }
 
 exports.singleMember = (req, res) => {
 
-      //get single inventory
-      const id = req.params.mId;
-
-      members.doc(id).get()
-            .then(doc => {
-                  if (!doc.exists) {
-                        return res.status(404).json({ error: 'Member not found' });
-                  } else {
-                        return res.status(200).json(doc.data());
-                  }
-            })
-            .catch(error => console.log(error));
-
-
 }
 
-exports.createMember = (req, res) => {
+exports.createMember = async (req, res) => {
 
-      //create new inventory
-      const id = req.params.Id;
-      const data = {
-            userId: id,
-            ...req.body
-      };
+      try{
+            const {residentId} = req.params;
 
-      members.add(data)
-            .then(doc => {
-                  res.status(201).json({ message: `New member added with ID: ${doc.id}` });
-            })
-            .catch(error => {
-                  res.status(400).json({ error: 'Something went wrong' });
-                  console.log(error);
-            });
+            const data = { residentId, ...req.body};
+            const member = await memberService.createNewMember(residentId, data);
+            res.status(201).send(`Created New Member ${member.memberId} for Resident ${residentId}`)
+
+      }catch(error){
+            console.error(error);
+            res.status(500).send(error.message);
+      }
+
 }
 
 exports.updateMember = (req, res) => {
 
-      //update inventory
-      const id = req.params.id;
-      const data = req.body;
-
-      members.doc(id).update(data)
-            .then(() => {
-                  res.status(200).json({ message: `Member updated with ID: ${id}` });
-            })
-            .catch(error => {
-                  res.status(400).json({ error: 'Something went wrong' });
-                  console.log(error);
-            });
 
 }
 
 exports.deleteMember = (req, res) => {
       
-      //delete inventory
-      const id = req.params.id;
-
-      members.doc(id).delete()
-            .then(() => {
-                  res.status(200).json({ message: `Deleted member with ID: ${id}` });
-            })
-            .catch(error => {
-                  res.status(400).json({ error: 'Something went wrong' });
-                  console.log(error);
-            });
+ 
 }
