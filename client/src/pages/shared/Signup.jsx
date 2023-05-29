@@ -1,49 +1,51 @@
 import React from 'react'
-import {useState, useEffect} from 'react'
-import {useNavigate, Link} from 'react-router-dom';
-import { FcGoogle } from "react-icons/fc"
-import {GrFacebook} from "react-icons/gr"
-import {MdOutlineErrorOutline, MdWarningAmber} from "react-icons/md"
-import {VscPass} from 'react-icons/vsc'
+import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom';
 
 import Navbar from '../../components/Navbar';
 import AlertBox from '../../components/AlertBox';
+import { registerUser } from '../../services/AuthService'
 
 function Signup() {
 
       const [firstname, setFirstName] = useState('');
       const [lastname, setLastName] = useState('');
       const [email, setEmail] = useState('');
+      const [phone, setPhone] = useState('');
       const [password, setPassword] = useState('');
       const [confirmPassword, setConfirmPassword] = useState('');
       const [role, setRole] = useState('');
       const [alert, setAlert] = useState("");
 
-      //const navigate = useNavigate();
+      const navigate = useNavigate();
 
       //handle login
-      const createNewUser = async (e) => {
+      const handleRegisterUser = async (e) => {
             e.preventDefault();
 
-            if (!firstname || !lastname || !email || !password || !confirmPassword || !role){
+            if (!firstname || !lastname || !email || !phone || !password || !confirmPassword || !role){
                   setAlert({type: 'warning', text: "All inputs are required"});
                   return;
             }
-
-           if(password !== confirmPassword){
-                  setAlert({type: 'warning', text: "Ensure passwords are similar!"})
+            if(password !== confirmPassword){
+                  setAlert({type: 'warning', text: "Passwords do not much!"})
                   return;
-           }
+            }
+            const userData = {
+                  firstname, lastname, email,
+                  phone, role, password
+            }
 
-            const res = await axios.post('api/auth/register', {
-                  firstname,
-                  lastname,
-                  email,
-                  password,
-                  role
-            });
-            //check if user or admin
-            //navigate('/resident');
+            const {error} = await registerUser(userData)
+
+            if(error){
+                  setAlert({ type: 'error', text:"An error occured on login!"});
+                  return;
+            }
+            setAlert({ type: 'success', text:"Registration successful!"})
+            setTimeout(() => {
+                  navigate('/auth/login');
+            },3000)
       }
 
       
@@ -60,6 +62,9 @@ function Signup() {
                         break;
                   case "email":
                         setEmail(value);
+                        break;
+                  case "phone":
+                        setPhone(value);
                         break;
                   case "password":
                         setPassword(value);
@@ -91,7 +96,7 @@ function Signup() {
                   }
 
 
-                  <form onSubmit={createNewUser} className="login__form box-bg-shadow">
+                  <form onSubmit={handleRegisterUser} className="login__form box-bg-shadow">
 
                         <h1 className="login__form__title">
                               Create Account
@@ -128,6 +133,15 @@ function Signup() {
                                     placeholder='Email address'
                                     onChange={handleInputChange}
                                     value={email}
+                              />
+                        </div>                        
+                        <div className="login__form__control">
+                              <input
+                                    type="text"
+                                    name='phone'
+                                    placeholder='Phone number'
+                                    onChange={handleInputChange}
+                                    value={phone}
                               />
                         </div>
                         <div className="login__form__control">

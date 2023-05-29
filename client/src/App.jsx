@@ -43,11 +43,14 @@ function App() {
         <Route path='/auth/signup' element={<Signup />} />
         <Route path='/app/:uid/register' element={<Register />} />
 
-        <Route path='/app/admin' element={<AdminDashboard />} />
-        <Route path='/app/admin/manage-residents' element={<AdminManageResidents />} />
-        <Route path='/app/admin/manage-devices' element={<AdminManageDevices />} />
-        <Route path='/app/admin/access-history' element={<AdminAccessHistory />} />
-        <Route path='/app/admin/settings' element={<AdminSettings />} />
+        <Route path='/app/admin' element={<ProtectedRoutes />} >
+          <Route path="/app/admin" element={<Navigate replace to='dashboard' />} />
+          <Route path='/app/admin/dashboard' element={<AdminDashboard />} />
+          <Route path='/app/admin/manage-residents' element={<AdminManageResidents />} />
+          <Route path='/app/admin/manage-devices' element={<AdminManageDevices />} />
+          <Route path='/app/admin/access-history' element={<AdminAccessHistory />} />
+          <Route path='/app/admin/settings' element={<AdminSettings />} />
+        </Route>
 
         <Route path='/app/:estateId/guard/:sessionId' element={<GuardMainPage />} />
         
@@ -58,14 +61,8 @@ function App() {
         <Route path='/app/resident/settings' element={<ClientSettings />} />
 
         {
-          /**
-           *  <Route path='/app/admin' element={<ProtectedRoutes />} >
-          <Route path='/app' element={<AdminDashboard />} />
-          <Route path='/app/manage-residents' element={<AdminManageResidents />} />
-          <Route path='/app/manage-devices' element={<AdminManageDevices />} />
-          <Route path='/app/access-history' element={<AdminAccessHistory />} />
-          <Route path='/app/settings' element={<AdminSettings />} />
-        </Route>
+        /**
+         * 
 
         <Route path='/app/resident' element={<ProtectedRoutes />} >
           <Route path='/app' element={<ClientDashboard />} />

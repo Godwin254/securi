@@ -8,7 +8,7 @@ import {MdOutlineErrorOutline, MdWarningAmber} from "react-icons/md"
 import {VscPass} from 'react-icons/vsc'
 
 
-import { loginUser, decodeAccessToken, userRole } from '../../services/ResidentServices'
+import { loginUser } from '../../services/AuthService';
 import { useToken } from '../../auth/useToken';
 
 import Navbar from '../../components/Navbar';
@@ -31,28 +31,26 @@ function Login() {
             return;
         }
         
-        const token = await loginUser({email, password});
+        const {role, token} = await loginUser({email, password});
 
-        if(!token && token === undefined){
+        
+        if(!token && error){
             setAlert({ type: 'error', text:"An error occured on login!"})
-            navigate('/app');
             return;
         }
 
         setToken(token);
-
-        const {role} = await decodeAccessToken(token);
-
         setAlert({ type: 'success', text:"Login Success!!!"})
 
+        
         if (role === "user"){
             setTimeout(() => {
-                navigate('/user/dashboard');
-            },500)
+                navigate('/app/resident/dashboard');
+            },1000)
         }else if (role === "admin"){
             setTimeout(() => {
-                navigate('/admin/dashboard');
-            },500)
+                navigate('/app/admin/dashboard');
+            },1000)
         }
 
         //clear inputs

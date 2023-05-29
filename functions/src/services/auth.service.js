@@ -4,28 +4,29 @@ const db = require('../config/db');
 
 
 class AuthService {
-  constructor(secretKey) {
-    this.secretKey = secretKey;
+  //fields
+
+  constructor() {
+    this.secretKey = process.env.SECRET_KEY;
     this.usersCollection = db.collection('users');
   }
 
-  async registerUser(firstname, lastname, email, role, password) {
+  async registerUser(firstname, lastname, email,phone , role, password) {
     const querySnapshot = await this.usersCollection.where('email', '==', email).get();
+
     if (!querySnapshot.empty) {
-      throw new Error('Email is already registered');
-      return;
+      throw new Error('Email is already registered!');
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await this.#hashpassword(password)
 
     const userRef = this.usersCollection.doc();
     const user = {
-      userId: userRef.id,
       firstname,
       lastname,
-      role,
       email,
+      phone,
+      role,
       password: hashedPassword,
       createdAt: new Date().toDateString()
     };
@@ -33,33 +34,33 @@ class AuthService {
     await userRef.set(user);
     return user;
   }
+  //hash password utility
+  async #hashpassword (password) {
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, salt);
+  }
 
   async loginUser(email, password) {
     const querySnapshot = await this.usersCollection.where('email', '==', email).get();
-    if (querySnapshot.empty) {
-      throw new Error('Invalid email or password');
-    }
 
-    const userDoc = querySnapshot.docs[0];
-    const user = userDoc.data();
+    if (querySnapshot.empty) throw new Error('User does not exist!');
+    
+    const {firstname, lastname, role, password:pwd} =  querySnapshot.docs[0].data();
+    const isMatch = await bcrypt.compare(password, pwd);
+    if (!isMatch) throw new Error('Invalid password!');
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      throw new Error('Invalid email or password');
-    }
-
-    const token = jwt.sign({ userId: user.id }, this.secretKey, { expiresIn: '1h' });
-    return { user, token };
+    const token = jwt.sign({ userId: querySnapshot.docs[0].id }, this.secretKey, { expiresIn: '1h' });
+    return { firstname, lastname, role, token };
   }
 
   async verifyToken(token) {
     try {
       const decoded = jwt.verify(token, this.secretKey);
-      const userDoc = await this.usersCollection.doc(decoded.id).get();
+      const userDoc = await this.usersCollection.doc(decoded.userId).get();
       const user = userDoc.data();
-      if (!user) {
-        throw new Error('Invalid token');
-      }
+
+      if (!user) throw new Error('Invalid token');
+      
       return user;
     } catch (error) {
       throw new Error('Invalid token');
