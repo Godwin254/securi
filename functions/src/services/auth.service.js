@@ -12,23 +12,26 @@ class AuthService {
   }
 
   async registerUser(firstname, lastname, email,phone , role, password) {
-    const querySnapshot = await this.usersCollection.where('email', '==', email).get();
+    const querySnapshot = await this.usersCollection
+      .where('email', '==', email)
+      .get();
 
-    if (!querySnapshot.empty) {
-      throw new Error('Email is already registered!');
-    }
+    if (!querySnapshot.empty) throw new Error('Email is already registered!');
 
     const hashedPassword = await this.#hashpassword(password)
 
     const userRef = this.usersCollection.doc();
+
     const user = {
+      uid: userRef.id,
       firstname,
       lastname,
       email,
       phone,
       role,
       password: hashedPassword,
-      createdAt: new Date().toDateString()
+      createdAt: new Date().toDateString(),
+      deleted: false
     };
 
     await userRef.set(user);

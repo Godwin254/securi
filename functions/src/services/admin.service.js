@@ -1,105 +1,137 @@
 const db = require('../config/db');
+const EstateService = require('./estate.service');
+
+// require estate service
+//require resident service
+//require guard service
+
+
+/**
+ * Update admin details
+ * soft delete residents and guards
+ * update residents and guard details
+ * Create estate
+ * update estate configuration
+ * delete estates
+ *  */ 
 
 class AdminService{
-      constructor(adminId){
-            this.estateService = new EstateService(adminId)
-            this.adminsCollection = db.collection('users')
-      }
+  constructor(){
+    this.estateService = new EstateService()
+    this.usersCollection = db.collection('users')
+  }
 
-      async getAllAdmins(){
-            const adminQuerySnapshot = await this.usersCollection.where('role', '==', 'admin').get();
-            const adminDocs = adminQuerySnapshot.docs;
-        
-            const admins = [];
-            for (const adminDoc of adminDocs) {
-              const adminData = adminDoc.data();
-              const estate = await this.estateService.getEstateByAdmin(adminDoc.id);
 
-              admins.push({
-                id: adminDoc.id,
-                email: adminData.email,
-                estate: estate,
-              });
-            }
-        
-            return admins;
-      }
+  //admin operations
+  async getAllAdmins(){
+    const admins = [];
+    const querySnapshot = await this.usersCollection
+      .where('role', '==', 'admin')
+      .where('deleted', '==', false)
+      .get();
+    
+    if(querySnapshot.empty) throw new Error('No Admins available!');
 
-      async getAdmin(){
-            const adminDoc = await this.usersCollection.doc(adminId).get();
+    querySnapshot.docs
+      .map(adminDoc => {
+        const adminData = adminDoc.data();
 
-            if (!adminDoc.exists || adminDoc.data().role !== 'admin') {
-              return null;
-            }
-        
-            const adminData = adminDoc.data();
-            const estate = await this.estateService.getEstateByAdmin(adminId);
-        
-            return {
-              id: adminDoc.id,
-              email: adminData.email,
-              estate: estate,
-            };
-      }
+        admins.push({...adminData})
+      })
+    
+    return admins;
+  }
 
-      //created during signup
-      async createNewUser(data){
 
-      }
+  async getAdminData (adminId){
+    const querySnapshot = await this.usersCollection
+      .where('uid', '==', adminId )
+      .where('role', '==', 'admin')
+      .where('deleted', '==', false)
+      .get();
+    
+    if (querySnapshot.empty) throw new Error('Admin not found!');
+    const estateData = await this.estateService.getEstateConfig(querySnapshot.docs[0].id)
+    const estate = estateData.deleted ? {} : estateData
+    const admin = {
+      ...querySnapshot.docs[0].data(),
+      estate
+    };
 
-      async updateAdminData(data){
-            const adminDoc = await this.usersCollection.doc(data.id).get();
+    return admin;
+  }
 
-            if (!adminDoc.exists || adminDoc.data().role !== 'admin') {
-              return false;
-            }
-        
-            await this.usersCollection.doc(data.id).update(data);
-        
-            const updatedAdminDoc = await this.usersCollection.doc(data.id).get();
-            const updatedAdminData = updatedAdminDoc.data();
-            const estate = await this.estateService.getEstateByAdmin(data.id);
-        
-            return {
-              id: updatedAdminDoc.id,
-              email: updatedAdminData.email,
-              estate: estate,
-            };
-      }
 
-      async deleteAdminData(){
-            const adminDoc = await this.usersCollection.doc(adminId).get();
 
-            if (!adminDoc.exists || adminDoc.data().role !== 'admin') {
-              return false;
-            }
-        
-            const estate = await this.estateService.getEstateByAdmin(adminId);
-            if (estate) {
-              await this.estateService.deleteEstate(estate.id);
-            }
-        
-            await this.usersCollection.doc(adminId).delete();
-        
-            return {message: 'User deleted!'};
-      }
+  async updateAdminData(newAdminData, adminId){
+    const querySnapshot = await this.usersCollection
+      .where('id', '==', adminId)
+      .where('role', '==', 'admin')
+      .where('deleted', '==', false)
+      .get()
+    
+    if(querySnapshot.empty) throw new Error('No admin found with the ID')
 
-      async createNewEstate() {
-            const adminDoc = await this.usersCollection.doc(adminId).get();
+    
+    return await querySnapshot.docs[0].ref.update(newAdminData)
+  }
 
-            if (!adminDoc.exists || adminDoc.data().role !== 'admin') {
-              return false;
-            }
-        
-            const newEstate = await this.estateService.createEstate(estateData);
-        
-            await this.usersCollection.doc(adminId).update({
-              estate: newEstate.id,
-            });
-        
-            return newEstate;
+  async deleteAdminData(adminId){
+      //soft delete
+    const querySnapshot = await this.usersCollection
+      .where('id', '==', adminId )
+      .where('role', '==', 'admin')
+      .where('deleted', '==', false)
+      .get();
+    
+    if(querySnapshot.empty) throw new Error('No Admin found with the ID')
 
-      }
+    return await querySnapshot.docs[0].ref.update({deleted: true}) //soft delete
+  }  
+  
+  async deleteAdminDataPermanently(adminId){
+      //Hard delete
+    const querySnapshot = await this.usersCollection
+      .where('id', '==', adminId )
+      .where('role', '==', 'admin')
+      .where('deleted', '==', false)
+      .get();
+    
+    if(querySnapshot.empty) throw new Error('No Admin found with the ID')
+
+    return await querySnapshot.docs[0].ref.delete();
+
+  }
+
+  //estate operations done by admin
+  async createNewEstate(adminId, newEstateData) {
+    const querySnapshot = await this.usersCollection
+      .where('uid', '==', adminId )
+      .where('role', '==', 'admin')
+      .where('deleted', '==', false)
+      .get();
+
+    const newEstate = await this.estateService.createNewEstate(querySnapshot.docs[0].id, newEstateData)
+    return newEstate;
+  }
+  async updateEstate(adminId, updatedEstateData ) {
+    const querySnapshot = await this.usersCollection
+      .where('uid', '==', adminId )
+      .where('role', '==', 'admin')
+      .where('deleted', '==', false)
+      .get();
+    const updatedEstate = await this.estateService.updateEstateConfig(querySnapshot.docs[0].id, updatedEstateData);
+    return updatedEstate;
+  }
+  async deleteEstate(adminId) {
+    const querySnapshot = await this.usersCollection
+      .where('uid', '==', adminId )
+      .where('role', '==', 'admin')
+      .where('deleted', '==', false)
+      .get();
+    const deletedEstate = await this.estateService.deleteEstateConfig(querySnapshot.docs[0].id);
+    return deletedEstate;
+  }
 
 
 }

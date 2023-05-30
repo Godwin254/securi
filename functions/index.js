@@ -9,6 +9,7 @@ app.use(express.json());
 
 //import routes
 require("./src/routes/auth.routes")(app);
+require("./src/routes/admin.routes")(app);
 require("./src/routes/resident.routes")(app);
 require("./src/routes/member.routes")(app);
 require("./src/routes/hardware.routes")(app);
