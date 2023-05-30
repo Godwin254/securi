@@ -2,61 +2,73 @@ const ResidentService = require('../services/resident.service')
 
 const residentService = new ResidentService()
 
-exports.allResidents = async (req, res) => {
-
-
+exports.getAllResidents = async (req, res) => {
       try{
-            const residents =  await residentService.getAllResidents()
+            const residents = await residentService.getAllResidents();
             return res.status(200).json(residents);
       }catch(error){
-            console.log(error)
-            res.status(500).send(error.message);
+            res.status(500).send(error);
       }
-
-
 }
 
-exports.singleResident = async (req, res) => {
-
-      //get single user
+exports.getResident = async (req, res) => {
       const {residentId} = req.params;
-
       try{
             const resident = await residentService.getOneResident(residentId)
-
+            return res.status(200).json(resident);
       }catch(error){
-            res.status(500).send(error.message);
+            res.status(500).send(error);
       }
-
-
 }
 
-exports.updateResident = (req, res) => {
-
-      //update inventory
-      const id = req.params.id;
-      const data = req.body;
-
-      users.doc(id).update(data)
-            .then(() => {
-                  res.status(200).json({ message: `User updated with ID: ${id}` });
-            })
-            .catch(error => {
-                  res.status(400).json({ error: 'Something went wrong' });
-                  console.log(error);
-            });
-
+exports.updateResident = async (req, res) => {
+      const {residentId} = req.params;
+      
+      try{
+            await residentService.updateResidentData(residentId, req.body)
+            return res.status(200).json('Resident updated succesfully!');
+      }catch(error){
+            res.status(500).send(error);
+      }
 }
 
 exports.deleteResident = async(req, res) => {
-      
       const {residentId} = req.params;
-
       try{
-            const deleted = await residentService.deleteResidentData(residentId);
-            res.status(200).send(`Resident ${deleted.id} deleted successfully!`)
+            await residentService.deleteResidentData(residentId)
+            res.status(204).send(`Resident deleted!`)
       }catch(error){
-            console.error(error)
-            res.status(500).send(error.message)
+            res.status(500).send(error)
+      }
+}
+
+
+//members operations
+exports.createMember = async (req, res) => {
+      const {residentId} = req.params;
+      try{
+            const member = await residentService.createNewMember(residentId, req.body)
+            res.status(201).send(member)
+      }catch(error){
+            res.status(500).send(error)
+      }
+}
+
+exports.updateMember = async (req, res) => {
+      const {residentId, memberId} = req.params;
+      try{
+            await residentService.updateMember(residentId, memberId, req.body);
+            res.status(200).send('Member updated successfully!')
+      }catch(error){
+            res.status(500).send(error)
+      }
+}
+exports.deleteMember = async (req, res) => {
+      const {residentId, memberId} = req.params;
+      try{
+            await residentService.deleteMember(residentId, memberId)
+            res.status(204).send('Member deleted!')
+      }catch(error){
+            res.status(500).send(error)
       }
 }

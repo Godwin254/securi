@@ -11,13 +11,15 @@ module.exports = (app) => {
       });
 
       //user operations
-      app.get('/residents/', controller.allResidents);
-      app.get('/residents/:residentId',[authToken], controller.singleResident);
-      app.patch('/residents/:residentId',[authToken], controller.updateResident);
-      app.delete('/residents/:residentId',[authToken], controller.deleteResident);
+      app.get('/residents/', controller.getAllResidents);
+      app.get('/residents/:residentId',  controller.getResident);
+      app.put('/residents/:residentId', controller.updateResident);
+      app.delete('/residents/:residentId', controller.deleteResident);
 
       //member operations
-      //app.post('/residents/:residentId/members', controller.singleUser);
+      app.post('/residents/:residentId/members', controller.createMember);
+      app.put('/residents/:residentId/members/:memberId', controller.updateMember);
+      app.delete('/residents/:residentId/members/:memberId', controller.deleteMember);
 
 
 }

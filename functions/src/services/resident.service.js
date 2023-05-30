@@ -1,90 +1,131 @@
 const db = require('../config/db');
-const EstateService = require('./estate.service');
+const EstateService = require('../services/estate.service')
 const MemberService = require('./member.service')
 
 class ResidentService{
       constructor(){
             this.memberService = new MemberService()
-            this.usersRef = db.collection('users')
+            this.estateService = new EstateService()
+            this.userCollection = db.collection('users')
       }
 
       async getAllResidents(){
             const residents = [];
-            const snapshot = await this.usersRef.where('role', '==', 'resident').get();
-            if (snapshot.empty) {
-                  return residents;
-            }
+            const querySnapshot = await this.userCollection
+                  .where('role', '==', 'user')
+                  .where('deleted', '==', false)
+                  .get();
+            
+            if (querySnapshot.empty) throw new Error('No Residents found!')
 
-            const residentPromises = snapshot.docs.map(async (doc) => {
-                  const resident = doc.data();
-                  const members = await this.memberService.getAllMembers(resident.id);
-                  
-                  return {
-                  ...resident,
-                  members: members,
-                  };
-            });
+            await Promise.all(
+                  querySnapshot.docs.map(
+                        async (residentDoc) => {
+                              const memberData = await this.memberService.getAllMembers(residentDoc.id)
+                              const members = memberData.length ? memberData : {};
 
-            residents.push(...await Promise.all(residentPromises));
+                              const residentData = {
+                                    ...residentDoc.data(),
+                                    members
+                              }
+                              residents.push(residentData)
+                        }
+                  )
+            )
             return residents;
       }
 
       async getOneResident(residentId){
-            const residentRef = this.usersRef.doc(residentId);
-            const residentDoc = await residentRef.get();
-            if (!residentDoc.exists || residentDoc.data().role !== 'resident') {
-              throw new Error('Resident not found');
+            const querySnapshot = await this.userCollection
+                  .where("uid", '==', residentId)
+                  .where('role', '==', 'user')
+                  .where('deleted', '==', false)
+                  .get()
+            
+            if (querySnapshot.empty) throw new Error('Resident not found!')
+
+            const membersData = await this.memberService.getAllMembers(querySnapshot.docs[0].id)
+            const estateData = await this.estateService.getUserEstateConfigs(querySnapshot.docs[0].id)
+            const estate = (typeof estateData === 'object' && Object.keys(estateData).length > 0 && !estateData.deleted)
+            ? estateData
+            : {};
+            const members = (typeof membersData === 'object' && Object.keys(membersData).length > 0)
+                  ? membersData
+                  : {};
+
+            const {estateName, location } = estate;
+            const resident = {
+                  ...querySnapshot.docs[0].data(),
+                  members,
+                  estate: {
+                        estateName,
+                        location
+                  }
             }
-        
-            const resident = residentDoc.data();
-            const members = await this.memberService.getAllMembers(resident.id);
-        
-            return {
-              ...resident,
-              members: members,
-            };
-      }
-      //created during signup
-      async createNewResident(data){
-
+            return resident;     
       }
 
-      async updateResidentData(residentId, data){
-            const residentRef = this.usersRef.doc(residentId);
-            const residentDoc = await residentRef.get();
-            if (!residentDoc.exists || residentDoc.data().role !== 'resident') {
-              throw new Error('Resident not found');
-            }
+      async updateResidentData(residentId, update){
+            const querySnapshot = await this.userCollection
+                  .where("uid", '==', residentId)
+                  .where('role', '==', 'user')
+                  .where('deleted', '==', false)
+                  .get()
+            
+            if (querySnapshot.empty) throw new Error('Resident not found!')
 
-            const members = await this.memberService.getAllMembers(residentId);
-        
-            const updatedRes = await residentRef.update(data);
-        
-            return {...updatedRes, members}
+            await querySnapshot.docs[0].ref.update(update)
+            const updatedResident = (await querySnapshot.docs[0].ref.get()).data();
+            console.log(updatedResident.estateId);
+            await this.estateService.assignResidentToEstate(updatedResident.estateId, residentId)
+            return updatedResident;
       }
 
       async deleteResidentData(residentId){
-            const residentRef = this.usersRef.doc(residentId);
-            const residentDoc = await residentRef.get();
-        
-            if (!residentDoc.exists || residentDoc.data().role !== 'resident') {
-              throw new Error('Resident not found');
-            }
-        
-            // Delete the resident document
-            await residentRef.delete();
-        
-            // Delete all members associated with this resident
-            const membersQuery = db.collection('members').where('residentId', '==', residentId);
-            const membersSnapshot = await membersQuery.get();
-            const batch = db.batch();
-            membersSnapshot.forEach((doc) => batch.delete(doc.ref));
-            await batch.commit();
-        
-            return {
-              id: residentDoc.id,
-              message: 'Resident and associated members deleted successfully',
-            };
+            //soft delete
+            const querySnapshot = await this.userCollection
+                  .where("uid", '==', residentId)
+                  .where('role', '==', 'user')
+                  .where('deleted', '==', false)
+                  .get()
+            
+            if (querySnapshot.empty) throw new Error('Resident not found!')
+
+            return await querySnapshot.docs[0].ref.update({deleted: true})
+      }
+
+
+      //member operation
+
+      async createNewMember(residentId, memberData){
+            const querySnapshot = await this.userCollection
+                  .where("uid", '==', residentId)
+                  .where('role', '==', 'user')
+                  .where('deleted', '==', false)
+                  .get()
+
+            return await this.memberService.createNewMember(querySnapshot.docs[0].id, memberData)
+
+      }
+
+      async updateMember(residentId, memberId, updatedData){
+            const querySnapshot = await this.userCollection
+                  .where("uid", '==', residentId)
+                  .where('role', '==', 'user')
+                  .where('deleted', '==', false)
+                  .get()
+
+            return await this.memberService.updateMemberData(querySnapshot.docs[0].id, memberId, updatedData)
+      }
+
+      async deleteMember(residentId, memberId){
+            const querySnapshot = await this.userCollection
+                  .where("uid", '==', residentId)
+                  .where('role', '==', 'user')
+                  .where('deleted', '==', false)
+                  .get()
+
+            return await this.memberService.deleteMember(querySnapshot.docs[0].id, memberId)
       }
 
 

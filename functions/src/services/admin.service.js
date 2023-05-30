@@ -52,7 +52,10 @@ class AdminService{
     
     if (querySnapshot.empty) throw new Error('Admin not found!');
     const estateData = await this.estateService.getEstateConfig(querySnapshot.docs[0].id)
-    const estate = estateData.deleted ? {} : estateData
+    
+    const estate = (typeof estateData === 'object' && Object.keys(estateData).length > 0 && !estateData.deleted)
+    ? estateData
+    : {};
     const admin = {
       ...querySnapshot.docs[0].data(),
       estate
@@ -72,7 +75,6 @@ class AdminService{
     
     if(querySnapshot.empty) throw new Error('No admin found with the ID')
 
-    
     return await querySnapshot.docs[0].ref.update(newAdminData)
   }
 

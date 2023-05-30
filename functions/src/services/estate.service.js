@@ -8,14 +8,52 @@ class EstateService{
       async getEstateConfig(userId){
             const querySnapshot = await this.estatesCollection
                   .where('owner', '==', userId)
+                  .where('deleted', '==', false)
                   .get();
             if(querySnapshot.empty) throw new Error('User not assigned to any estate')
             return querySnapshot.docs[0].data();
       }
 
+      async getUserEstateConfigs(userId) {
+            const querySnapshot = await this.estatesCollection
+              .where('deleted', '==', false)
+              .where('residentIds', 'array-contains', userId)
+              .get();
+          
+            if (querySnapshot.empty) throw new Error('User not assigned to any estate');
+          
+            return querySnapshot.docs[0].data();
+      }
+          
+
+      async assignResidentToEstate(estateId, residentId) {
+            if (!estateId) return;
+            const querySnapshot = await this.estatesCollection
+                  .where('estateId', '==', estateId)
+                  .where('deleted', '==', false)
+                  .get();
+            
+            if(querySnapshot.empty) throw new Error('Estate not found!');
+            
+            const residentIds = querySnapshot.docs[0].data().residentIds || [];
+            console.log(residentIds);
+            const updatedResidentIds = [
+              ...residentIds,
+              residentId
+            ];
+
+            await querySnapshot.docs[0].ref.update({ residentIds: updatedResidentIds });
+         
+            console.log('Residents assigned to the estate successfully!');
+      }
+          
+
+      //check is user is a member of estate
+
       async createNewEstate(adminId, newEstateData){
             const estateRef = this.estatesCollection.doc();
             const estateData = {
+                  estateId: estateRef.id,
                   owner: adminId, 
                   ...newEstateData,
                   createdAt: new Date().toDateString(),
@@ -45,7 +83,7 @@ class EstateService{
                   .get();
 
             if (querySnapshot.empty) throw new Error('No estate found under owner ID!')
-            
+
             return await querySnapshot.docs[0].ref.update({deleted: true});
 
       }
