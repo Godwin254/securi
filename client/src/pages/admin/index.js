@@ -1,0 +1,5 @@
+export * from './AdminAccessHistory'
+export * from './AdminDashboard'
+export * from './AdminManageDevices'
+export * from './AdminSettings'
+export * from './AdminManageResidents'

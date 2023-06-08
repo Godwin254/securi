@@ -2,10 +2,8 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 //footer component
-const Footer = () => {
-
+export const Footer = () => {
     const year = new Date().getFullYear()
-
     return (
         <footer className='footer'>
             <a href="/" className='footer__logo'>SECURI</a>
@@ -19,5 +17,3 @@ const Footer = () => {
         </footer>
     );
 }
-
-export default Footer;

@@ -4,9 +4,9 @@ import { MdPowerSettingsNew } from 'react-icons/md';
 import { FaUserTag, FaUserAlt, FaCarAlt } from 'react-icons/fa';
 import { IoFingerPrintOutline } from 'react-icons/io5';
 
-import AlertBox from '../../components/AlertBox';
+import { AlertBox } from '../../components';
 
-function GuardMainPage() {
+export function GuardMainPage() {
 
   const [alert, setAlert] = useState(null);
 
@@ -133,5 +133,3 @@ function GuardMainPage() {
     </div>
   );
 }
-
-export default GuardMainPage;

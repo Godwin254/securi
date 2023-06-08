@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import {MdOutlineLightMode, MdOutlineDarkMode, MdOutlineLogin} from 'react-icons/md';
 import {AiOutlineUser} from 'react-icons/ai'
 
 //Navbar component
-const Navbar = () => {
+export const Navbar = () => {
     const [mode, setMode] = useState(false);
     const [user, setUser] = useState(false)
 
@@ -16,8 +16,6 @@ const Navbar = () => {
     }
 
     const handleLogin = () => {
-
-
         setUser(true)
         navigate('/auth/login')
     }
@@ -26,20 +24,14 @@ const Navbar = () => {
         setMode(!mode)
     }
 
-    const darkTheme = {
-        color: "#ffff",
-        backgroundColor: "#000"
-    }
-
-
     return (
-        <nav className='navbar'>
-            <a href='/'>SECURI</a>
+        <nav className='flex flex-row items-center h-[10vh] shadow-md px-24'>
+            <Link to='/' className='text-3xl font-bold mr-10'>SECURI</Link>
 
-            <a href='/'>Home</a>
-            <a href='/about'>About Securi</a>
-            <a href='/circuits'>Circuits</a>
-            <a href='/diagrams'>Diagrams</a>
+            <Link to='/' className='mr-8'>Home</Link>
+            <Link to='/about' className='mr-8'>About</Link>
+            <Link to='/circuit' className='mr-8'>Circuits</Link>
+            <Link to='/system-design' className='mr-8'>System Design</Link>
 
 
             <div className="navbar__icons">
@@ -71,5 +63,3 @@ const Navbar = () => {
         </nav>
     )
 }
-
-export default Navbar;

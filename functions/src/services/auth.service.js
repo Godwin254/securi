@@ -48,12 +48,12 @@ class AuthService {
 
     if (querySnapshot.empty) throw new Error('User does not exist!');
     
-    const {firstname, lastname, role, password:pwd} =  querySnapshot.docs[0].data();
+    const {uid, firstname, lastname, role, password:pwd} =  querySnapshot.docs[0].data();
     const isMatch = await bcrypt.compare(password, pwd);
     if (!isMatch) throw new Error('Invalid password!');
 
     const token = jwt.sign({ userId: querySnapshot.docs[0].id }, this.secretKey, { expiresIn: '1h' });
-    return { firstname, lastname, role, token };
+    return { uid, firstname, lastname, role, token };
   }
 
   async verifyToken(token) {

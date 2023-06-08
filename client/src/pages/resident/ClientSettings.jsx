@@ -6,7 +6,7 @@ import AlertBox from '../../components/AlertBox'
 import RegisterResidentForm from '../../components/RegisterResidentForm'
 import { ClientLinks } from '../../utils/utils'
 
-function ClientSettings() {
+export function ClientSettings() {
   return (
     <div className="page-layout-grid">
       <SharedNavbar />
@@ -26,5 +26,3 @@ function ClientSettings() {
     </div>
   )
 }
-
-export default ClientSettings

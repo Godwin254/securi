@@ -1,20 +1,18 @@
 import React from 'react'
 import { BiMenu } from 'react-icons/bi'
 
-function PageHeader({title}) {
+export function DashboardHeader({title, date}) {
       return (
-            <div className="dashboard__main__panel1">
+            <div className="flex flex-row items-center border-2 border-ccc w-[80vw] mx-auto py-4 px-5 mt-8 rounded-md bg-white">
 
                   <BiMenu className="dashboard__main__panel1__icon" />
-                  <h5 className="dashboard__main__panel1__title">
+                  <h5 className="dashboard__main__panel1__title mx-3">
                         {title || null}
                   </h5>
                   <span className="dashboard__main__panel1__text info-tag2">
-                        Wed Mar 31 2023
+                        {date}
                   </span>
                   
             </div>
       )
 }
-
-export default PageHeader;

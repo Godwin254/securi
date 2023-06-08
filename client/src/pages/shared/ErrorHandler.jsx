@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
-function ErrorHandler() {
+export function ErrorHandler() {
 
     const navigate = useNavigate();
   return (
@@ -13,5 +13,3 @@ function ErrorHandler() {
     </div>
   )
 }
-
-export default ErrorHandler;

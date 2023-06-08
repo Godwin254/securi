@@ -1,5 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
+//icons
 import { BsSignpostFill, BsArrowRight } from 'react-icons/bs';
 import { MdApproval } from 'react-icons/md';
 import { BiLogInCircle } from 'react-icons/bi';
@@ -9,24 +11,20 @@ import {SiArduino, SiExpress, SiReact} from 'react-icons/si'
 import {AiFillTag} from 'react-icons/ai'
 import {FaNode} from 'react-icons/fa'
 
-import { useNavigate } from 'react-router-dom';
-
-
+//images
 import carParkedImg from '../../assets/cars-parked.jpg'
 import fingerPrintImg from '../../assets/fingerprint_header_sd.jpg'
 import rfidImg from '../../assets/rfid-card.png'
 import securityImg from '../../assets/security-guard.jpg'
 import heroImg from "../../assets/hero.svg";
 
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+//layouts
+import { WebLayout } from '../../layout/WebLayout';
 
-function LandingPage() {
-
+export function LandingPage() {
     const navigate = useNavigate();
   return (
-    <div className='homepage'>
-        <Navbar />
+    <WebLayout>
         <header className='header'>
             <div className='header__left-view'>
                 <h1 className='header__left-view__title'>Estate Vehicle Access Control System</h1>
@@ -202,9 +200,7 @@ function LandingPage() {
                 Contribute on Github
             </button>
         </section>
-        <Footer />
-    </div>
+
+    </WebLayout>
   )
 }
-
-export default LandingPage;

@@ -2,11 +2,11 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 
-import Navbar from '../../components/Navbar';
-import AlertBox from '../../components/AlertBox';
+import { AlertBox } from '../../components';
+import { WebLayout } from '../../layout/WebLayout';
 import { registerUser } from '../../services/AuthService'
 
-function Signup() {
+export function Signup() {
 
       const [firstname, setFirstName] = useState('');
       const [lastname, setLastName] = useState('');
@@ -87,104 +87,98 @@ function Signup() {
 
     return (
 
-      <>
-            <Navbar />
-            <div  className="login">
 
-                  {
-                        alert ? ( <AlertBox type={alert.type} text={alert.text}/>) : null
-                  }
+     <WebLayout>
+            {
+                  alert ? ( <AlertBox type={alert.type} text={alert.text}/>) : null
+            }
 
 
-                  <form onSubmit={handleRegisterUser} className="login__form box-bg-shadow">
+            <form onSubmit={handleRegisterUser} className="login__form box-bg-shadow">
 
-                        <h1 className="login__form__title">
-                              Create Account
-                        </h1>
+                  <h1 className="login__form__title">
+                        Create Account
+                  </h1>
 
-                        <p className="login__form__text">
-                              Enter you credentials below.
-                        </p>
-                        <div className="login__form__control">
+                  <p className="login__form__text">
+                        Enter you credentials below.
+                  </p>
+                  <div className="login__form__control">
 
-                              <input
-                                    type="text"
-                                    name='firstname'
-                                    placeholder='First name'
-                                    onChange={handleInputChange}
-                                    value={firstname}
-                              />
-                        </div>
-                        <div className="login__form__control">
+                        <input
+                              type="text"
+                              name='firstname'
+                              placeholder='First name'
+                              onChange={handleInputChange}
+                              value={firstname}
+                        />
+                  </div>
+                  <div className="login__form__control">
 
-                              <input
-                                    type="text"
-                                    name='lastname'
-                                    placeholder='Last name'
-                                    onChange={handleInputChange}
-                                    value={lastname}
-                              />
-                        </div>
-                        <div className="login__form__control">
+                        <input
+                              type="text"
+                              name='lastname'
+                              placeholder='Last name'
+                              onChange={handleInputChange}
+                              value={lastname}
+                        />
+                  </div>
+                  <div className="login__form__control">
 
-                              <input
-                                    type="email"
-                                    name='email'
-                                    placeholder='Email address'
-                                    onChange={handleInputChange}
-                                    value={email}
-                              />
-                        </div>                        
-                        <div className="login__form__control">
-                              <input
-                                    type="text"
-                                    name='phone'
-                                    placeholder='Phone number'
-                                    onChange={handleInputChange}
-                                    value={phone}
-                              />
-                        </div>
-                        <div className="login__form__control">
-                              <select id="roles" name="role" onChange={handleInputChange}>
-                                    <option value="">Select Your Role</option>
-                                    <option value="admin">Administrator</option>
-                                    <option value="user">Resident</option>
-                                    <option value="security">Security</option>
-                              </select>
-                        </div>
-                        <div className="login__form__control passwordField">
-                              <input 
-                                    type="password"
-                                    name="password"
-                                    placeholder='Password'
-                                    onChange={handleInputChange}
-                                    value={password}
-                              />
-                              <input 
-                                    type="password"
-                                    name="confirmpassword"
-                                    placeholder='Confirm password'
-                                    onChange={handleInputChange}
-                                    value={confirmPassword}
-                              />
-                        </div>
-                        <div className="login__form__control">
+                        <input
+                              type="email"
+                              name='email'
+                              placeholder='Email address'
+                              onChange={handleInputChange}
+                              value={email}
+                        />
+                  </div>                        
+                  <div className="login__form__control">
+                        <input
+                              type="text"
+                              name='phone'
+                              placeholder='Phone number'
+                              onChange={handleInputChange}
+                              value={phone}
+                        />
+                  </div>
+                  <div className="login__form__control">
+                        <select id="roles" name="role" onChange={handleInputChange}>
+                              <option value="">Select Your Role</option>
+                              <option value="admin">Administrator</option>
+                              <option value="user">Resident</option>
+                              <option value="security">Security</option>
+                        </select>
+                  </div>
+                  <div className="login__form__control passwordField">
+                        <input 
+                              type="password"
+                              name="password"
+                              placeholder='Password'
+                              onChange={handleInputChange}
+                              value={password}
+                        />
+                        <input 
+                              type="password"
+                              name="confirmpassword"
+                              placeholder='Confirm password'
+                              onChange={handleInputChange}
+                              value={confirmPassword}
+                        />
+                  </div>
+                  <div className="login__form__control">
 
-                              <input
-                                    type="submit"
-                                    value='Register'
-                              />
-                              <Link to='/auth/login'>Already have an account? Login</Link>
-                        </div>
+                        <input
+                              type="submit"
+                              value='Register'
+                        />
+                        <Link to='/auth/login'>Already have an account? Login</Link>
+                  </div>
 
 
 
-                  </form>
-
-            </div>
-      </>
+            </form>
+     </WebLayout>
         
     )
 }
-
-export default Signup;

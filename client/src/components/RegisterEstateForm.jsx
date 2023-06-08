@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import {CiSquareRemove} from 'react-icons/ci'
 import {GrFormAdd} from 'react-icons/gr'
 
-const RegisterEstateForm = ({onsubmit, title, btnText}) => {
+export const RegisterEstateForm = ({onsubmit, title, btnText}) => {
 
       const [dialog, setDialog] = useState(false)
       const [houses, setHouses] = useState([])
@@ -155,5 +155,3 @@ const AddNewHouse = ({onsave}) => {
             </div>
       )
 }
-
-export default RegisterEstateForm;

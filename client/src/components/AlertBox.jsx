@@ -4,8 +4,7 @@ import {IoWarningOutline} from "react-icons/io5"
 import {BsInfoCircle} from "react-icons/bs"
 import {MdOutlineError} from "react-icons/md"
 
-function AlertBox({type,text}) {
-
+export function AlertBox({type,text}) {
   return (
       <div className={
             `alert-box slide-from-top ${
@@ -25,5 +24,3 @@ function AlertBox({type,text}) {
       </div>
   )
 }
-
-export default AlertBox;

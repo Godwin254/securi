@@ -2,12 +2,12 @@ import React from 'react'
 
 import SharedNavbar from '../../components/SharedNavbar'
 import SideNavigation from '../../components/SideNavigation'
-import PageHeader from '../../components/PageHeader'
+import PageHeader from '../../components/DashboardHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
 import { ClientLinks, accessTableHead } from '../../utils/utils'
 
-function ClientAccessHistory() {
+export function ClientAccessHistory() {
   return (
     <div className="page-layout-grid">
       <SharedNavbar />
@@ -32,5 +32,3 @@ function ClientAccessHistory() {
     </div>
   )
 }
-
-export default ClientAccessHistory

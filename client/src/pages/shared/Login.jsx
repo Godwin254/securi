@@ -1,7 +1,8 @@
 import React from 'react'
-import {useState, useEffect} from 'react'
-import {useNavigate, Link} from 'react-router-dom';
+import {useState} from 'react'
+import {useNavigate, Link, useParams} from 'react-router-dom';
 
+//icons
 import { FcGoogle } from "react-icons/fc"
 import {GrFacebook} from "react-icons/gr"
 import {MdOutlineErrorOutline, MdWarningAmber} from "react-icons/md"
@@ -10,17 +11,17 @@ import {VscPass} from 'react-icons/vsc'
 
 import { loginUser } from '../../services/AuthService';
 import { useToken } from '../../auth/useToken';
+import {AlertBox } from '../../components/';
+import { WebLayout } from '../../layout/WebLayout';
 
-import Navbar from '../../components/Navbar';
-import AlertBox from '../../components/AlertBox'
-
-function Login() {
+export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alert, setAlert] = useState(null);
 
     const [,setToken] = useToken();
     const navigate = useNavigate();
+    //const {uid} = useParams()
 
     //handle login
     const handleLogin = async (e) => {
@@ -31,10 +32,10 @@ function Login() {
             return;
         }
         
-        const {role, token} = await loginUser({email, password});
+        const {uid,role, token} = await loginUser({email, password});
 
         
-        if(!token && error){
+        if(!token){
             setAlert({ type: 'error', text:"An error occured on login!"})
             return;
         }
@@ -45,11 +46,11 @@ function Login() {
         
         if (role === "user"){
             setTimeout(() => {
-                navigate('/app/resident/dashboard');
+                navigate(`/app/resident/${uid}/dashboard`);
             },1000)
         }else if (role === "admin"){
             setTimeout(() => {
-                navigate('/app/admin/dashboard');
+                navigate(`/app/admin/${uid}/dashboard`);
             },1000)
         }
 
@@ -80,62 +81,57 @@ function Login() {
 
 
     return (
-
-        <>
-            <Navbar />
-            <div  className="login">
-
-                {
-                    alert ? (<AlertBox type={alert.type} text={alert.text}/>) : null
-                }
+        <WebLayout>
+             {
+                alert ? (<AlertBox type={alert.type} text={alert.text}/>) : null
+            }
 
 
-                <form onSubmit={handleLogin} className="login__form box-bg-shadow">
+            <form onSubmit={handleLogin} className="w-[23vw] bg-white shadow-lg border-2 border-gray-100 mx-auto p-5 rounded-lg">
 
-                    <h1 className="login__form__title">
-                        Login
-                    </h1>
-                    <p className="login__form__text">
-                        Enter you credentials below
-                    </p>
-                    <div className="login__form__control">
+                <h1 className="text-3xl font-semibold">
+                    Login
+                </h1>
+                <p className="text-md my-2 mb-6">
+                    Enter you credentials below
+                </p>
+                <div className="border-b border-[#cccc] mb-5">
 
-                        <input
-                            type="email"
-                            name='email'
-                            placeholder='Email address'
-                            onChange={handleInputChange}
-                            value={email}
-                        />
-                    </div>
-                    <div className="login__form__control">
-                        <input 
-                            type="password"
-                            name="password"
-                            placeholder='Password'
-                            onChange={handleInputChange}
-                            value={password}
-                        />
-                    </div>
-                    <div className="login__form__control">
+                    <input
+                        className=' w-full py-3 px-4 outline-none'
+                        type="email"
+                        name='email'
+                        placeholder='Email address'
+                        onChange={handleInputChange}
+                        value={email}
+                    />
+                </div>
+                <div className="border-b border-[#cccc] mb-5">
+                    <input 
+                        className=' w-full py-3 px-4 outline-none'
+                        type="password"
+                        name="password"
+                        placeholder='Password'
+                        onChange={handleInputChange}
+                        value={password}
+                    />
+                </div>
+                <div className="login__form__control">
 
-                        <input
-                            type="submit"
-                            value='login'
-                            onClick={handleLogin}
-                        />
-                        <Link to='/auth/forgot-password'>Forgot Password?</Link>
-                        <Link to='/auth/signup'>Dont have an account? Register</Link>
-                    </div>
+                    <input
+                        type="submit"
+                        value='Confirm'
+                        onClick={handleLogin}
+                    />
+                    <Link to='/auth/forgot-password'>Forgot Password?</Link>
+                    <Link to='/auth/signup'>Dont have an account? Register</Link>
+                </div>
 
 
 
-                </form>
+            </form>
 
-            </div>
-        </>
+        </WebLayout>
         
     )
 }
-
-export default Login;

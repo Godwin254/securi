@@ -1,57 +1,49 @@
-import './App.scss'
-import React, {useState} from 'react'
-import {Routes, Route, Navigate} from 'react-router-dom'
+import './App.scss';
+import React, { useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
+import { ProtectedRoutes } from './auth/ProtectedRoutes';
 
-import { ProtectedRoutes } from './auth/ProtectedRoutes'
+import { DashboardLayout } from './layout';
 
-//pages -shared
-import LandingPage from './pages/shared/LandingPage'
-import ErrorHandler from './pages/shared/ErrorHandler'
-import Signup from './pages/shared/Signup'
-import Login from './pages/shared/Login'
-import Register from './pages/shared/Register'
+//shared
+import { LandingPage, Login, Signup, ErrorHandler } from './pages/shared';
 
-//pages - gaurd
-import GuardMainPage from './pages/guard/GuardMainPage'
+//admin
+import {
+  AdminDashboard,
+  AdminAccessHistory,
+  AdminManageResidents,
+  AdminManageDevices,
+  AdminSettings,
+} from './pages/admin';
 
-//pages - Resident
-import ClientManageMembers from './pages/resident/ClientManageMembers'
-import ClientDashboard from './pages/resident/ClientDashboard'
-import ClientManageDevices from './pages/resident/ClientManageDevices'
-import ClientSettings from './pages/resident/ClientSettings'
-import ClientAccessHistory from './pages/resident/ClientAccessHistory'
+//resident
+//import { ClientDashboard, ClientAccessHistory, ClientManageDevices, ClientManageMembers, ClientSettings } from './pages/resident'
 
-
-//pages - Admin
-import AdminDashboard from './pages/admin/AdminDashboard'
-import AdminManageDevices from './pages/admin/AdminManageDevices'
-import AdminManageResidents from './pages/admin/AdminManageResidents'
-import AdminAccessHistory from './pages/admin/AdminAccessHistory'
-import AdminSettings from './pages/admin/AdminSettings'
-
+//Guard
+//import { GuardMainPage } from './pages/guard'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState(null);
-
   return (
-    <div className="App">
+    <div className="">
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/auth/login' element={<Login />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/signup" element={<Signup />} />
+
+        <Route path="/app/admin/:uid" element={<ProtectedRoutes />}>
+          <Route path="/app/admin/:uid" element={<Navigate replace to="dashboard" />} />
+          <Route path="/app/admin/:uid/dashboard" element={<AdminDashboard />} />
+          <Route path="/app/admin/:uid/manage-residents" element={<AdminManageResidents />} />
+          <Route path="/app/admin/:uid/manage-devices" element={<AdminManageDevices />} />
+          <Route path="/app/admin/:uid/access-history" element={<AdminAccessHistory />} />
+          <Route path="/app/admin/:uid/settings" element={<AdminSettings />} />
+        </Route>
+        {/*
+
+         <Route path='/' element={<LandingPage />} />
         <Route path='/auth/signup' element={<Signup />} />
         <Route path='/app/:uid/register' element={<Register />} />
-
-        <Route path='/app/admin' element={<ProtectedRoutes />} >
-          <Route path="/app/admin" element={<Navigate replace to='dashboard' />} />
-          <Route path='/app/admin/dashboard' element={<AdminDashboard />} />
-          <Route path='/app/admin/manage-residents' element={<AdminManageResidents />} />
-          <Route path='/app/admin/manage-devices' element={<AdminManageDevices />} />
-          <Route path='/app/admin/access-history' element={<AdminAccessHistory />} />
-          <Route path='/app/admin/settings' element={<AdminSettings />} />
-        </Route>
-
         <Route path='/app/:estateId/guard/:sessionId' element={<GuardMainPage />} />
         
         <Route path='/app/resident/' element={<ClientDashboard />} />
@@ -60,8 +52,8 @@ function App() {
         <Route path='/app/resident/access-history' element={<ClientAccessHistory />} />
         <Route path='/app/resident/settings' element={<ClientSettings />} />
 
-        {
-        /**
+        
+        **
          * 
 
         <Route path='/app/resident' element={<ProtectedRoutes />} >
@@ -75,16 +67,12 @@ function App() {
         <Route path='/app/admin' element={<ProtectedRoutes />} >
           <Route path='/app/:estateId/guard/:sessionId' element={<GuardMainPage />} />
         </Route>
-           */
-        }
+           */}
 
-
-        <Route path='*' element={<ErrorHandler />} />
+        <Route path="*" element={<ErrorHandler />} />
       </Routes>
-
-
     </div>
-  )
+  );
 }
 
 export default App;

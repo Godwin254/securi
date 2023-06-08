@@ -36,7 +36,6 @@ class EstateService{
             if(querySnapshot.empty) throw new Error('Estate not found!');
             
             const residentIds = querySnapshot.docs[0].data().residentIds || [];
-            console.log(residentIds);
             const updatedResidentIds = [
               ...residentIds,
               residentId

@@ -4,7 +4,7 @@ import {AiOutlineUsergroupAdd} from 'react-icons/ai'
 import {CiSquareRemove} from 'react-icons/ci'
 
 
-const RegisterResidentForm = ({onsubmit, title, btnText}) => {
+export const RegisterResidentForm = ({onsubmit, title, btnText}) => {
 
       const [image, setImage] = useState(null);
       const [previewUrl, setPreviewUrl] = useState(null);
@@ -202,5 +202,3 @@ const AddNewMember = ({onsave}) => {
             </div>
       )
 }
-
-export default RegisterResidentForm;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function UnderConstruction() {
+export function UnderConstruction() {
   return (
     <div className="under-constuction">
       <img src="" alt="img" />
@@ -16,5 +16,3 @@ function UnderConstruction() {
     </div>
   )
 }
-
-export default UnderConstruction

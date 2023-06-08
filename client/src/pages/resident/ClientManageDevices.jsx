@@ -2,12 +2,12 @@ import React from 'react'
 
 import SharedNavbar from '../../components/SharedNavbar'
 import SideNavigation from '../../components/SideNavigation'
-import PageHeader from '../../components/PageHeader'
+import PageHeader from '../../components/DashboardHeader'
 import AlertBox from '../../components/AlertBox'
 import Table from '../../components/Table'
 import { ClientLinks,deviceTableHead } from '../../utils/utils'
 
-function ClientManageDevices() {
+export function ClientManageDevices() {
   return (
     <div className="page-layout-grid">
       <SharedNavbar />
@@ -42,5 +42,3 @@ function ClientManageDevices() {
     </div>
   )
 }
-
-export default ClientManageDevices
