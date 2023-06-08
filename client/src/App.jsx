@@ -1,4 +1,7 @@
 import './App.scss';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -27,17 +30,18 @@ import {
 function App() {
   return (
     <div className="">
+      <ToastContainer />
       <Routes>
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
 
-        <Route path="/app/admin/:uid" element={<ProtectedRoutes />}>
-          <Route path="/app/admin/:uid" element={<Navigate replace to="dashboard" />} />
-          <Route path="/app/admin/:uid/dashboard" element={<AdminDashboard />} />
-          <Route path="/app/admin/:uid/manage-residents" element={<AdminManageResidents />} />
-          <Route path="/app/admin/:uid/manage-devices" element={<AdminManageDevices />} />
-          <Route path="/app/admin/:uid/access-history" element={<AdminAccessHistory />} />
-          <Route path="/app/admin/:uid/settings" element={<AdminSettings />} />
+        <Route path="/app/admin/" element={<ProtectedRoutes />}>
+          <Route path="/app/admin/" element={<Navigate replace to="dashboard" />} />
+          <Route path="/app/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/app/admin/manage-residents" element={<AdminManageResidents />} />
+          <Route path="/app/admin/manage-devices" element={<AdminManageDevices />} />
+          <Route path="/app/admin/access-history" element={<AdminAccessHistory />} />
+          <Route path="/app/admin/settings" element={<AdminSettings />} />
         </Route>
         {/*
 

@@ -2,6 +2,8 @@ import {MdOutlineLogin, MdSpaceDashboard, MdAccessTimeFilled, MdManageAccounts} 
 import {HiUsers} from "react-icons/hi"
 import {RiDeviceFill} from "react-icons/ri"
 
+export const backendAPI = "http://127.0.0.1:5001/securi-91c08/us-central1/api"
+
 export const adminNavigations = [
       {
             url: '/app/admin',
@@ -57,3 +59,4 @@ export const residentNavigations = [
             text: 'Settings'
       }
 ]
+

@@ -1,38 +1,39 @@
 import { useState, useEffect } from "react";
+import { backendAPI } from "../utils/constants";
+import { getLocalStorageItem, setToLocalStorage } from "../utils/utils";
 
-const backendAPI = "http://127.0.0.1:5001/securi-91c08/us-central1/api/admin/"
-
+const endpoint = `${backendAPI}/admin`;
 //get admin info
 export const getAdminDetails = (adminId) => {
-      const [admin, setAdmin] = useState(() => {
-        const savedAdmin = localStorage.getItem('adminData');
-        return savedAdmin ? JSON.parse(savedAdmin) : {};
-      });
+  const [admin, setAdmin] = useState(() => {
+    const savedAdmin = getLocalStorageItem('adminData');
+    return savedAdmin ? JSON.parse(savedAdmin) : {};
+  });
 
-      console.log(adminId)
+  console.log(adminId)
     
-      useEffect(() => {
-        const fetchAdminDetails = async () => {
-          try {
-            const response = await fetch(`${backendAPI}${adminId}`);
-            if (response.ok) {
-              const data = await response.json();
-              setAdmin(data);
-              localStorage.setItem('adminData', JSON.stringify(data));
-            } else {
-                  //send error message to the toast service
-              console.error('Failed to fetch admin details:', response.status);
-            }
-          } catch (error) {
-            console.error('Error while fetching admin details:', error);
-          }
-        };
+  useEffect(() => {
+    const fetchAdminDetails = async () => {
+      try {
+        const response = await fetch(`${endpoint}/${adminId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setAdmin(data);
+          setToLocalStorage('adminData', data);
+        } else {
+              //send error message to the toast service
+          console.error('Failed to fetch admin details:', response.status);
+        }
+      } catch (error) {
+        console.error('Error while fetching admin details:', error);
+      }
+    };
+
+    //fetchAdminDetails();
+    !admin.uid || admin.uid || !admin !== adminId && fetchAdminDetails();
+  }, [adminId]);
     
-        //fetchAdminDetails();
-        !admin.uid || admin.uid || !admin !== adminId && fetchAdminDetails();
-      }, [adminId]);
-    
-      return admin.uid === adminId ? admin : {};
+  return admin.uid === adminId ? admin : {};
 };
    
 
@@ -41,7 +42,7 @@ export const getAdminDetails = (adminId) => {
 export const createNewEstate = (adminId, estateData) => {
 
       return async () => {
-            const response = await fetch(`${backendAPI}${adminId}/estate`, {
+            const response = await fetch(`${endpoint}/${adminId}/estate`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ export const createNewEstate = (adminId, estateData) => {
 export const updateEstateData = (adminId, updatedEstateData) => {
 
       return async () => {
-            const response = await fetch(`${backendAPI}${adminId}/estate`, {
+            const response = await fetch(`${endpoint}/${adminId}/estate`, {
                   method: 'PUT',
                   headers: {
                     'Content-Type': 'application/json',

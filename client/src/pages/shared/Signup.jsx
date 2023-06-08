@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
+import {toast} from 'react-toastify'
 
-import { AlertBox } from '../../components';
 import { WebLayout } from '../../layout/WebLayout';
 import { registerUser } from '../../services/AuthService'
+import { pathNavigator } from '../../utils/utils';
 
 export function Signup() {
 
@@ -15,7 +16,7 @@ export function Signup() {
       const [password, setPassword] = useState('');
       const [confirmPassword, setConfirmPassword] = useState('');
       const [role, setRole] = useState('');
-      const [alert, setAlert] = useState("");
+      const [estateId, setEstateId] = useState('');
 
       const navigate = useNavigate();
 
@@ -24,28 +25,20 @@ export function Signup() {
             e.preventDefault();
 
             if (!firstname || !lastname || !email || !phone || !password || !confirmPassword || !role){
-                  setAlert({type: 'warning', text: "All inputs are required"});
+                  toast.warning("All fields are required!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000});
                   return;
             }
             if(password !== confirmPassword){
-                  setAlert({type: 'warning', text: "Passwords do not much!"})
+                  toast.warning("Passwords do not match!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000});
                   return;
             }
             const userData = {
                   firstname, lastname, email,
-                  phone, role, password
+                  phone, role, password, estateId
             }
 
-            const {error} = await registerUser(userData)
-
-            if(error){
-                  setAlert({ type: 'error', text:"An error occured on login!"});
-                  return;
-            }
-            setAlert({ type: 'success', text:"Registration successful!"})
-            setTimeout(() => {
-                  navigate('/auth/login');
-            },3000)
+           const response =  await registerUser(userData)
+           response.status === 201 && navigate("/auth/login");
       }
 
       
@@ -74,14 +67,14 @@ export function Signup() {
                         break;
                   case "role":
                         setRole(value);
+                        setEstateId("");
+                        break;                  
+                  case "estateId":
+                        setEstateId(value);
                         break;
                   default:
                         break;
             }
-
-            //clear alert message
-            setAlert("")
-
             
       }
 
@@ -89,18 +82,13 @@ export function Signup() {
 
 
      <WebLayout>
-            {
-                  alert ? ( <AlertBox type={alert.type} text={alert.text}/>) : null
-            }
-
-
             <form onSubmit={handleRegisterUser} className="login__form box-bg-shadow">
 
-                  <h1 className="login__form__title">
+                  <h1 className="login__form__title text-3xl font-semibold">
                         Create Account
                   </h1>
 
-                  <p className="login__form__text">
+                  <p className="login__form__text text-md my-1 mb-4">
                         Enter you credentials below.
                   </p>
                   <div className="login__form__control">
@@ -147,9 +135,21 @@ export function Signup() {
                               <option value="">Select Your Role</option>
                               <option value="admin">Administrator</option>
                               <option value="user">Resident</option>
-                              <option value="security">Security</option>
+                              <option value="guard">Security</option>
                         </select>
                   </div>
+                  {
+                        (role === "user" || role === "guard") && (                  
+                        <div className="login__form__control">
+                              <select id="estateId" name="estateId" onChange={handleInputChange}>
+                                    <option value="">Select Your Estate</option>
+                                    <option value="estid">Harambee Sacco Estate</option>
+                                    <option value="estid">Crystal Villa Estate</option>
+                                    <option value="estid">Kahawa Estate</option>
+                              </select>
+                        </div>
+                        )
+                  }
                   <div className="login__form__control passwordField">
                         <input 
                               type="password"

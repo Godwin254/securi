@@ -1,24 +1,20 @@
 import React, {useState} from 'react';
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation, redirect } from 'react-router-dom'
 
 import {MdOutlineLightMode, MdOutlineDarkMode, MdOutlineLogin} from 'react-icons/md';
 import {AiOutlineUser} from 'react-icons/ai'
+import { getLocalStorageItem } from '../utils/utils';
 
 //Navbar component
 export const Navbar = () => {
     const [mode, setMode] = useState(false);
-    const [user, setUser] = useState(false)
+    const user = JSON.parse(getLocalStorageItem("userData")) || ""
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const pathExists = location.pathname.includes("/auth/login") || location.pathname.includes("/auth/signup")
 
-    const handleLogout = () => {
-        setUser(false)
-    }
-
-    const handleLogin = () => {
-        setUser(true)
-        navigate('/auth/login')
-    }
+    if (pathExists && user) navigate(`/app/${user.role}/dashboard`);
     
     const handleThemeToggle = () => {
         setMode(!mode)
@@ -41,19 +37,16 @@ export const Navbar = () => {
 
                 {
                     !user ? (
-                        <a to='/login' className='navbar__icons__btn' onClick={handleLogin}>
+                        <Link to='/auth/login' className='navbar__icons__btn'>
                             <MdOutlineLogin  className='navbar__icons__btn__icon' />
                             Login
-                        </a> 
+                        </Link> 
                     ) : (
 
-                        <a to='/login' className='navbar__icons__btn logout' style={{border: "none"}} onClick={handleLogout}>
+                        <Link to='' className='navbar__icons__btn logout' style={{border: "none"}} >
                             <AiOutlineUser  className='navbar__icons__btn__icon ' style={{fontSize: "1.6rem"}}/>
-                            {
-                                "[Hello],"
-                            }
-                            Logout
-                        </a> 
+                            {`${user.firstname} ${user.lastname}`}
+                        </Link> 
                     )
                 }
                 

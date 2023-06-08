@@ -1,29 +1,28 @@
+import { useNavigate } from "react-router-dom"
 
-export const accessTableHead = [
-      'Name',
-      'Car ID',
-      'House No.',
-      'Time',
-      'Accessed By',
-      'Action'
+export const setToLocalStorage = (storageName, storageData) => {
+      localStorage.setItem(storageName , JSON.stringify(storageData));
+}
 
-]
+export const getLocalStorageItem =  (key) => {
+      let item = localStorage.getItem(key);
+      
+      return item;
+};
+    
+    
 
+export const getDateFormat = (format) => {
+      switch(format){
+            case 'year':
+                  return new Date().getFullYear();
+            case 'string':
+                  return new Date().toDateString();
+      }
+}
 
-export const residentTableHead = [
-      'Firstname',
-      'Lastname',
-      'House',
-      'Phone',
-      'Members',
-      'Number plate',
-      'Tag',
-      'Action'
-]
-export const deviceTableHead = [
-      'Device',
-      'Data Id',
-      'Assigned To',
-      'Date Created',
-      'Action'
-]
+export const pathNavigator = (pathArray=[]) => {
+      const path = pathArray.join('/');
+      const navigate = useNavigate()
+      navigate(path);
+}

@@ -1,6 +1,8 @@
 import React from 'react'
 import {useState} from 'react'
 import {useNavigate, Link, useParams} from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 //icons
 import { FcGoogle } from "react-icons/fc"
@@ -13,6 +15,9 @@ import { loginUser } from '../../services/AuthService';
 import { useToken } from '../../auth/useToken';
 import {AlertBox } from '../../components/';
 import { WebLayout } from '../../layout/WebLayout';
+import { pathNavigator } from '../../utils/utils';
+import { getLocalStorageItem } from '../../utils/utils';
+import { getUserDetails } from '../../services/AuthService';
 
 export function Login() {
     const [email, setEmail] = useState('');
@@ -28,37 +33,32 @@ export function Login() {
         e.preventDefault();
 
         if (!email || !password){
-            setAlert({type: 'warning', text: "All inputs are required"});
+            toast.info("Email or Password required!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000});
             return;
         }
         
-        const {uid,role, token} = await loginUser({email, password});
+        const {token, role } = await loginUser({email, password});
 
-        
         if(!token){
-            setAlert({ type: 'error', text:"An error occured on login!"})
+            toast.error("An Error occured when logging in!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000});
             return;
         }
-
         setToken(token);
-        setAlert({ type: 'success', text:"Login Success!!!"})
-
+        toast.success("Successful Login!", { position: toast.POSITION.TOP_CENTER});
         
         if (role === "user"){
             setTimeout(() => {
-                navigate(`/app/resident/${uid}/dashboard`);
+                navigate(`/app/resident/dashboard`);
             },1000)
         }else if (role === "admin"){
             setTimeout(() => {
-                navigate(`/app/admin/${uid}/dashboard`);
+                navigate(`/app/admin/dashboard`);
             },1000)
         }
 
         //clear inputs
         setEmail("");
-        setPassword("");
-
-        
+        setPassword("");  
     }
 
     const handleInputChange = (e) => {
@@ -87,7 +87,7 @@ export function Login() {
             }
 
 
-            <form onSubmit={handleLogin} className="w-[23vw] bg-white shadow-lg border-2 border-gray-100 mx-auto p-5 rounded-lg">
+            <form onSubmit={handleLogin} className="w-[23vw] bg-white shadow-lg border-2 border-gray-100 mx-auto p-5 px-8 rounded-lg">
 
                 <h1 className="text-3xl font-semibold">
                     Login

@@ -5,7 +5,7 @@ import {BiChevronDown, BiMenu} from 'react-icons/bi'
 import {MdOutlineLogin} from 'react-icons/md'
 import {AiOutlineUser} from 'react-icons/ai'
 
-export function SharedNavbar({firstname, lastname, estateName}) {
+export function SharedNavbar({firstname, lastname, estateName, userId}) {
 
 
   return (
@@ -13,9 +13,9 @@ export function SharedNavbar({firstname, lastname, estateName}) {
       <p className="bg-gray-100 px-5 py-1 rounded-full">{estateName || "Estate Name Here"}</p>
 
 
-      <Link to={`/admin/${1}/edit-profile`} className='flex flex-row items-center ml-auto text-sm font-regular'>
+      <Link to={`/admin/${userId}/edit-profile`} className='flex flex-row items-center ml-auto text-sm font-regular'>
         <AiOutlineUser   className='mr-2 text-2xl' />
-        {`${firstname || "No"} ${lastname || "User"}`}
+        {`${firstname ?? "No"} ${lastname ?? "User"}`}
         <BiChevronDown className='ml-2' />
       </Link> 
      

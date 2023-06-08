@@ -7,14 +7,11 @@ import {RiDeviceFill} from "react-icons/ri"
 
 import { logoutUser } from '../services/ResidentServices'
 
-export function SideNavigation({navigations}) {
+export function SideNavigation({navigations, handleLogout}) {
 
       const navigate = useNavigate();
-
-      const handleLogout = () => {
-            //logoutUser();
-            console.log('Logout')
-            navigate('/auth/login');
+      const onLogoutEvent = () => {
+            handleLogout()
       }
 
   return (
@@ -30,9 +27,9 @@ export function SideNavigation({navigations}) {
       }
 
       <div className="flex-initiaze mt-auto flex flex-col px-3">
-            <button className='flex flex-row py-2 rounded-full items-center justify-center text-lg bg-white font-regular'>
+            <button onClick={onLogoutEvent} className='flex flex-row py-2 rounded-full items-center justify-center text-lg bg-white font-regular'>
                   Logout
-                  <MdOutlineLogin className='ml-4 text-xl'  onClick={handleLogout}/>
+                  <MdOutlineLogin className='ml-4 text-xl' />
             </button>
 
             <span className='text-cyan-100 text-xs text-center pt-2'>
