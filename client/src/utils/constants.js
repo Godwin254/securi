@@ -6,7 +6,7 @@ export const backendAPI = "http://127.0.0.1:5001/securi-91c08/us-central1/api"
 
 export const adminNavigations = [
       {
-            url: '/app/admin',
+            url: '/app/admin/dashboard',
             icon: MdSpaceDashboard,
             text: 'Dashboard'
       },
@@ -34,7 +34,7 @@ export const adminNavigations = [
 
 export const residentNavigations = [
       {
-            url: '/app/resident',
+            url: '/app/resident/dashboard',
             icon: MdSpaceDashboard,
             text: 'Dashboard'
       },

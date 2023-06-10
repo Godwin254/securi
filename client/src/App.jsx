@@ -7,10 +7,10 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { ProtectedRoutes } from './auth/ProtectedRoutes';
 
-import { DashboardLayout } from './layout';
+import { AddNewMemberDialog } from './components';
 
 //shared
-import { LandingPage, Login, Signup, ErrorHandler } from './pages/shared';
+import { LandingPage, Login, Signup, ErrorHandler, Registrations } from './pages/shared';
 
 //admin
 import {
@@ -32,6 +32,7 @@ function App() {
     <div className="">
       <ToastContainer />
       <Routes>
+        <Route path="/" element={<Registrations />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
 
