@@ -1,8 +1,10 @@
 import React from 'react'
 import {AiOutlinePlus, AiFillDelete} from 'react-icons/ai'
 import { MdOutlineFilterList } from 'react-icons/md'
+import { useGlobalContext } from '../pages/shared'
 
-export function Table() {
+export function Table({theads=[], actions=[], data=[]}) {
+
   return (
 
       <>
@@ -15,46 +17,25 @@ export function Table() {
             <table className='dashboard__main__panel2__left-view__table bg-white shadow-sm px-2'>
                   <thead>
                         <tr>
-                              <th>Data</th>       
-                              <th>Data</th>       
-                              <th>Data</th>       
-                              <th>Data</th>       
-                              <th>Data</th>       
-                              <th>Data</th>       
+                              {
+                                   theads.length > 0 && theads.map((thead, index) => <th key={index}>{thead}</th> )
+                              }     
                         </tr>
                   </thead>
                   <tbody>
                         <tr>
-                              <td>John Doe</td>
-                              <td>KCV 144V</td>
-                              <td>House 408</td>
-                              <td>1100hrs</td>
-                              <td>Owner</td>
+                              {
+                                    data.length === 0 && <td colSpan={theads.length} className='text-center'>No data available</td>
+                              }
+                              {
+                                    data.length > 0 && data.map((dt, index) => <td key={index}>{dt}</td> )
+                              }
                               <td>
-                                    <AiFillDelete />
+                                    {
+                                          actions.length > 0 && actions.map((action, index) => <span key={index}>{action}</span> )
+                                    }
                               </td>
                         </tr>
-                        <tr>
-                              <td>John Doe</td>
-                              <td>KCV 144V</td>
-                              <td>House 408</td>
-                              <td>1100hrs</td>
-                              <td>Unkwown</td>
-                              <td>
-                                    <AiFillDelete />
-                              </td>
-                        </tr>
-                        <tr>
-                              <td>John Doe</td>
-                              <td>KCV 144V</td>
-                              <td>House 408</td>
-                              <td>1100hrs</td>
-                              <td>Owner</td>
-                              <td>
-                                    <AiFillDelete />
-                              </td>
-                        </tr>
-                  
                   </tbody>
             </table>
       </>

@@ -30,7 +30,7 @@ export const AddNewHouse = ({onsave, closeDialog }) => {
                                     <ErrorMessage className='text-red-200' name='block' component="div"/>
                               </div>                        
                               <div>
-                                    <Field type="text" className="border-b text-lg border-ccc w-full px-2 py-2 outline-none my-1" name="house" placeholder="MHouse name e.g B107"/>
+                                    <Field type="text" className="border-b text-lg border-ccc w-full px-2 py-2 outline-none my-1" name="house" placeholder="House name e.g B107"/>
                                     <ErrorMessage className='text-red-200' name='house' component="div"/>
                               </div>
                               <div className='mt-4 flex flex-row items-center justify-end'>

@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {BiChevronDown, BiMenu} from 'react-icons/bi'
 import {MdOutlineLogin} from 'react-icons/md'
 import {AiOutlineUser} from 'react-icons/ai'
+import { useGlobalContext } from '../pages/shared'
 
 export function SharedNavbar({firstname, lastname, estateName, userId}) {
 

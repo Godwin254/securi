@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
+export let cachedData  = {};
+
 export const setToLocalStorage = (storageName, storageData) => {
       localStorage.setItem(storageName , JSON.stringify(storageData));
 }

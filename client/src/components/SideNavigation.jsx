@@ -5,8 +5,6 @@ import {MdOutlineLogin, MdSpaceDashboard, MdAccessTimeFilled, MdManageAccounts} 
 import {HiUsers} from "react-icons/hi"
 import {RiDeviceFill} from "react-icons/ri"
 
-import { logoutUser } from '../services/ResidentServices'
-
 export function SideNavigation({navigations, handleLogout}) {
 
       const navigate = useNavigate();

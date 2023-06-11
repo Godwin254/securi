@@ -46,16 +46,10 @@ export function Login() {
         setToken(token);
         toast.success("Successful Login!", { position: toast.POSITION.TOP_CENTER});
         
-        if (role === "user"){
-            setTimeout(() => {
-                navigate(`/app/resident/dashboard`);
-            },1000)
-        }else if (role === "admin"){
-            setTimeout(() => {
-                navigate(`/app/admin/dashboard`);
-            },1000)
-        }
 
+        role === "guard" && navigate("/app/gate");
+        role === "user" && navigate("/app/resident/dashboard");
+        role === "admin" && navigate("/app/admin/dashboard");
         //clear inputs
         setEmail("");
         setPassword("");  

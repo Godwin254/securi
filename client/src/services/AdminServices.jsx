@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { backendAPI } from "../utils/constants";
 import { getLocalStorageItem, setToLocalStorage } from "../utils/utils";
 
+import {toast} from 'react-toastify';
+
 const endpoint = `${backendAPI}/admin`;
 //get admin info
 export const getAdminDetails = (adminId) => {
@@ -9,8 +11,6 @@ export const getAdminDetails = (adminId) => {
     const savedAdmin = getLocalStorageItem('adminData');
     return savedAdmin ? JSON.parse(savedAdmin) : {};
   });
-
-  console.log(adminId)
     
   useEffect(() => {
     const fetchAdminDetails = async () => {
@@ -50,14 +50,13 @@ export const createNewEstate = (adminId, estateData) => {
                   body: JSON.stringify(estateData),
             });
               
-            if (response.ok) {
-            const createdEstate = await response.json();
-            console.log('New estate created:', createdEstate);
-            return createdEstate;
-            }
-              
-            console.error('Failed to create estate:', response.status);
-            throw new Error('Failed to create estate');
+            if (!response.ok) console.error('Failed to create new estate:', response.status);
+      
+            const newEstate = await response.json();
+            console.log('New estate created:', newEstate);
+            
+            // Fetch admin details after 
+            await getAdminDetails(adminId);
 
       }
 

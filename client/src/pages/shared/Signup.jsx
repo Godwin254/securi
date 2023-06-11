@@ -38,7 +38,10 @@ export function Signup() {
             }
 
            const response =  await registerUser(userData)
-           response.status === 201 && navigate("/auth/login");
+
+           response.status === 201 && response.data.role ==="admin" && navigate("/app/create-estate");
+           response.status === 201 && response.data.role ==="user" && navigate("/app/configure");
+           response.status === 201 && response.data.role ==="guard" && navigate("/auth/login");
       }
 
       

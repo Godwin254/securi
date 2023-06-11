@@ -1,9 +1,11 @@
-import {auth} from '../firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import axios from 'axios';
+import { backendAPI } from '../utils/constants';
+import {toast} from 'react-toastify';
+import { cachedData } from '../utils/utils';
 
-const url = `http://127.0.0.1:5001/securi-91c08/us-central1/api/users/`
+
 const accessToken = localStorage.getItem('firebase-token');
+
 const config = {
       headers: {
             'Authorization': `Bearer ${accessToken}`,
@@ -12,55 +14,69 @@ const config = {
       }
 }
 
-export const loginUser = async ({email, password}) => {
-
-      try{
-
-            await signInWithEmailAndPassword(auth, email, password);
-            const user = auth.currentUser;
-            const {token} = await user.getIdTokenResult()
-            decodeAccessToken(token);
-            return token;
-
-      }catch(error){
-            console.log(error.message);
-            //return error.message;
-      }     
-}
-
-export const logoutUser = () => {
-      localStorage.removeItem('firebase-token')
-      localStorage.clear();
-      //window.location.reload();
-}
-
 export const decodeAccessToken = (token) => {
       const encodedPayLoad = token.split('.')[1];
-
       const {email, user_id} =  JSON.parse(window.atob(encodedPayLoad));
-
-      //identify user from the user
-     const user = getUser(user_id) 
-
+      const user = getUser(user_id) 
       return user;//{email, uid: user_id} //user
 }
 
-export const getUser = async (uid) => {
-
-      try{
-            const {data} = await axios.get(`${url}${uid}`, config);
-
-            //console.log(data);
-            return data;
-
-      }catch(error){
-            console.log(error.message);
-      }
-      
-
+export const getAllResidents = async () => { 
+      const response = await axios.get(`${backendAPI}/residents`, config);
+      if(response.status !== 200) toast.error('Error fetching residents');
+      return response.data;
 }
 
-export const userRole = (user) => {
-      console.log("Role", user.role);
-      return user.role;
+export const getResident = (uid) => {
+      const response = axios.get(`${backendAPI}/residents/${uid}`, config);
+      if(response.status !== 200) toast.error('Error fetching resident details');
+      return response.data;
+}
+
+export const updateResidentRecord = async (uid, data) => {
+      const response = await axios.put(`${backendAPI}/residents/${uid}`, data, config);
+      if(response.status !== 200) toast.error('Error updating resident details');
+      return response.data;
+}
+
+export const deleteResidentRecord = async (uid) => {
+      const response = await axios.delete(`${backendAPI}/residents/${uid}`, config);
+      if(response.status !== 200) toast.error('Error deleting resident details');
+      return response.data;
+}
+
+//members operation
+export const getAllMembers = async (uid) => {
+      const resident = await getResident(uid);
+      console.log(resident);
+      //const {members} = resident;
+      //check if members is empty
+      //if(members.length === 0) return [];
+      //return members;
+}
+
+export const getMember = async (uid, memberId) => {
+      const members = await getAllMembers(uid);
+      const member = members.find(member => member.id === memberId);
+      return member;
+}
+
+export const addMember = async (uid, data) => {
+      const response = await axios.post(`${backendAPI}/residents/${uid}/members`, data, config);
+      if(response.status !== 201) toast.error('Error adding member');
+      return response.data;
+}
+
+export const updateMember = async (uid, memberId, data) => {
+      const response = await axios.put(`${backendAPI}/residents/${uid}/members/${memberId}`, data, config);
+      if(response.status !== 200) toast.error('Error updating member');
+      return response.data;
+}
+
+export const deleteMember = async (uid, memberId) => {
+
+      //optimized version
+      const response = await axios.delete(`${backendAPI}/residents/${uid}/members/${memberId}`, config);
+      if(response.status !== 200) toast.error('Error deleting member');
+      return response.data;
 }
