@@ -11,16 +11,15 @@ import { getEstateById } from '../../services/EstateServices';
 export function GuardMainPage() {
   const [estate, setEstate] = useState({estateName: "Dummy Estate", location: "Dummy Location"})
   const user = { vehicle: {}, members: []}
-  const store = JSON.parse(getLocalStorageItem("authData"));
+  const {estateId} = JSON.parse(getLocalStorageItem("authData"));
 
   useEffect(() => {
-
     const fetchData = async () => {
-      const data = await getEstateById(store.estateId)
+      const data = await getEstateById(estateId)
       setEstate(data);
     }
     fetchData();
-  }, [estate])
+  }, [])
 
   const handleOpenGate = (e) => {
 

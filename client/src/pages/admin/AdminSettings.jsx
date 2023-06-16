@@ -3,10 +3,16 @@ import React from 'react'
 import { DashboardLayout } from '../../layout'
 import { CreateEstateForm } from '../../components'
 
+import { getLocalStorageItem } from '../../utils/utils';
+import { updateEstateConfig } from '../../services/AdminServices';
+
+
 export function AdminSettings() {
 
-  const handleUpdateSettings =  () => {
+  const {estate, uid} = JSON.parse(getLocalStorageItem("userData"));
 
+  const handleUpdateSettings =  async ( newEstateData) => {
+    await updateEstateConfig(uid, newEstateData);
   }
   return (
     <DashboardLayout>
@@ -20,7 +26,7 @@ export function AdminSettings() {
           <span className='border-b border-ccc text-gray-400 text-lg px-1 py-2 mb-4 cursor-pointer hover:bg-sky-50'>Documents</span>
 
         </div>
-        <CreateEstateForm onsubmit={handleUpdateSettings} title='Edit Estate Configuration' btnText='Save Changes' formWidth="w-1/1"/>
+        <CreateEstateForm handleSubmit={handleUpdateSettings} estate={estate} title='Edit Estate Configuration' btnText='Save Changes' formWidth="w-1/1"/>
       </div>
       
     </DashboardLayout>

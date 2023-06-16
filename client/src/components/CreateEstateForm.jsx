@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import {CiSquareRemove} from 'react-icons/ci'
 import {GrFormAdd} from 'react-icons/gr'
@@ -9,31 +10,31 @@ import { AddNewHouse } from './AddNewHouseDialog';
 import { getLocalStorageItem } from '../utils/utils';
 
 
-export const CreateEstateForm = ({onsubmit, title, btnText, formWidth}) => {
+export const CreateEstateForm = ({handleSubmit, title, btnText, formWidth, estate}) => {
 
       const [openDialog, setOpenDialog] = useState(false);
       const [houses, setHouses] = useState([])
-      const estate  = {}; //JSON.parse(getLocalStorageItem("userData"));
+      const navigate = useNavigate();
+      const location = useLocation();
 
 
       const validationSchema = Yup.object().shape({
             estateName: Yup.string().required('Estate name is required'),
             location: Yup.string().required('Location is required'),
             phone: Yup.string().required('Hepline is required'),
-
       })
       
       
-      const handleCreateNewEstate = async (values) => {
-            console.log(values);
-            //await createNewEstateService(values)
+      const handleSubmitClick = async (values) => {
+            await handleSubmit(values);
+            if(location.pathname.includes("create-estate")) navigate("/auth/login");
       }
 
       return (
             <Formik 
                   initialValues={{estateName: `${estate.estateName || ""}`, location: `${estate.location|| ""}`, phone: `${estate.phone || ""}`}}
                   validationSchema={validationSchema}
-                  onSubmit={handleCreateNewEstate}>
+                  onSubmit={handleSubmitClick}>
                   <Form className={`bg-white shadow-lg ${formWidth || "w-1/2"} px-5 py-8 border-2 border-cyan-50 rounded-md`}>
                         <h1 className='form-title text-3xl font-semibold'>{title}</h1>
                         <p className='form-subtitle text-md my-2 mb-6'>

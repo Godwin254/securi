@@ -35,8 +35,8 @@ function App() {
         <Route path="/" element={<Registrations />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
-        <Route path="/app/:role/create-estate" element={<Registrations />} />
-        <Route path="/app/:role/configure-info" element={<Registrations />} />
+        <Route path="/app/:role/:uid/create-estate" element={<Registrations />} />
+        <Route path="/app/:role/:uid/configure-info" element={<Registrations />} />
 
         <Route path="/app/admin/" element={<ProtectedRoutes />}>
           <Route path="/app/admin/" element={<Navigate replace to="dashboard" />} />

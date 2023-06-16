@@ -4,18 +4,23 @@ import { useParams } from 'react-router-dom';
 import { CreateEstateForm, CreateResidentDetailsForm } from '../../components'
 import { WebLayout } from '../../layout/WebLayout';
 
-export function Registrations() {
-      const {role} = useParams();
+import { createNewEstate } from '../../services/AdminServices';
+import { getLocalStorageItem } from '../../utils/utils';
 
-      const handleFormSubmit = (res) => {    
+export function Registrations() {
+      const {role, uid} = useParams();
+      
+
+      const handleCreateEstate = async (estateData) => {
+            await createNewEstate(uid, estateData);
       }
 
       return (
             <WebLayout>
                   {
                         role === 'admin'
-                        ? <CreateEstateForm onsubmit={handleFormSubmit} title='Register New Estate' btnText='Create New Estate'/> 
-                        : <CreateResidentDetailsForm onsubmit={handleFormSubmit} title='Resident Account Setup' btnText='Save New Changes'/>
+                        ? <CreateEstateForm estate={{}} handleSubmit={handleCreateEstate} title='Register New Estate' btnText='Create New Estate'/> 
+                        : <CreateResidentDetailsForm handleSubmit={handleFormSubmit} title='Resident Account Setup' btnText='Save New Changes'/>
                   }
             </WebLayout>
       

@@ -49,8 +49,8 @@ export function Signup() {
 
             const res = await registerUser(userData)
 
-            res.role ==="admin" && navigate(`/app/${res.role}/create-estate`);
-            res.role ==="user" && navigate(`/app/${res.role === "user" && "resident"}/configure-info`);
+            res.role ==="admin" && navigate(`/app/${res.role}/${res.uid}/create-estate`);
+            res.role ==="user" && navigate(`/app/${res.role}/${res.uid}/configure-info`);
             res.role ==="guard" && navigate("/auth/login");
       }
 

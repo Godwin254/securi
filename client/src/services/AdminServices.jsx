@@ -3,57 +3,44 @@ import { backendAPI } from "../utils/constants";
 import { getLocalStorageItem, setToLocalStorage } from "../utils/utils";
 
 import {toast} from 'react-toastify';
+import axios from "axios";
+import { getUserDetails } from "./AuthService";
 
+const accessToken = getLocalStorageItem("firebase-token");
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
+};
+
+const store = JSON.parse(localStorage.getItem("authData"));
 const endpoint = `${backendAPI}/admin`;
 
 //create new estate
-export const createNewEstate = (adminId, estateData) => {
+export const createNewEstate = async (adminId, estateData) => {
+      const response = await axios.post(`${endpoint}/${adminId}/estate`, estateData, config);
+      if (response.status !== 201) toast.error(`An error occured when creating estate`, { position: toast.POSITION.TOP_CENTER});
+      toast.success(`Created estate successfully`, { position: toast.POSITION.TOP_CENTER});
 
-      return async () => {
-            const response = await fetch(`${endpoint}/${adminId}/estate`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(estateData),
-            });
-              
-            if (!response.ok) console.error('Failed to create new estate:', response.status);
-      
-            const newEstate = await response.json();
-            console.log('New estate created:', newEstate);
-            
-            // Fetch admin details after 
-            await getAdminDetails(adminId);
-
-      }
-
+      return response.data;
 };
 
 //update estate - PUT
-export const updateEstateData = (adminId, updatedEstateData) => {
-
-      return async () => {
-            const response = await fetch(`${endpoint}/${adminId}/estate`, {
-                  method: 'PUT',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(updatedEstateData),
-            });
-              
-            if (!response.ok) console.error('Failed to update estate data:', response.status);
+export const updateEstateConfig = async (adminId, updatedEstateData) => {
+      const response = await axios.put(`${endpoint}/${adminId}/estate`, updatedEstateData, config);
+      if (response.status !== 200) toast.error(`An error occured when updating estate`, { position: toast.POSITION.TOP_CENTER});
+      await getUserDetails(store.uid, store.role); //after update get user details again
       
-            const updatedEstate = await response.json();
-            console.log('Estate data updated:', updatedEstate);
-            
-            // Fetch admin details after 
-            await getAdminDetails(adminId);
-
-      }
-      
-
+      toast.success(`Estate updated successfully`, { position: toast.POSITION.TOP_CENTER});
+      return response.data;    
 };
+
+export  const deleteEstate = async (adminId) => {
+      const response = await axios.delete(`${endpoint}/${adminId}/estate`, config);
+      if (response.status !== 204) toast.error(`An error occured when deleting estate`, { position: toast.POSITION.TOP_CENTER});
+      return response.data;    
+}
     
 
 //delete estate
