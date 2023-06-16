@@ -7,7 +7,6 @@ import isEqual from 'lodash/isEqual';
 
 import { setToLocalStorage, getLocalStorageItem } from '../utils/utils';
 import { backendAPI } from '../utils/constants';
-import { pathNavigator } from '../utils/utils';
 
 const accessToken = getLocalStorageItem("firebase-token");
 const config = {
@@ -26,10 +25,16 @@ export const loginUser = async ({ email, password }) => {
     if (response.status !== 200)  console.log("An Error occured!");
     
     const { token, uid, role} = response.data;
-    setToLocalStorage("authData", {uid, role})
-    await getUserDetails(uid, role); //retrieve user detals
+    const authData = {
+      token,
+      uid,
+      role,
+      ...(response.data.hasOwnProperty('estateId') && { estateId: response.data.estateId })
+    };
+    setToLocalStorage("authData", authData);
+    role !== "guard" && await getUserDetails(uid, role); //retrieve user details after login
   
-    return {token, role}
+    return authData;
 };
 
 export const logoutUser = () => {
@@ -44,8 +49,21 @@ export const logoutUser = () => {
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(`${endpoint}/signup`, userData, config);
+    if (response.status !== 201) toast.error(`An error occured during registration`, { position: toast.POSITION.TOP_CENTER});
     if (response.status === 201) toast.warning(`Registered ${response.data.firstname} successfully!`, { position: toast.POSITION.TOP_CENTER});
-    return response;
+    
+    const { uid, role} = response.data;
+
+    const authData = {
+      uid,
+      role,
+      ...(response.data.hasOwnProperty('estateId') && { estateId: response.data.estateId })
+    };
+
+    console.log('authData', authData); //
+    setToLocalStorage("authData", authData);
+
+    return authData;
   } catch (error) {
     toast.error(`Error occured during signup: ${error.message} `, { position: toast.POSITION.TOP_CENTER});
   }

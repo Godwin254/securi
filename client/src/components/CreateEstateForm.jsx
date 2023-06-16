@@ -13,7 +13,7 @@ export const CreateEstateForm = ({onsubmit, title, btnText, formWidth}) => {
 
       const [openDialog, setOpenDialog] = useState(false);
       const [houses, setHouses] = useState([])
-      const {estate} = JSON.parse(getLocalStorageItem("userData"));
+      const estate  = {}; //JSON.parse(getLocalStorageItem("userData"));
 
 
       const validationSchema = Yup.object().shape({

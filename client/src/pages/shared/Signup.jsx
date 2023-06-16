@@ -1,11 +1,12 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import {toast} from 'react-toastify'
 
 import { WebLayout } from '../../layout/WebLayout';
 import { registerUser } from '../../services/AuthService'
-import { pathNavigator } from '../../utils/utils';
+import { getAllEstates } from '../../services/EstateServices';
+import { getLocalStorageItem, pathNavigator } from '../../utils/utils';
 
 export function Signup() {
 
@@ -17,9 +18,18 @@ export function Signup() {
       const [confirmPassword, setConfirmPassword] = useState('');
       const [role, setRole] = useState('');
       const [estateId, setEstateId] = useState('');
-
+      const [estates, setEstates] = useState([]);
       const navigate = useNavigate();
 
+      useEffect(() => {
+            const fetchData = async () => {
+                  const data = await getAllEstates();
+                  setEstates(data);
+            }
+            fetchData(); 
+      }, [])
+
+      //console.log('data', estates);
       //handle login
       const handleRegisterUser = async (e) => {
             e.preventDefault();
@@ -37,11 +47,11 @@ export function Signup() {
                   phone, role, password, estateId
             }
 
-           const response =  await registerUser(userData)
+            const res = await registerUser(userData)
 
-           response.status === 201 && response.data.role ==="admin" && navigate("/app/create-estate");
-           response.status === 201 && response.data.role ==="user" && navigate("/app/configure");
-           response.status === 201 && response.data.role ==="guard" && navigate("/auth/login");
+            res.role ==="admin" && navigate(`/app/${res.role}/create-estate`);
+            res.role ==="user" && navigate(`/app/${res.role === "user" && "resident"}/configure-info`);
+            res.role ==="guard" && navigate("/auth/login");
       }
 
       
@@ -146,9 +156,11 @@ export function Signup() {
                         <div className="login__form__control">
                               <select id="estateId" name="estateId" onChange={handleInputChange}>
                                     <option value="">Select Your Estate</option>
-                                    <option value="estid">Harambee Sacco Estate</option>
-                                    <option value="estid">Crystal Villa Estate</option>
-                                    <option value="estid">Kahawa Estate</option>
+                                    {
+                                         estates.length > 0 
+                                          ? estates.map((estate, index) => <option key={index} value={estate.estateId}>{estate.estateName}</option>)
+                                          : <option value="">No Estates Found</option>
+                                    }
                               </select>
                         </div>
                         )

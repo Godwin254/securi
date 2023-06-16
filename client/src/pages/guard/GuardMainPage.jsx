@@ -1,72 +1,40 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import { MdPowerSettingsNew } from 'react-icons/md';
 import { FaUserTag, FaUserAlt, FaCarAlt } from 'react-icons/fa';
 import { IoFingerPrintOutline } from 'react-icons/io5';
-
-import { AlertBox } from '../../components';
+import {toast} from 'react-toastify';
+import { logoutUser } from '../../services/AuthService';
+import { getDateFormat, getLocalStorageItem } from '../../utils/utils';
+import { getEstateById } from '../../services/EstateServices';
 
 export function GuardMainPage() {
+  const [estate, setEstate] = useState({estateName: "Dummy Estate", location: "Dummy Location"})
+  const user = { vehicle: {}, members: []}
+  const store = JSON.parse(getLocalStorageItem("authData"));
 
-  const [alert, setAlert] = useState(null);
+  useEffect(() => {
 
-  const estateConfig = {
-    eid: "112345678",
-    name: "Jacaranda Villa Estate",
-    date: new Date().toDateString()
-  }
-  const user = {
-    name: "Lelit Brenda",
-    house: 'House B107',
-    approved: true,
-    vehicle: {
-      type: "Mazda CX5",
-      make: "2016",
-      color: "Maroon",
-      plate: "KCY 001V"
-    },
-    members: [
-      {
-        name: "Winstone Owen",
-        rel: "son",
-        phone: "0712345678",
-        access: true
-      },
-      {
-        name: "Jane Doe",
-        rel: "friend",
-        phone: "0712345678",
-        access: false
-      },
-      {
-        name: "Tina Atieno",
-        rel: "wife",
-        phone: "0712345678",
-        access: false
-      },
-    ]
-    
-  };
+    const fetchData = async () => {
+      const data = await getEstateById(store.estateId)
+      setEstate(data);
+    }
+    fetchData();
+  }, [estate])
 
   const handleOpenGate = (e) => {
 
     if(!user){
-      setAlert({type: 'warning', text: 'There is no user to open the gate for!'})
-
+      toast.info("There is no user to open the gate for!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000});
       return;
     }
-
-    setAlert({type: 'success', text: 'Gate starting to open...'})
-
-    setTimeout(() => {
-      setAlert(null)
-    }, 3000);
-
+    toast.success("Gate starting to open...", { position: toast.POSITION.TOP_CENTER, autoClose: 2000});
   }
 
 
-  const handleSecurityLogout = (e) => {
-    setAlert({type: 'info', text: 'You have logged out successfully!!'})
+  const handleGuardLogout =  (e) => {
+    logoutUser()
+    toast.info("You have logged out successfully!!", { position: toast.POSITION.TOP_CENTER});
   }
 
   const {name, house, vehicle, approved, members} = user;
@@ -74,23 +42,20 @@ export function GuardMainPage() {
     <div className="main-page">
       <header className="page-header">
         <h2 className="header-text">SECURI</h2>
-        <p className="text estate-tag">{estateConfig.name}</p>
+        <p className="text estate-tag">{estate.estateName || "No Esate Config"}</p>
 
         <span className="sub-title">
-          {estateConfig.date}
-          <MdPowerSettingsNew className="icon" onClick={handleSecurityLogout}/>
+          {getDateFormat('string')}
+          <MdPowerSettingsNew className="icon cursor-pointer text-2xl" onClick={handleGuardLogout}/>
         </span>
       </header>
 
       <div className="page-body">
-        {
-          alert && <AlertBox type={alert.type} text={alert.text}/>
-        }
         <div className="scanner">
-          <div className={`scanner-card ${  user ? 'scale-in-out' : null}`}>
+          <div className={`scanner-card ${  !user ? 'scale-in-out' : null}`}>
             <FaUserTag className="icon" />
           </div>
-          <div className={`scanner-card ${ user ? 'scale-in-out' : null}`}>
+          <div className={`scanner-card ${ !user ? 'scale-in-out' : null}`}>
             <IoFingerPrintOutline className="icon" />
           </div>
         </div>
@@ -119,7 +84,9 @@ export function GuardMainPage() {
               Members
             </h1>
             {
-              members.map( (member, i) => <p key={i} className={`member-list ${member.access ? 'selected-member' : null}`}>{i+1}. {member.name} | {member.rel}</p>)
+              members.length > 0 
+                ? members.map( (member, i) => <p key={i} className={`member-list ${member.access ? 'selected-member' : null}`}>{i+1}. {member.name} | {member.rel}</p>)
+                : <p className="stroke-left">No members</p>
             }
           </div>
           <button 

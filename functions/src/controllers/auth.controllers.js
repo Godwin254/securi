@@ -16,10 +16,10 @@ exports.login = async (req, res) => {
 }
 
 exports.signup = async (req, res) => {
-      const { firstname, lastname, email, phone, password, role } = req.body;
+      const { firstname, lastname, email, phone, estateId, password, role } = req.body;
 
       try {
-            const user = await authService.registerUser(firstname, lastname, email, phone, role, password)
+            const user = await authService.registerUser(firstname, lastname, email, phone, estateId, role, password)
             res.status(201).send(user);
       } catch (error) {
             res.status(500).send(error.message);

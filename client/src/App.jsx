@@ -25,7 +25,7 @@ import {
 //import { ClientDashboard, ClientAccessHistory, ClientManageDevices, ClientManageMembers, ClientSettings } from './pages/resident'
 
 //Guard
-//import { GuardMainPage } from './pages/guard'
+import { GuardMainPage } from './pages/guard'
 
 function App() {
   return (
@@ -35,6 +35,8 @@ function App() {
         <Route path="/" element={<Registrations />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
+        <Route path="/app/:role/create-estate" element={<Registrations />} />
+        <Route path="/app/:role/configure-info" element={<Registrations />} />
 
         <Route path="/app/admin/" element={<ProtectedRoutes />}>
           <Route path="/app/admin/" element={<Navigate replace to="dashboard" />} />
@@ -45,34 +47,18 @@ function App() {
           <Route path="/app/admin/settings" element={<AdminSettings />} />
         </Route>
         {/*
-
-         <Route path='/' element={<LandingPage />} />
-        <Route path='/auth/signup' element={<Signup />} />
-        <Route path='/app/:uid/register' element={<Register />} />
-        <Route path='/app/:estateId/guard/:sessionId' element={<GuardMainPage />} />
-        
-        <Route path='/app/resident/' element={<ClientDashboard />} />
-        <Route path='/app/resident/manage-members' element={<ClientManageMembers />} />
-        <Route path='/app/resident/manage-devices' element={<ClientManageDevices />} />
-        <Route path='/app/resident/access-history' element={<ClientAccessHistory />} />
-        <Route path='/app/resident/settings' element={<ClientSettings />} />
-
-        
-        **
-         * 
-
+        ************  RESIDENT ROUTES  ************
         <Route path='/app/resident' element={<ProtectedRoutes />} >
           <Route path='/app' element={<ClientDashboard />} />
           <Route path='/app/manage-members' element={<ClientManageMembers />} />
           <Route path='/app/manage-devices' element={<ClientManageDevices />} />
           <Route path='/app/access-history' element={<ClientAccessHistory />} />
           <Route path='/app/settings' element={<ClientSettings />} />
-        </Route>
+        </Route>   */}
 
-        <Route path='/app/admin' element={<ProtectedRoutes />} >
-          <Route path='/app/:estateId/guard/:sessionId' element={<GuardMainPage />} />
+        <Route path='/app/gate/:estateId' element={<ProtectedRoutes />} >
+          <Route path="/app/gate/:estateId" element={<GuardMainPage />} />
         </Route>
-           */}
 
         <Route path="*" element={<ErrorHandler />} />
       </Routes>

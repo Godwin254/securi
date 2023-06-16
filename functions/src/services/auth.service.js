@@ -11,7 +11,7 @@ class AuthService {
     this.usersCollection = db.collection('users');
   }
 
-  async registerUser(firstname, lastname, email,phone , role, password) {
+  async registerUser(firstname, lastname, email, phone,estateId, role, password) {
     const querySnapshot = await this.usersCollection
       .where('email', '==', email)
       .get();
@@ -30,12 +30,18 @@ class AuthService {
       phone,
       role,
       password: hashedPassword,
-      createdAt: new Date().toDateString(),
+      dateadded: new Date().toDateString(),
       deleted: false
     };
+    if (estateId) user.estateId = estateId;
 
     await userRef.set(user);
-    return user;
+    return {
+      uid: user.uid, 
+      firstname: user.firstname, 
+      role: user.role, 
+      estateId: user.estateId
+    };
   }
   //hash password utility
   async #hashpassword (password) {
@@ -49,11 +55,13 @@ class AuthService {
     if (querySnapshot.empty) throw new Error('User does not exist!');
     
     const {uid, firstname, lastname, role, password:pwd} =  querySnapshot.docs[0].data();
+    const doc = querySnapshot.docs[0].data();
+    const estateId =  doc.hasOwnProperty("estateId") ? doc.estateId : uid;
     const isMatch = await bcrypt.compare(password, pwd);
     if (!isMatch) throw new Error('Invalid password!');
 
     const token = jwt.sign({ userId: querySnapshot.docs[0].id }, this.secretKey, { expiresIn: '1h' });
-    return { uid, firstname, lastname, role, token };
+    return { uid, firstname, lastname, role, token, estateId };
   }
 
   async verifyToken(token) {

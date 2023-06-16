@@ -9,20 +9,22 @@ import { setToLocalStorage } from '../utils/utils'
 import { getAllResidents, getAllMembers } from '../services/ResidentServices'
 import { cachedData } from '../utils/utils'
 import { GlobalContextProvider } from '../pages/shared'
+import { getEstateConfig } from '../services/EstateServices'
 
 export  function DashboardLayout({children}) {
   const [residents, setResidents] = useState([])
-  const {firstname, lastname, estate, uid, role} = JSON.parse(getLocalStorageItem("userData"))
+  const {firstname, lastname, uid, role, estate} = JSON.parse(getLocalStorageItem("userData"))
 
   useEffect(() => {
     const fetchData = async () => {
-      const updatedDetails = await getUserDetails(uid, role);
-      setResidents(await getAllResidents());
+      //const estateData = await getEstateConfig(estateId);
+      //setEstate(estateData);
+      //setResidents(await getAllResidents());
       
     };
 
     fetchData();
-  }, []);
+  }, [residents, estate]);
 
   return (
     <GlobalContextProvider residents={estate}>

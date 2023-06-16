@@ -5,38 +5,6 @@ import { getLocalStorageItem, setToLocalStorage } from "../utils/utils";
 import {toast} from 'react-toastify';
 
 const endpoint = `${backendAPI}/admin`;
-//get admin info
-export const getAdminDetails = (adminId) => {
-  const [admin, setAdmin] = useState(() => {
-    const savedAdmin = getLocalStorageItem('adminData');
-    return savedAdmin ? JSON.parse(savedAdmin) : {};
-  });
-    
-  useEffect(() => {
-    const fetchAdminDetails = async () => {
-      try {
-        const response = await fetch(`${endpoint}/${adminId}`);
-        if (response.ok) {
-          const data = await response.json();
-          setAdmin(data);
-          setToLocalStorage('adminData', data);
-        } else {
-              //send error message to the toast service
-          console.error('Failed to fetch admin details:', response.status);
-        }
-      } catch (error) {
-        console.error('Error while fetching admin details:', error);
-      }
-    };
-
-    //fetchAdminDetails();
-    !admin.uid || admin.uid || !admin !== adminId && fetchAdminDetails();
-  }, [adminId]);
-    
-  return admin.uid === adminId ? admin : {};
-};
-   
-
 
 //create new estate
 export const createNewEstate = (adminId, estateData) => {

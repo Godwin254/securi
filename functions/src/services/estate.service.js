@@ -5,12 +5,29 @@ class EstateService{
             this.estatesCollection = db.collection('estates');
       }
 
+      async getAllEstates(){
+            const querySnapshot = await this.estatesCollection
+                  .where('deleted', '==', false)
+                  .get();
+            if(querySnapshot.empty) throw new Error('No estates found!')
+            return querySnapshot.docs.map(doc => doc.data());
+      }
+
       async getEstateConfig(userId){
             const querySnapshot = await this.estatesCollection
                   .where('owner', '==', userId)
                   .where('deleted', '==', false)
                   .get();
             if(querySnapshot.empty) throw new Error('User not assigned to any estate')
+            return querySnapshot.docs[0].data();
+      }
+
+      async getEstate(estateId){
+            const querySnapshot = await this.estatesCollection
+                  .where('estateId', '==', estateId)
+                  .where('deleted', '==', false)
+                  .get();
+            if(querySnapshot.empty) throw new Error('Estate not found!')
             return querySnapshot.docs[0].data();
       }
 

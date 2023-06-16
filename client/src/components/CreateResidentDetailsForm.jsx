@@ -9,7 +9,7 @@ import { getLocalStorageItem } from '../utils/utils';
 export const CreateResidentDetailsForm = ({onsubmit, title, btnText}) => {
 
       const [openDialog, setOpenDialog] = useState(false);
-      const {role, firstname} = JSON.parse(getLocalStorageItem("userData"));
+      //const {role, firstname} = JSON.parse(getLocalStorageItem("userData"));
 
       const validationSchema = Yup.object().shape({
             idnumber: Yup.string().required('ID required'),
@@ -37,7 +37,7 @@ export const CreateResidentDetailsForm = ({onsubmit, title, btnText}) => {
                   <Form className="bg-white shadow-lg w-1/2 px-6 py-8 border-2 border-cyan-50 rounded-md">
                         <h1 className='form-title text-3xl font-semibold'>{title}</h1>
                         <p className='form-subtitle text-md my-2 mb-6'>
-                              {role !== "admin" && firstname || "User"}, Thank you for choosing SECURI. 
+                              Thank you for choosing SECURI. 
                               Please fill in the details below to get started.
                         </p>
 

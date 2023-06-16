@@ -6,9 +6,8 @@ export const setToLocalStorage = (storageName, storageData) => {
       localStorage.setItem(storageName , JSON.stringify(storageData));
 }
 
-export const getLocalStorageItem =  (key) => {
-      let item = localStorage.getItem(key);
-      
+export const getLocalStorageItem = (key) => {
+      const item = localStorage.getItem(key);
       return item;
 };
     
