@@ -2,15 +2,15 @@ import React from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
 import {MdOutlineLogin, MdSpaceDashboard, MdAccessTimeFilled, MdManageAccounts} from 'react-icons/md'
-import {HiUsers} from "react-icons/hi"
-import {RiDeviceFill} from "react-icons/ri"
 
-export function SideNavigation({navigations, handleLogout}) {
+export function SideNavigation({adminNavigations, userNavigations, role, handleLogout}) {
 
       const navigate = useNavigate();
       const onLogoutEvent = () => {
             handleLogout()
       }
+
+      const navigations = role === 'admin' ? adminNavigations : userNavigations
 
   return (
     <aside className="bg-sky-950 flex flex-col py-3">

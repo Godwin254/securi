@@ -5,9 +5,19 @@ const residentService = new ResidentService()
 exports.getAllResidents = async (req, res) => {
       try{
             const residents = await residentService.getAllResidents();
-            return res.status(200).json(residents);
+            return res.status(200).send(residents);
       }catch(error){
             res.status(500).send(error);
+      }
+}
+
+exports.getAllResidentsByEstate = async (req, res) => {
+      const {estateId} = req.params;
+      try{
+            const residents = await residentService.getAllResidentsByEstate(estateId);
+            res.status(200).send(residents);
+      }catch(error){
+            res.send(500).send(error);
       }
 }
 
@@ -15,7 +25,7 @@ exports.getResident = async (req, res) => {
       const {residentId} = req.params;
       try{
             const resident = await residentService.getOneResident(residentId)
-            return res.status(200).json(resident);
+            return res.status(200).send(resident);
       }catch(error){
             res.status(500).send(error);
       }
@@ -26,7 +36,7 @@ exports.updateResident = async (req, res) => {
       
       try{
             await residentService.updateResidentData(residentId, req.body)
-            return res.status(200).json('Resident updated succesfully!');
+            return res.status(200).send('Resident updated succesfully!');
       }catch(error){
             res.status(500).send(error);
       }

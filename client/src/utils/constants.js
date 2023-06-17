@@ -32,7 +32,7 @@ export const adminNavigations = [
       }
 ]
 
-export const residentNavigations = [
+export const userNavigations = [
       {
             url: '/app/resident/dashboard',
             icon: MdSpaceDashboard,
@@ -42,11 +42,6 @@ export const residentNavigations = [
             url: '/app/resident/manage-members',
             icon: HiUsers,
             text: 'Members'
-      },
-      {
-            url: '/app/resident/manage-devices',
-            icon: RiDeviceFill,
-            text: 'Devices'
       },
       {
             url: '/app/resident/access-history',

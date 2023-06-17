@@ -3,7 +3,7 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
 
-export function AddNewMemberDialog({residentId, btnText, memberDetails, closeDialog}) {
+export function AddNewMemberDialog({residentId, btnText, memberDetails, closeDialog, title}) {
 
       const validationSchema = Yup.object().shape({
             firstname: Yup.string().required('First name is required'),
@@ -29,6 +29,7 @@ export function AddNewMemberDialog({residentId, btnText, memberDetails, closeDia
                   validationSchema={validationSchema}
                   onSubmit={handleCreateNewMember}>
                   <Form className="bg-white shadow-lg w-1/4 px-5 py-8 border-2 border-cyan-50 rounded-md">
+                        <h1 className='form-title text-3xl font-semibold'>{title}</h1>
                         <div>
                               <Field type="text" className="border-b text-lg border-ccc w-full px-2 py-2 outline-none my-1" name="firstname" placeholder="Member first name"/>
                               <ErrorMessage className='text-red-200' name='firstname' component="div"/>

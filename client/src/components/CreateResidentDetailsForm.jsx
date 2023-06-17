@@ -1,15 +1,17 @@
 import React, {useState} from 'react'
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import {GrFormAdd} from 'react-icons/gr'
 import { AddNewMemberDialog } from './AddNewMemberDialog';
 import { getLocalStorageItem } from '../utils/utils';
 
-export const CreateResidentDetailsForm = ({onsubmit, title, btnText}) => {
+export const CreateResidentDetailsForm = ({handleSubmit, title, btnText, formWidth, userData}) => {
 
       const [openDialog, setOpenDialog] = useState(false);
-      //const {role, firstname} = JSON.parse(getLocalStorageItem("userData"));
+      
+      const {idnumber, gender, dob, house, vehicle} = userData;
 
       const validationSchema = Yup.object().shape({
             idnumber: Yup.string().required('ID required'),
@@ -25,16 +27,17 @@ export const CreateResidentDetailsForm = ({onsubmit, title, btnText}) => {
             })
       })
       
-      const handleUpdateResidentDetails = (values) => {
-            console.log(values);
+      const handleUpdateResidentDetails = async (values) => {
+            await handleSubmit(values);
+            if(location.pathname.includes("configure-info")) navigate("/auth/login");
       }
 
       return (
             <Formik 
-                  initialValues={{idnumber: "", gender: "", dob: "", house: "", vehicle: {make: "", color: "", model: "", numberplate: ""}}}
+                  initialValues={{idnumber: `${idnumber || ""}`, gender: `${gender || ""}`, dob: `${dob || ""}`, house: `${house || ""}`, vehicle: {make: `${vehicle.make || ""}`, color: `${vehicle.color || ""}`, model: `${vehicle.model || ""}`, numberplate: `${vehicle.numberplate || ""}`}}}
                   validationSchema={validationSchema}
                   onSubmit={handleUpdateResidentDetails}>
-                  <Form className="bg-white shadow-lg w-1/2 px-6 py-8 border-2 border-cyan-50 rounded-md">
+                  <Form className={`bg-white shadow-lg ${formWidth || "w-1/2"} px-6 py-8 border-2 border-cyan-50 rounded-md`}>
                         <h1 className='form-title text-3xl font-semibold'>{title}</h1>
                         <p className='form-subtitle text-md my-2 mb-6'>
                               Thank you for choosing SECURI. 
@@ -88,7 +91,7 @@ export const CreateResidentDetailsForm = ({onsubmit, title, btnText}) => {
                         <div className='mb-8'>
                               <h1 className='form-title font-semibold'>Members Details:</h1>
                               {
-                                    openDialog && <AddNewMemberDialog closeDialog={setOpenDialog} btnText="Create"/>
+                                    openDialog && <AddNewMemberDialog closeDialog={setOpenDialog} btnText="Create" title={"Add New Member"}/>
                               }
                               <button type='button'  className='bg-cyan-50 px-3 py-2 rounded-md flex flex-row items-center cursor-pointer text-cyan-200' onClick={() => setOpenDialog(!openDialog)}>
                                     <GrFormAdd className='mr-2 text-2xl'/>

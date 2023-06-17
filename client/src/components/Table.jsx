@@ -3,7 +3,7 @@ import {AiOutlinePlus, AiFillDelete} from 'react-icons/ai'
 import { MdOutlineFilterList } from 'react-icons/md'
 import { useGlobalContext } from '../pages/shared'
 
-export function Table({theads=[], actions=[], data=[]}) {
+export function Table({tableHeaders=[], actions=[], tableData=[], rowDataKeys=[]}) {
 
   return (
 
@@ -18,24 +18,31 @@ export function Table({theads=[], actions=[], data=[]}) {
                   <thead>
                         <tr>
                               {
-                                   theads.length > 0 && theads.map((thead, index) => <th key={index}>{thead}</th> )
+                                   tableHeaders.length > 0 && tableHeaders.map((header, index) => <th key={index}>{header}</th> )
                               }     
                         </tr>
                   </thead>
                   <tbody>
-                        <tr>
-                              {
-                                    data.length === 0 && <td colSpan={theads.length} className='text-center'>No data available</td>
-                              }
-                              {
-                                    data.length > 0 && data.map((dt, index) => <td key={index}>{dt}</td> )
-                              }
-                              <td>
-                                    {
-                                          actions.length > 0 && actions.map((action, index) => <span key={index}>{action}</span> )
-                                    }
-                              </td>
-                        </tr>
+
+                        {
+                              tableData.length > 0 && tableData.map((rowData, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                          {
+                                               rowDataKeys.map((key, cellIndex) => <td key={cellIndex}>{rowData[key] || "--"}</td>)
+                                          }
+                                          {
+
+                                                actions.length > 0 && (
+                                                      <td>
+                                                            {
+                                                                  actions.map((action, actionIndex) => (<span className='px-2 cursor-pointer' key={actionIndex}>{action}</span>) )
+                                                            }
+                                                      </td>
+                                                )
+                                          }
+                                    </tr>
+                              ))
+                        }
                   </tbody>
             </table>
       </>

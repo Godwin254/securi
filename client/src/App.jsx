@@ -10,7 +10,13 @@ import { ProtectedRoutes } from './auth/ProtectedRoutes';
 import { AddNewMemberDialog } from './components';
 
 //shared
-import { LandingPage, Login, Signup, ErrorHandler, Registrations } from './pages/shared';
+import { 
+  LandingPage, 
+  Login, 
+  Signup, 
+  ErrorHandler, 
+  Registrations 
+} from './pages/shared';
 
 //admin
 import {
@@ -22,7 +28,13 @@ import {
 } from './pages/admin';
 
 //resident
-//import { ClientDashboard, ClientAccessHistory, ClientManageDevices, ClientManageMembers, ClientSettings } from './pages/resident'
+import { 
+  ClientDashboard, 
+  ClientAccessHistory, 
+  ClientManageDevices, 
+  ClientManageMembers, 
+  ClientSettings 
+} from './pages/resident'
 
 //Guard
 import { GuardMainPage } from './pages/guard'
@@ -32,7 +44,7 @@ function App() {
     <div className="">
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<Registrations />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
         <Route path="/app/:role/:uid/create-estate" element={<Registrations />} />
@@ -46,15 +58,15 @@ function App() {
           <Route path="/app/admin/access-history" element={<AdminAccessHistory />} />
           <Route path="/app/admin/settings" element={<AdminSettings />} />
         </Route>
-        {/*
-        ************  RESIDENT ROUTES  ************
+       
         <Route path='/app/resident' element={<ProtectedRoutes />} >
-          <Route path='/app' element={<ClientDashboard />} />
-          <Route path='/app/manage-members' element={<ClientManageMembers />} />
-          <Route path='/app/manage-devices' element={<ClientManageDevices />} />
-          <Route path='/app/access-history' element={<ClientAccessHistory />} />
-          <Route path='/app/settings' element={<ClientSettings />} />
-        </Route>   */}
+          <Route path="/app/resident/" element={<Navigate replace to="dashboard" />} />
+          <Route path='/app/resident/dashboard' element={<ClientDashboard />} />
+          <Route path='/app/resident/manage-members' element={<ClientManageMembers />} />
+          <Route path='/app/resident/manage-devices' element={<ClientManageDevices />} />
+          <Route path='/app/resident/access-history' element={<ClientAccessHistory />} />
+          <Route path='/app/resident/settings' element={<ClientSettings />} />
+        </Route> 
 
         <Route path='/app/gate/:estateId' element={<ProtectedRoutes />} >
           <Route path="/app/gate/:estateId" element={<GuardMainPage />} />

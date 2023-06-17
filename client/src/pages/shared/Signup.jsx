@@ -29,8 +29,6 @@ export function Signup() {
             fetchData(); 
       }, [])
 
-      //console.log('data', estates);
-      //handle login
       const handleRegisterUser = async (e) => {
             e.preventDefault();
 

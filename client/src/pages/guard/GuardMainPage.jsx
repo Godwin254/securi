@@ -51,10 +51,10 @@ export function GuardMainPage() {
 
       <div className="page-body">
         <div className="scanner">
-          <div className={`scanner-card ${  !user ? 'scale-in-out' : null}`}>
+          <div className={`scanner-card ${  user ? 'scale-in-out' : null}`}>
             <FaUserTag className="icon" />
           </div>
-          <div className={`scanner-card ${ !user ? 'scale-in-out' : null}`}>
+          <div className={`scanner-card ${ user ? 'scale-in-out' : null}`}>
             <IoFingerPrintOutline className="icon" />
           </div>
         </div>

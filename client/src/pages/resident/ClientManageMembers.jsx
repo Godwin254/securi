@@ -1,47 +1,31 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-import SharedNavbar from '../../components/SharedNavbar'
-import SideNavigation from '../../components/SideNavigation'
-import PageHeader from '../../components/DashboardHeader'
-import AlertBox from '../../components/AlertBox'
-import Table from '../../components/Table'
-import { ClientLinks, accessTableHead } from '../../utils/utils'
+import { Table } from '../../components/'
+import { DashboardLayout } from '../../layout'
+import { AddNewMemberDialog } from '../../components/'
 
 export function ClientManageMembers() {
+      const [open, setOpen] = useState(false);
+      const handleClickOpen = () => {
+            setOpen(true);
+      }
   return (
-    <div className="page-layout-grid">
-      <SharedNavbar />
-      <SideNavigation 
-            links={ClientLinks}
-      />
+      <DashboardLayout>
 
-      <main className='main-content-space'>
-            {
-                  true  ? <AlertBox type='success' text='Welcome to home page' /> : null
-            }
-            <PageHeader title={"Manage Members"}/>
+            <div className='grid grid-col-[1fr, 400px]'>
 
-            <div className='container'>
-                  <Table 
-                    theads={accessTableHead}
-                  />
-
-                  <div className='controls'>
-                        <div className="card">
-                              <h4>Update Resident</h4>
-                        </div>
-                        <div className="card">
-                              <h4>Manage Devices</h4>
-                        </div>
-                        <div className="card">
-                              <h4>Add New</h4>
-                        </div>
+                  <div className='mb-6 flex flex-row items-end justify-end'>
+                        <button onClick={handleClickOpen} type="submit" className='bg-sky-950 px-5 py-2 rounded-md text-cyan-50' >Create Member</button>
                   </div>
-
+                  {
+                        open && <AddNewMemberDialog btnText="Create" closeDialog={setOpen} title={"Add New Member"} />
+                  }
+                  <Table 
+                        theads={["Name", "Vehicle", "House", "Time", "Status", "Actions"]}
+                        data={["John Doe", "KCV 144V", "House 408", "1100hrs", "Unknown"]}
+                        actions={["Edit", "Delete"]}
+                  />
             </div>
-
-      </main>
-
-    </div>
+      </DashboardLayout>      
   )
 }

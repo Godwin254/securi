@@ -4,17 +4,22 @@ import { Table } from '../../components/'
 import { DashboardLayout } from '../../layout'
 import { useGlobalContext } from '../shared'
 import { GlobalContextProvider } from '../shared'
+import { getLocalStorageItem } from '../../utils/utils'
 
 export function AdminDashboard() {
+
+  const residents = JSON.parse(getLocalStorageItem('estateResidents'))
 
   return (
     <GlobalContextProvider residents={["residents"]}>
       <DashboardLayout>
-            <Table 
-              theads={["Name", "Vehicle", "House", "Time", "Status", "Actions"]}
-              data={["John Doe", "KCV 144V", "House 408", "1100hrs", "Unknown"]}
-              actions={["Edit", "Delete"]}
-            />
+        <Table 
+          tableHeaders={["First Name", "Last Name", "Phone", "House", "Action"]}
+          actions={["View","Edit", "Delete"]}
+          tableData={[]}
+          rowDataKeys={["firstname", "lastname", "phone", "house"]}
+
+        />
       </DashboardLayout>
     </GlobalContextProvider>
   )

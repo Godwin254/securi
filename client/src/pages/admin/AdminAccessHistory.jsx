@@ -6,7 +6,13 @@ import { DashboardLayout } from '../../layout'
 export function AdminAccessHistory() {
   return (
     <DashboardLayout>
-       <Table />
+       <Table 
+        tableHeaders={["Resident", "Vehicle", "Number Plate", "Accessed By", "Access Time", "Action"]}
+        actions={["View","Archive"]}
+        tableData={[]}
+        rowDataKeys={["firstname", "lastname", "phone", "house"]}
+
+      />
     </DashboardLayout>
     
   )

@@ -1,28 +1,27 @@
 import React from 'react'
 
-import SharedNavbar from '../../components/SharedNavbar'
-import SideNavigation from '../../components/SideNavigation'
-import AlertBox from '../../components/AlertBox'
-import RegisterResidentForm from '../../components/RegisterResidentForm'
-import { ClientLinks } from '../../utils/utils'
+import { DashboardLayout } from '../../layout'
+import { CreateResidentDetailsForm } from '../../components/'
+import { updateResidentRecord } from '../../services/ResidentServices'
+import { getLocalStorageItem } from '../../utils/utils'
+import { getUserDetails } from '../../services/AuthService'
 
 export function ClientSettings() {
+
+  const {uid, role, vehicle, gender, dob, house, idnumber} = JSON.parse(getLocalStorageItem('userData'))
+
+  const userInfo = {
+    vehicle, gender, dob, house, idnumber
+  }
+
+  const handleUpdateResidentDetails = async (data) => {
+    await updateResidentRecord(uid,data)
+    await getUserDetails(uid, role)
+    console.log("Update Resident Details")
+  }
   return (
-    <div className="page-layout-grid">
-      <SharedNavbar />
-      <SideNavigation 
-        links={ClientLinks}
-      />
-
-      <main className='main-content-space'>
-        {
-          true  ? <AlertBox type='success' text='Welcome to home page' /> : null
-        }
-
-        <RegisterResidentForm title='Account Configuration' btnText='Save Changes' />
-
-      </main>
-
-    </div>
+    <DashboardLayout>
+      <CreateResidentDetailsForm handleSubmit={handleUpdateResidentDetails} userData={userInfo} title="Resident Settings" btnText="Save Changes" formWidth="w-1/1"/>
+    </DashboardLayout>
   )
 }

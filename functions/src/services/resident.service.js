@@ -35,6 +35,34 @@ class ResidentService{
             return residents;
       }
 
+      //get all residents who belong to given estate
+      async getAllResidentsByEstate(estateId){
+            const residents = [];
+            const querySnapshot = await this.userCollection
+                  .where('role', '==', 'user')
+                  .where('deleted', '==', false)
+                  .where('estateId', '==', estateId)
+                  .get();
+            
+            if (querySnapshot.empty) return residents; //no residents found for this estate
+
+            await Promise.all(
+                  querySnapshot.docs.map(
+                        async (residentDoc) => {
+                              const memberData = await this.memberService.getAllMembers(residentDoc.id)
+                              const members = memberData.length ? memberData : [];
+
+                              const residentData = {
+                                    ...residentDoc.data(),
+                                    members
+                              }
+                              residents.push(residentData)
+                        }
+                  )
+            )
+            return residents;
+      }
+
       async getOneResident(residentId){
             const querySnapshot = await this.userCollection
                   .where("uid", '==', residentId)
@@ -51,7 +79,7 @@ class ResidentService{
             : {};
             const members = (typeof membersData === 'object' && Object.keys(membersData).length > 0)
                   ? membersData
-                  : {};
+                  : [];
 
             const {estateName, location } = estate;
             const resident = {

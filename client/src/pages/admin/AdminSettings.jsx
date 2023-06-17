@@ -5,14 +5,16 @@ import { CreateEstateForm } from '../../components'
 
 import { getLocalStorageItem } from '../../utils/utils';
 import { updateEstateConfig } from '../../services/AdminServices';
+import { getUserDetails } from '../../services/AuthService';
 
 
 export function AdminSettings() {
 
-  const {estate, uid} = JSON.parse(getLocalStorageItem("userData"));
+  const {estate, uid, role} = JSON.parse(getLocalStorageItem("userData"));
 
   const handleUpdateSettings =  async ( newEstateData) => {
     await updateEstateConfig(uid, newEstateData);
+    await getUserDetails(uid, role);
   }
   return (
     <DashboardLayout>

@@ -12,6 +12,7 @@ module.exports = (app) => {
 
       //user operations
       app.get('/residents/', controller.getAllResidents);
+      app.get('/residents/estates/:estateId', controller.getAllResidentsByEstate); //get all residents by estate
       app.get('/residents/:residentId',  controller.getResident);
       app.put('/residents/:residentId', controller.updateResident);
       app.delete('/residents/:residentId', controller.deleteResident);
