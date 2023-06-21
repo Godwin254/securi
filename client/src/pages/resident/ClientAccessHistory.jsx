@@ -6,11 +6,13 @@ import { DashboardLayout } from '../../layout'
 export function ClientAccessHistory() {
   return (
     <DashboardLayout>
-            <Table 
-                theads={["Name", "Vehicle", "House", "Time", "Status", "Actions"]}
-                data={["John Doe", "KCV 144V", "House 408", "1100hrs", "Unknown"]}
-                actions={["Edit", "Delete"]}
-            />
+      <Table 
+        tableHeaders={["Device ID", "Device", "Accessed By", "Access Time", "Action"]}
+        actions={["View", "Delete"]}
+        tableData={[]}
+        rowDataKeys={["firstname", "lastname", "email", "relationship"]}
+
+      />
     </DashboardLayout>
   )
 }

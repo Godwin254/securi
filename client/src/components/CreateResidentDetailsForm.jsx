@@ -5,13 +5,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import {GrFormAdd} from 'react-icons/gr'
 import { AddNewMemberDialog } from './AddNewMemberDialog';
-import { getLocalStorageItem } from '../utils/utils';
 
 export const CreateResidentDetailsForm = ({handleSubmit, title, btnText, formWidth, userData}) => {
 
       const [openDialog, setOpenDialog] = useState(false);
-      
       const {idnumber, gender, dob, house, vehicle} = userData;
+      const location = useLocation();
+      const navigate = useNavigate();
 
       const validationSchema = Yup.object().shape({
             idnumber: Yup.string().required('ID required'),

@@ -81,6 +81,8 @@ export const getMember = async (uid, memberId) => {
 export const addMember = async (uid, data) => {
       const response = await axios.post(`${backendAPI}/residents/${uid}/members`, data, config);
       if(response.status !== 201) toast.error('Error adding member');
+
+      toast.success('Member added successfully');
       return response.data;
 }
 

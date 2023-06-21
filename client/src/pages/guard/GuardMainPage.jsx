@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import io from 'socket.io-client';
 
 import { MdPowerSettingsNew } from 'react-icons/md';
 import { FaUserTag, FaUserAlt, FaCarAlt } from 'react-icons/fa';
@@ -19,6 +20,10 @@ export function GuardMainPage() {
       setEstate(data);
     }
     fetchData();
+
+    return () => {
+
+    }
   }, [])
 
   const handleOpenGate = (e) => {

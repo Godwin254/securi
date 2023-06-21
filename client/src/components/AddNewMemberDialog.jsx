@@ -3,7 +3,7 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
 
-export function AddNewMemberDialog({residentId, btnText, memberDetails, closeDialog, title}) {
+export function AddNewMemberDialog({residentId, btnText, closeDialog, title, handleSubmit}) {
 
       const validationSchema = Yup.object().shape({
             firstname: Yup.string().required('First name is required'),
@@ -12,13 +12,12 @@ export function AddNewMemberDialog({residentId, btnText, memberDetails, closeDia
             relationship: Yup.string().required('Include your relationship.'),
       })
       
-      const handleCreateNewMember = (values) => {
-            console.log(values);
+      const handleCreateNewMember = async (values) => {
+            await handleSubmit(values);
       }
 
       const handleClose = () => {
             closeDialog(false);
-            console.log("Closed!")
       }
 
 
