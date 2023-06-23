@@ -8,9 +8,9 @@ import { logoutUser, getUserDetails } from '../services/AuthService'
 import { getAllResidents, getAllResidentsByEstate } from '../services/ResidentServices'
 import { cachedData } from '../utils/utils'
 import { GlobalContextProvider } from '../pages/shared'
+import { getAllEstateTags } from '../services/EstateServices'
 
 export  function DashboardLayout({children}) {
-  const [residents, setResidents] = useState([])
   const {firstname, lastname, uid, role, estate} = JSON.parse(getLocalStorageItem("userData"))
 
   const pageTitle = `SECURI ${role === 'admin' ? 'Admin' : 'Resident'} | ${estate.estateName}`;
@@ -19,7 +19,7 @@ export  function DashboardLayout({children}) {
     document.title = pageTitle;
     const fetchData = async () => {
       role === "admin" && await getAllResidentsByEstate(estate.estateId);
-      //role === "user" && await getAllResidents(uid);
+      role === "admin" && await getAllEstateTags(estate.estateId);
     };
 
     fetchData();

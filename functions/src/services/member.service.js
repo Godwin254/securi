@@ -13,7 +13,7 @@ class MemberService{
       .where('deleted', '==', false)
       .get();
 
-    //if (querySnapshot.empty) throw new Error('No members found!')
+    if (querySnapshot.empty) return members;
 
     querySnapshot.docs.map(
       memberDoc =>  members.push({...memberDoc.data()})
@@ -28,7 +28,7 @@ class MemberService{
       .where('deleted', '==', false)
       .get();
 
-    if (querySnapshot.empty) throw new Error('Member not found!')
+    if (querySnapshot.empty) return {};
 
     return querySnapshot.docs[0].data();
   }

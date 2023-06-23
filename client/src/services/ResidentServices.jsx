@@ -62,6 +62,12 @@ export const deleteResidentRecord = async (uid) => {
       return response.data;
 }
 
+export const getResidentAccessLogs = async (uid) => {
+      const response = await axios.get(`${backendAPI}/access/user/${uid}/`, config);
+      if(response.status !== 200) toast.error('Error fetching resident access logs');
+      return response.data;
+}
+
 //members operation
 export const getAllMembers = async (uid) => {
       const resident = await getResident(uid);
@@ -99,3 +105,5 @@ export const deleteMember = async (uid, memberId) => {
       if(response.status !== 200) toast.error('Error deleting member');
       return response.data;
 }
+
+

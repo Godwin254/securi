@@ -38,6 +38,7 @@ import {
 
 //Guard
 import { GuardMainPage } from './pages/guard'
+import { CreateNewTagDialog } from './components';
 
 function App() {
   return (

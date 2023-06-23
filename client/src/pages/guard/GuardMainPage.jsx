@@ -8,6 +8,7 @@ import {toast} from 'react-toastify';
 import { logoutUser } from '../../services/AuthService';
 import { getDateFormat, getLocalStorageItem } from '../../utils/utils';
 import { getEstateById } from '../../services/EstateServices';
+import { backendAPI } from '../../utils/constants';
 
 export function GuardMainPage() {
   const [estate, setEstate] = useState({estateName: "Dummy Estate", location: "Dummy Location"})
@@ -15,6 +16,16 @@ export function GuardMainPage() {
   const {estateId} = JSON.parse(getLocalStorageItem("authData"));
 
   useEffect(() => {
+
+    /*socket connection
+    const socket = io(`${backendAPI}`, {transports: ['websocket']});
+    socket.on('connect', () => {
+      console.log('Socket connected to server');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Socket disconnected from server');
+    });*/
     const fetchData = async () => {
       const data = await getEstateById(estateId)
       setEstate(data);
@@ -22,7 +33,7 @@ export function GuardMainPage() {
     fetchData();
 
     return () => {
-
+      //socket.disconnect();
     }
   }, [])
 

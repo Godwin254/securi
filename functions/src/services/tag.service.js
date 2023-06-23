@@ -1,7 +1,9 @@
 const db = require('../config/db');
+const ResidentService = require('./resident.service');
 
 class Tag {
       constructor(){
+            this.residentService = new ResidentService();
             this.tagCollection = db.collection('tags');
       }
       
@@ -10,6 +12,8 @@ class Tag {
             const newTag = {
                   ...tagData,
                   deleted: false,
+                  assinged: true,
+                  type: "tag",
                   createdAt: new Date().toDateString(),
             }
             const tagRef = await this.tagCollection.add(newTag);
@@ -26,7 +30,9 @@ class Tag {
 
             if(querySnapshot.empty) throw new Error('Tag not found!');
 
-            return querySnapshot.docs[0].data();
+            const tagRef = querySnapshot.docs[0].data();
+            const residentData = await this.residentService.getOneResident(tagRef.residentId);
+            return {...tagRef, resident: `${residentData.firstname} ${residentData.lastname}`};
       }
       
       async getAllTags(estateId){
@@ -37,11 +43,23 @@ class Tag {
                   .get();
             if(querySnapshot.empty) throw new Error('No Tags available!');
             
-            querySnapshot.docs.map(tagDoc => {
-                  const tagData = tagDoc.data();
-                  tags.push({...tagData})
-            });
+            await Promise.all(
+                  querySnapshot.docs.map(
+                        async (tagDoc) => {
+                              const tag = tagDoc.data();
+                              const residentData = await this.residentService.getOneResident(tag.residentId);
+                              const resident = residentData ? residentData : {};
+                              const tagData = {
+                                    ...tagDoc.data(),
+                                    resident:  `${resident.firstname} ${resident.lastname}`,
+                              }     
+                              tags.push(tagData)
+                        }
+                  )
+            )
+
             return tags;
+            
       }
       
       async updateTag(tagId, tagData){

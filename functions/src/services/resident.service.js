@@ -71,23 +71,24 @@ class ResidentService{
                   .get()
             
             if (querySnapshot.empty) throw new Error('Resident not found!')
-
+            const residentData = querySnapshot.docs[0].data();
             const membersData = await this.memberService.getAllMembers(querySnapshot.docs[0].id)
-            const estateData = await this.estateService.getUserEstateConfigs(querySnapshot.docs[0].id)
-            const estate = (typeof estateData === 'object' && Object.keys(estateData).length > 0 && !estateData.deleted)
+            const estateData = await this.estateService.getEstate(residentData.estateId)
+            const estate = (typeof estateData === 'object' && Object.keys(estateData).length > 0 )
             ? estateData
             : {};
             const members = (typeof membersData === 'object' && Object.keys(membersData).length > 0)
                   ? membersData
                   : [];
 
-            const {estateName, location } = estate;
+            const {estateName, location, estateId } = estate;
             const resident = {
-                  ...querySnapshot.docs[0].data(),
+                  ...residentData,
                   members,
                   estate: {
                         estateName,
-                        location
+                        location,
+                        estateId
                   }
             }
             return resident;     
@@ -104,8 +105,7 @@ class ResidentService{
 
             await querySnapshot.docs[0].ref.update(update)
             const updatedResident = (await querySnapshot.docs[0].ref.get()).data();
-            console.log(updatedResident.estateId);
-            await this.estateService.assignResidentToEstate(updatedResident.estateId, residentId)
+           // await this.estateService.assignResidentToEstate(updatedResident.estateId, residentId)
             return updatedResident;
       }
 
