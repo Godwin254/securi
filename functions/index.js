@@ -22,6 +22,7 @@ require("./src/routes/guard.routes")(app);
 require("./src/routes/estate.routes")(app);
 require("./src/routes/access.routes")(app);
 require("./src/routes/tag.routes")(app);
+require("./src/routes/fingerprint.routes")(app);
 
 /*
 io.on("connect", (socket) => {

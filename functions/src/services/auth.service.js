@@ -31,7 +31,8 @@ class AuthService {
       role,
       password: hashedPassword,
       dateadded: new Date().toDateString(),
-      deleted: false
+      deleted: false,
+      referenceType: "owner"
     };
     if (estateId) user.estateId = estateId;
 

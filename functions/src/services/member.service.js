@@ -41,7 +41,8 @@ class MemberService{
       residentId,
       ...newMemberData,
       createdAt: new Date().toDateString(),
-      deleted: false
+      deleted: false,
+      referenceType: "member"
     }
     await memberRef.set(memberData);
 
