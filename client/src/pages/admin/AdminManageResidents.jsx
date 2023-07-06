@@ -13,7 +13,7 @@ export function AdminManageResidents() {
       <Table 
         tableHeaders={["First Name", "Last Name", "Phone", "House", "Action"]}
         actions={["View","Edit", "Delete"]}
-        tableData={residents}
+        tableData={residents || []}
         rowDataKeys={["firstname", "lastname", "phone", "house"]}
 
       />
