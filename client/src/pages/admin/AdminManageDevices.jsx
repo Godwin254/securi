@@ -30,7 +30,7 @@ export function AdminManageDevices() {
       <Table 
         tableHeaders={["Device ID", "Device Type", "Date Added", "Assigned To", "Action"]}
         actions={["Add","Edit", "Delete"]}
-        tableData={estateTags}
+        tableData={estateTags || []}
         rowDataKeys={["tagId", "type", "createdAt", "resident"]}
 
       />

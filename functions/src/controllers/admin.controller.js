@@ -6,8 +6,7 @@ exports.getAdminData =  async (req, res) => {
       const { adminId } = req.params;
 
       try{
-            const admin = await adminService.getAdminData(adminId)
-            console.log(admin)
+            const admin = await adminService.getAdminData(adminId);
             res.status(200).send(admin)
       }catch(error){
             console.log(error)

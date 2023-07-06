@@ -2,8 +2,8 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
-    "serve": "firebase emulators:start --import=../data --export-on-exit",
-    "dev": "nodemon --trace-warnings index.js ",
+    "serve": "firebase emulators:start --only firestore --import=../data --export-on-exit",
+    "dev": "nodemon  index.js ",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",

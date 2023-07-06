@@ -20,7 +20,8 @@ export const getAllEstates = async () => {
             //if (response.status === 200) toast.warning(`Estates fetched successfully!`, { position: toast.POSITION.TOP_CENTER});
             return response.data;
       } catch (error) {
-            toast.error(`No Estates available or error occurred `, { position: toast.POSITION.TOP_CENTER});
+            console.log(`No Estates available or error occurred `)
+            //toast.error(`No Estates available or error occurred `, { position: toast.POSITION.TOP_CENTER});
       }
 }
 
@@ -81,6 +82,7 @@ export const getAllEstateTags = async (estateId) => {
             setToLocalStorage('estateTags', response.data);
             return response.data;
       } catch (error) {
-            toast.error(`Error occured while fetching estate tags: ${error.message} `, { position: toast.POSITION.TOP_CENTER});
+            console.log(`Error occured while fetching estate tags: ${error.message} `)
+            //toast.error(`Error occured while fetching estate tags: ${error.message} `, { position: toast.POSITION.TOP_CENTER});
       }
 }

@@ -6,10 +6,8 @@ exports.getUserByFingerprint = async (req, res) => {
       const { fingerprintId } = req.params;
 
       try {
-            const {firstname, lastname, email, referenceType} = await fingerprintService.getUserByFingerprintId(fingerprintId);
-
-            const user = {firstname, lastname, email, referenceType}
-
+            const user = await fingerprintService.getUserByFingerprintId(fingerprintId);
+            req.io.emit("accessFingerprint", user);
             res.status(200).send(user);
 
       }catch(error){

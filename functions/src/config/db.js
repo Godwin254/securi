@@ -9,6 +9,9 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+const settings = { host: 'localhost', port: 8080, ssl: false };
+
+db.settings(settings);
 
 
 module.exports = db;

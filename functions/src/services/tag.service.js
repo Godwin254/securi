@@ -28,7 +28,7 @@ class Tag {
                   .where('deleted', '==', false)
                   .get();
 
-            if(querySnapshot.empty) throw new Error('Tag not found!');
+            if(querySnapshot.empty) console.log("working")//throw new Error('Tag not found!');
 
             const tagRef = querySnapshot.docs[0].data();
             const residentData = await this.residentService.getOneResident(tagRef.residentId);

@@ -14,7 +14,7 @@ export function Table({tableHeaders=[], actions=[], tableData=[], rowDataKeys=[]
                         Filter
                   </span>
             </div>
-            <table className='dashboard__main__panel2__left-view__table bg-white shadow-sm px-2'>
+            <table className='dashboard__main__panel2__left-view__table bg-white shadow-sm px-2 overflow-auto'>
                   <thead>
                         <tr>
                               {
@@ -22,7 +22,7 @@ export function Table({tableHeaders=[], actions=[], tableData=[], rowDataKeys=[]
                               }     
                         </tr>
                   </thead>
-                  <tbody>
+                  <tbody className='max-h-[60vh]'>
 
                         {
                               tableData.length > 0 && tableData.map((rowData, rowIndex) => (

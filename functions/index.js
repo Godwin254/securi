@@ -1,20 +1,21 @@
-const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
 const morgan = require('morgan');
-const http = require('http');
-const socketio = require("socket.io");
-require("dotenv").config();
+
 const app = express();
-//const server = http.createServer(app);
-//const io = socketio(server);
+const server = require('http').Server(app);
+const io = require("socket.io")(server);
+require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
+app.use((req, res, next) => {
+      req.io = io; // Attach the io object to the request
+      next();
+});
 
-
-//import routes
+// import routes
 require("./src/routes/auth.routes")(app);
 require("./src/routes/admin.routes")(app);
 require("./src/routes/resident.routes")(app);
@@ -24,23 +25,26 @@ require("./src/routes/access.routes")(app);
 require("./src/routes/tag.routes")(app);
 require("./src/routes/fingerprint.routes")(app);
 
-/*
-io.on("connect", (socket) => {
-      console.log("user connected");
 
-      socket.on("disconnect", () => {
-            console.log("user disconnected");
-      });
+io.on("connect", (socket) => {
+  console.log("Client connected");
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 });
 
 app.get("/", (req, res) => {
-      res.send("Hello World");
+  res.send("Hello World from Brown's server.");
 });
 
-//server
 const port = process.env.PORT || 8000;
-server.listen(port, () => {
-      console.log(`Server is running on port ${port}.`);
-})*/
+server.listen(port,'localhost', () => {
+  console.log(`Server is running on:  http://localhost:${port}`);
+});
 
-exports.api = functions.https.onRequest(app);
+server.listen(port,'0.0.0.0', () => {
+      console.log(`Global access on: http://102.220.230.247:${port}`);
+});
+
+

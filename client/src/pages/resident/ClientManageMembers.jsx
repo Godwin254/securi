@@ -39,7 +39,7 @@ export function ClientManageMembers() {
                   <Table 
                         tableHeaders={["First Name", "Last Name", "email", "Relationship", "Action"]}
                         actions={["View","Edit", "Delete"]}
-                        tableData={members}
+                        tableData={members || []}
                         rowDataKeys={["firstname", "lastname", "email", "relationship"]}
 
                   />

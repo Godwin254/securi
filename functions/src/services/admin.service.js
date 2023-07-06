@@ -1,20 +1,6 @@
 const db = require('../config/db');
 const EstateService = require('./estate.service');
 
-// require estate service
-//require resident service
-//require guard service
-
-
-/**
- * Update admin details
- * soft delete residents and guards
- * update residents and guard details
- * Create estate
- * update estate configuration
- * delete estates
- *  */ 
-
 class AdminService{
   constructor(){
     this.estateService = new EstateService()

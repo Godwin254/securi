@@ -26,7 +26,7 @@ export function AdminAccessHistory() {
        <Table 
         tableHeaders={["Resident", "Vehicle", "Number Plate", "Access Date", "Access Time", "Action"]}
         actions={["View","Archive"]}
-        tableData={accessLogs}
+        tableData={accessLogs || []}
         rowDataKeys={["resident", "vehicle", "numberplate", "day", "accessTime"]}
 
       />

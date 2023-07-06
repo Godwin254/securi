@@ -17,7 +17,6 @@ exports.createTag =  async (req, res) => {
 exports.getTag =  async (req, res) => {
       const { tagId } = req.params;
       try{
-            console.log(tagId)
             const tag = await tagService.getTag(tagId);
 
             //store access and access time
@@ -30,9 +29,11 @@ exports.getTag =  async (req, res) => {
                   deleted: false
             }
             await accessService.createAccess(accessData);
+            req.io.emit("accessTag", accessData);
             res.status(200).send(tag)
       }catch(error){
             res.status(500).send(error);
+            console.log(error)
       }
 }
 

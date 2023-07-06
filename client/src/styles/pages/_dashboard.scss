@@ -49,8 +49,10 @@
                         padding: 1rem;
 
                         &__table{
+                              position: relative;
                               border-collapse: collapse;
                               width: 100%;
+                              overflow-y: scroll;
                               td,th{
                                     border: 1px solid #ddd;
                                     padding: 8px;
