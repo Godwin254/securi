@@ -95,6 +95,8 @@ export const addMember = async (uid, data) => {
 export const updateMember = async (uid, memberId, data) => {
       const response = await axios.put(`${backendAPI}/residents/${uid}/members/${memberId}`, data, config);
       if(response.status !== 200) toast.error('Error updating member');
+
+      toast.success('Resident details updated successfully');
       return response.data;
 }
 

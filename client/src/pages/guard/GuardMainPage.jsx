@@ -11,12 +11,17 @@ import { getEstateById } from '../../services/EstateServices';
 import { backendAPI } from '../../utils/constants';
 import { getUserDetails } from '../../services/AuthService';
 
+import soundplay from '../../assets/alert.mp3';
+
 export function GuardMainPage() {
   const [estate, setEstate] = useState({estateName: "Dummy Estate", location: "Dummy Location"})
   //const user = { vehicle: {}, members: []}
   const [user, setUser] = useState({ vehicle: {}, members: []});
   const [fingerprint, setFingerprintId] = useState("");
   const {estateId} = JSON.parse(getLocalStorageItem("authData"));
+
+  const audioRef = React.useRef(new Audio(soundplay));
+
 
   useEffect(() => {
 
@@ -33,6 +38,9 @@ export function GuardMainPage() {
       setUser(userData);
       socket.emit('residentiId', residentId);
       toast.success(`Vehicle Owner: ${userData.firstname}`, { position: toast.POSITION.TOP_CENTER});
+      if(userData.firstname){
+        playNotification();
+      }
     })
 
     socket.on('accessFingerprint', async(data) => {
@@ -40,6 +48,9 @@ export function GuardMainPage() {
       const {firstname, lastname, referenceType, fingerprintId} = data;
       setFingerprintId(fingerprintId);
       toast.success(`Vehicle Accessed By: ${firstname} ${lastname} --> ${referenceType} `, { position: toast.POSITION.TOP_CENTER, autoClose: 3000});
+      if(firstname){
+        playNotification();
+      }
     });
 
     socket.on('disconnect', () => {
@@ -56,6 +67,12 @@ export function GuardMainPage() {
       socket.disconnect();
     }
   }, [])
+
+  const playNotification = () => {
+    const audio = audioRef.current;
+    audio.currentTime = 0;
+    audio.play();
+  }
 
   const handleOpenGate = (e) => {
 

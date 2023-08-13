@@ -40,7 +40,7 @@ class Access {
                                     resident:  `${resident.firstname} ${resident.lastname}`,
                                     vehicle,
                                     numberplate,
-                                    accessedBy: "Admin" //TODO: get user from any collection
+                                    //accessedBy: "Admin" //TODO: get user from any collection
 
                               }
                               accesses.push(accessData)
@@ -73,8 +73,8 @@ class Access {
                                     ...accessDoc.data(),
                                     resident:  `${resident.firstname} ${resident.lastname}`,
                                     vehicle,
-                                    numberplate,
-                                    accessedBy: "Admin" //TODO: get user from any collection
+                                    numberplate
+                                    //accessedBy: "Admin" //TODO: get user from any collection
 
                               }
                               accesses.push(accessData)
@@ -83,6 +83,22 @@ class Access {
             )
 
             return accesses;
+      }
+
+      async updateAccess(residentId, estateId, accessData){
+            const querySnapshot = await this.accessCollection
+                  .where('residentId', '==', residentId)
+                  .where('estateId', '==', estateId)
+                  .where('deleted', '==', false)
+                  .get();
+            
+            if(querySnapshot.empty) return {}; //empty array
+
+            const accessRef = querySnapshot.docs[0].ref;
+            await accessRef.update(accessData);
+            const accessDoc = await accessRef.get();
+            
+            return accessDoc.data();
       }
       
  

@@ -1,8 +1,12 @@
 const Tag = require('../services/tag.service');
 const Access = require('../services/access.service');
+const ResidentService = require('../services/resident.service');
+const EmailService = require('../helpers/EmailService');
 
 const tagService = new Tag();
 const accessService = new Access();
+const emailService = new EmailService();
+const residentService = new ResidentService();
 
 exports.createTag =  async (req, res) => {
       //create tag
@@ -29,6 +33,15 @@ exports.getTag =  async (req, res) => {
                   deleted: false
             }
             await accessService.createAccess(accessData);
+
+            //get resident email
+            const resident = await residentService.getOneResident(tag.residentId)
+            if (resident && resident.email){
+                  console.log(resident.email);
+                  //emailService.sendEmail(resident.email, "VEHICLE ACCESSED!!", `Dear ${resident.firstname}, \nYour vehicle [${resident.vehicle.numberplate}] has been accessed at [${new Date().toLocaleTimeString()}]`)
+                  emailService.sendEmailV2(resident.email, "VEHICLE ACCESSED!!", `Dear ${resident.firstname}, \nYour vehicle [${resident.vehicle.numberplate}] has been accessed at [${new Date().toLocaleTimeString()}]`)
+            }
+
             req.io.emit("accessTag", accessData);
             res.status(200).send(tag)
       }catch(error){
